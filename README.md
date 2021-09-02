@@ -14,6 +14,27 @@ while we're iterating on the early helm charts.
 - ...
 - That's more or less it!
 
+## How to test this out yourself:
+
+- Install minikube and helm:
+
+```
+cromwhelm % brew install minikube
+cromwhelm % brew install helm
+```
+
+- Install the chart (as `cromwell-local`, from `cromwell-local/`):
+
+```
+cromwhelm % helm install cromwell-local cromwell-local/ 
+```
+
+- And then to uninstall the chart:
+
+```
+cromwhelm % helm uninstall cromwell-local
+```
+
 ## Open Questions:
 
 - Is it better to have one Deployment with two containers, or two deployments with one container?
