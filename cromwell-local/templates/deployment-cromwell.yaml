@@ -29,31 +29,31 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       shareProcessNamespace: true
       containers:
-        - name: postgres
-          securityContext:
-          {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag }}"
-          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
-          {{- if .Values.image.postgres.command }}
-          command:
-            {{- range .Values.image.postgres.command }}
-            - {{ . | quote }}
-              {{- end }}
-          {{- end }}
-          env:
-          {{- toYaml .Values.image.postgres.env | nindent 12 }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.postgres.port }}
-              protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: {{ .Values.service.postgres.port }}
-          readinessProbe:
-            tcpSocket:
-              port: {{ .Values.service.postgres.port }}
-          resources:
-        {{- toYaml .Values.resources | nindent 12 }}
+{{/*        - name: postgres*/}}
+{{/*          securityContext:*/}}
+{{/*          {{- toYaml .Values.securityContext | nindent 12 }}*/}}
+{{/*          image: "{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag }}"*/}}
+{{/*          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}*/}}
+{{/*          {{- if .Values.image.postgres.command }}*/}}
+{{/*          command:*/}}
+{{/*            {{- range .Values.image.postgres.command }}*/}}
+{{/*            - {{ . | quote }}*/}}
+{{/*              {{- end }}*/}}
+{{/*          {{- end }}*/}}
+{{/*          env:*/}}
+{{/*          {{- toYaml .Values.image.postgres.env | nindent 12 }}*/}}
+{{/*          ports:*/}}
+{{/*            - name: http*/}}
+{{/*              containerPort: {{ .Values.service.postgres.port }}*/}}
+{{/*              protocol: TCP*/}}
+{{/*          livenessProbe:*/}}
+{{/*            tcpSocket:*/}}
+{{/*              port: {{ .Values.service.postgres.port }}*/}}
+{{/*          readinessProbe:*/}}
+{{/*            tcpSocket:*/}}
+{{/*              port: {{ .Values.service.postgres.port }}*/}}
+{{/*          resources:*/}}
+{{/*        {{- toYaml .Values.resources | nindent 12 }}*/}}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
