@@ -5,3 +5,5 @@ metadata:
 data:
   POSTGRES_USER: postgres_user
   POSTGRES_DB: {{ .Values.dbname }}
+  papi.conf: |
+    {{ .Files.Get "conf/papi.conf" | nindent 4 }}

@@ -15,12 +15,23 @@ spec:
       labels:
         component: cromwell
     spec:
+      volumes:
+        - name: papi-conf
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: papi.conf
+                path: papi.conf
       containers:
         - name: cromwell-container
           image: broadinstitute/cromwell:66-5f8a277
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          volumeMounts:
+            - name: papi-conf
+              mountPath: /etc/papi/papi.conf
+              subPath: papi.conf
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -49,6 +60,7 @@ spec:
              -Ddatabase.db.password=$POSTGRES_PASSWORD
              -Ddatabase.db.port=5432
              -Ddatabase.db.connectionTimeout=5000
+             -Dconfig.file=/etc/papi/papi.conf
              -jar /app/cromwell.jar
              server
 ---
