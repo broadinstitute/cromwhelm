@@ -16,12 +16,14 @@ spec:
         component: cromwell
     spec:
       volumes:
-        - name: papi-conf
+        - name: cromwell-configuration
           configMap:
             name: {{ .Release.Name }}-configmap
             items:
-              - key: papi.conf
-                path: papi.conf
+              - key: cromwellConfig
+                path: {{ .Values.cromwellConfig.configFile }}
+              - key: credentials
+                path: {{ .Values.cromwellConfig.credentialsFile }}
       containers:
         - name: cromwell-container
           image: broadinstitute/cromwell:66-5f8a277
@@ -29,9 +31,12 @@ spec:
           ports:
             - containerPort: 8000
           volumeMounts:
-            - name: papi-conf
-              mountPath: /etc/papi/papi.conf
-              subPath: papi.conf
+            - name: cromwell-configuration
+              mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.configFile }}
+              subPath: {{ .Values.cromwellConfig.configFile }}
+            - name: cromwell-configuration
+              mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
+              subPath: {{ .Values.cromwellConfig.credentialsFile }}
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -48,6 +53,8 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-configmap
                   key: POSTGRES_DB
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
           command:
             - "bin/bash"
             - "-c"
@@ -60,7 +67,7 @@ spec:
              -Ddatabase.db.password=$POSTGRES_PASSWORD
              -Ddatabase.db.port=5432
              -Ddatabase.db.connectionTimeout=5000
-             -Dconfig.file=/etc/papi/papi.conf
+             -Dconfig.file={{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.configFile }}
              -jar /app/cromwell.jar
              server
 ---

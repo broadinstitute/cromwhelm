@@ -5,5 +5,7 @@ metadata:
 data:
   POSTGRES_USER: postgres_user
   POSTGRES_DB: {{ .Values.dbname }}
-  papi.conf: |
-    {{ .Files.Get "conf/papi.conf" | nindent 4 }}
+  cromwellConfig: |
+    {{ .Files.Get (printf "%s/%s" .Values.cromwellConfig.inputDir .Values.cromwellConfig.configFile ) | nindent 4 }}
+  credentials: |
+    {{ .Files.Get (printf "%s/%s" .Values.cromwellConfig.inputDir .Values.cromwellConfig.credentialsFile ) | nindent 4 }}
