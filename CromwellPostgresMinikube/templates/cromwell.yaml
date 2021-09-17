@@ -16,12 +16,16 @@ spec:
         component: cromwell
     spec:
       volumes:
-        - name: cromwell-configuration
+        - name: cromwell-config
+          configMap:
+            name: cromwell-config
+            items:
+              - key: {{ .Values.cromwellConfig.configFile }}
+                path: {{ .Values.cromwellConfig.configFile }}
+        - name: credentials
           configMap:
             name: {{ .Release.Name }}-configmap
             items:
-              - key: cromwellConfig
-                path: {{ .Values.cromwellConfig.configFile }}
               - key: credentials
                 path: {{ .Values.cromwellConfig.credentialsFile }}
       containers:
@@ -31,10 +35,10 @@ spec:
           ports:
             - containerPort: 8000
           volumeMounts:
-            - name: cromwell-configuration
+            - name: cromwell-config
               mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.configFile }}
               subPath: {{ .Values.cromwellConfig.configFile }}
-            - name: cromwell-configuration
+            - name: credentials
               mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
               subPath: {{ .Values.cromwellConfig.credentialsFile }}
           env:
