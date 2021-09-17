@@ -7,35 +7,14 @@ Tentative first steps into the world of helm charts
 - Be prepared for us to delete this repository imminently, it's really just here as a useful collaboration medium 
 while we're iterating on the early helm charts.
 
-## Notes on getting this far:
+## Charts
 
-- Made by running `helm create cromwell-local` and then adding/messing around.
-- I'm currently trying to get Cromwell and Postgres to run in the same pod. As of commit #2, that doesn't seem to be working.
-- ...
-- That's more or less it!
+### CromwellPostgresMinikube:
+Contains Cromwell, Postgres pods. Runs a local backend. Works on minikube. 
+
+### CromwellPostgresMinikube:
+Contains Cromwell, Postgres pods. Runs against the PAPI backend. Works on minikube.
 
 ## How to test this out yourself:
 
-- Install minikube and helm:
-
-```
-cromwhelm % brew install minikube
-cromwhelm % brew install helm
-```
-
-- Install the chart (as `cromwell-local`, from `cromwell-local/`):
-
-```
-cromwhelm % helm install cromwell-local cromwell-local/ 
-```
-
-- And then to uninstall the chart:
-
-```
-cromwhelm % helm uninstall cromwell-local
-```
-
-## Open Questions:
-
-- Is it better to have one Deployment with two containers, or two deployments with one container?
-- Same question, but w.r.t. Services. 
+See documentation within each chart

@@ -1,0 +1,68 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cromwell-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: cromwell
+  template:
+    metadata:
+      labels:
+        component: cromwell
+    spec:
+      containers:
+        - name: cromwell-container
+          image: broadinstitute/cromwell:66-5f8a277
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secrets
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap
+                  key: POSTGRES_USER
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap
+                  key: POSTGRES_DB
+          command:
+            - "bin/bash"
+            - "-c"
+            - >-
+             java
+             -Ddatabase.profile=slick.jdbc.PostgresProfile$
+             -Ddatabase.db.driver=org.postgresql.Driver
+             -Ddatabase.db.url=jdbc:postgresql://postgres-cip-service:5432/$POSTGRES_DB
+             -Ddatabase.db.user=$POSTGRES_USER
+             -Ddatabase.db.password=$POSTGRES_PASSWORD
+             -Ddatabase.db.port=5432
+             -Ddatabase.db.connectionTimeout=5000
+             -jar /app/cromwell.jar
+             server
+---
+###########################
+# External Service for Swagger
+###########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: cromwell-service
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    component: cromwell
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
