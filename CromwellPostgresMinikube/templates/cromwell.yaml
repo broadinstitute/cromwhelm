@@ -15,12 +15,32 @@ spec:
       labels:
         component: cromwell
     spec:
+      volumes:
+        - name: cromwell-config
+          configMap:
+            name: cromwell-config
+            items:
+              - key: {{ .Values.cromwellConfig.configFile }}
+                path: {{ .Values.cromwellConfig.configFile }}
+        - name: credentials
+          configMap:
+            name: {{ .Release.Name }}-configmap
+            items:
+              - key: credentials
+                path: {{ .Values.cromwellConfig.credentialsFile }}
       containers:
         - name: cromwell-container
           image: broadinstitute/cromwell:66-5f8a277
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          volumeMounts:
+            - name: cromwell-config
+              mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.configFile }}
+              subPath: {{ .Values.cromwellConfig.configFile }}
+            - name: credentials
+              mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
+              subPath: {{ .Values.cromwellConfig.credentialsFile }}
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -37,6 +57,8 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-configmap
                   key: POSTGRES_DB
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
           command:
             - "bin/bash"
             - "-c"
@@ -49,6 +71,7 @@ spec:
              -Ddatabase.db.password=$POSTGRES_PASSWORD
              -Ddatabase.db.port=5432
              -Ddatabase.db.connectionTimeout=5000
+             -Dconfig.file={{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.configFile }}
              -jar /app/cromwell.jar
              server
 ---
