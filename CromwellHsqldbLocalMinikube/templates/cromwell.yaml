@@ -1,0 +1,30 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cromwell-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: cromwell
+  template:
+    metadata:
+      labels:
+        component: cromwell
+    spec:
+      containers:
+        - name: cromwell-container
+          image: broadinstitute/cromwell:68-8e12ab5
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          command:
+            - "bin/bash"
+            - "-c"
+            - >-
+             java
+             -jar /app/cromwell.jar
+             server
