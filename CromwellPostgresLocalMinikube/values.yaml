@@ -1,0 +1,28 @@
+dbname: cromwell
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  # When running via the helm chart configuration, I had to change this from NodePort to LoadBalancer.
+  # Before deploying:
+  # 1) minikube addons enable metallb
+  # 2) minikube ip
+  # 2) minikube addons configure metallb
+  #    Specify Load Balancer IP range based on minikube ip, eg. 192.168.49.105 to  192.168.49.120)
+  type: LoadBalancer
+  port: 8000
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
