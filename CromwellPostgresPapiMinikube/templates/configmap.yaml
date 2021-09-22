@@ -5,5 +5,3 @@ metadata:
 data:
   POSTGRES_USER: postgres_user
   POSTGRES_DB: {{ .Values.dbname }}
-  credentials: |
-    {{ .Files.Get (printf "%s/%s" .Values.cromwellConfig.inputDir .Values.cromwellConfig.credentialsFile ) | nindent 4 }}

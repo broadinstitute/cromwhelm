@@ -22,12 +22,9 @@ spec:
             items:
               - key: {{ .Values.cromwellConfig.configFile }}
                 path: {{ .Values.cromwellConfig.configFile }}
-        - name: credentials
-          configMap:
-            name: {{ .Release.Name }}-configmap
-            items:
-              - key: credentials
-                path: {{ .Values.cromwellConfig.credentialsFile }}
+        - name: service-account
+          secret:
+            secretName: {{ .Values.cromwellConfig.credentialsKey }}
       containers:
         - name: cromwell-container
           image: broadinstitute/cromwell:66-5f8a277
@@ -38,9 +35,8 @@ spec:
             - name: cromwell-config
               mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.configFile }}
               subPath: {{ .Values.cromwellConfig.configFile }}
-            - name: credentials
-              mountPath: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
-              subPath: {{ .Values.cromwellConfig.credentialsFile }}
+            - name: service-account
+              mountPath: /var/run/secret/cloud.google.com
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -58,7 +54,7 @@ spec:
                   name: {{ .Release.Name }}-configmap
                   key: POSTGRES_DB
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: {{ .Values.cromwellConfig.outputDir }}/{{ .Values.cromwellConfig.credentialsFile }}
+              value: /var/run/secret/cloud.google.com/{{ .Values.cromwellConfig.credentialsFile }}
           command:
             - "bin/bash"
             - "-c"
