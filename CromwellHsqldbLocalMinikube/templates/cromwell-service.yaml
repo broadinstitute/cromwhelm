@@ -6,9 +6,9 @@ kind: Service
 metadata:
   name: cromwell-service
 spec:
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   selector:
     component: cromwell
   ports:
-    - port: 8000
-      targetPort: 8000
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
