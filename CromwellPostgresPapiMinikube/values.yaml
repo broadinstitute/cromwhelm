@@ -3,9 +3,10 @@ dbname: cromwell
 cromwellConfig:
   inputDir: conf
   outputDir: /etc/conf
-  credentialsFile: credentials.json
+  credentialsKey: cromwell-sa-key
+  credentialsFile: service-account.json
   configFile: papi.conf
-  gcsBucket: gs://christina-test/cromwell-execution
+  gcsBucket: gs://cromwell_k8s_papi/cromwell-execution
   gcsProject: broad-dsde-cromwell-dev
 
 serviceAccount:
