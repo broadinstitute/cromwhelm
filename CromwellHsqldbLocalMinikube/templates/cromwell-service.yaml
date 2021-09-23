@@ -1,0 +1,14 @@
+###########################
+# External Service for API and Swagger
+###########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: cromwell-service
+spec:
+  type: LoadBalancer
+  selector:
+    component: cromwell
+  ports:
+    - port: 8000
+      targetPort: 8000
