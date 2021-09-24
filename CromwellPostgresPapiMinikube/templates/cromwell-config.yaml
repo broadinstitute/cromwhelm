@@ -26,7 +26,8 @@ data:
     engine {
       filesystems {
         gcs {
-          auth = "application-default"
+          // Will be used if the wdl interacts with files outside of the context of a backend.
+          auth = "user-service-account"
           project = "{{ .Values.cromwellConfig.gcsProject }}"
         }
       }
