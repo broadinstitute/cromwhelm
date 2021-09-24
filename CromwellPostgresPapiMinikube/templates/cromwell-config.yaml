@@ -15,6 +15,10 @@ data:
         {
           name = "application-default"
           scheme = "application_default"
+        },
+        {
+          name = "user-service-account"
+          scheme = "user_service_account"
         }
       ]
     }
@@ -56,8 +60,8 @@ data:
               auth = "application-default"
               // Endpoint for APIs, no reason to change this unless directed by Google.
               endpoint-url = "https://lifesciences.googleapis.com/"
-              // This allows you to use an alternative service account to launch jobs, by default uses default service account
-              compute-service-account = "default"
+              // Will get overridden by email address provided in workflow options, "google_compute_service_account"
+              compute-service-account = "specify in workflow options"
 
               // Pipelines v2 only: specify the number of times localization and delocalization operations should be attempted
               // There is no logic to determine if the error was transient or not, everything is retried upon failure
@@ -75,7 +79,7 @@ data:
             filesystems {
               gcs {
                 // A reference to a potentially different auth for manipulating files via engine functions.
-                auth = "application-default"
+                auth = "user-service-account"
                 project = "{{ .Values.cromwellConfig.gcsProject }}"
               }
             }
