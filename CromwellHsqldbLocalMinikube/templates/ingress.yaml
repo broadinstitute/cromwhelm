@@ -27,7 +27,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: cromwell-service
-              servicePort: {{ .Values.service.port }}
+              servicePort: {{ $.Values.ingress.port }}
           {{- end }}
     {{- end }}
 {{- end }}
