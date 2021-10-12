@@ -1,14 +1,14 @@
-###########################
-# External Service for API and Swagger
-###########################
 apiVersion: v1
 kind: Service
 metadata:
-  name: cromwell-service
+  name: {{ include "app.fullname" }}
+  labels:
+  {{- include "app.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   selector:
-    component: cromwell
+  {{- include "app.selectorLabels" . | nindent 4 }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
+
