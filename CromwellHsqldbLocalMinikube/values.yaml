@@ -6,19 +6,16 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    # nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
-    # nginx.ingress.kubernetes.io/auth-tls-secret: "{{ $.Release.Namespace }}/ca-secret"
-    # nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
-    # nginx.ingress.kubernetes.io/auth-tls-verify-depth: "1"
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # nginx.ingress.kubernetes.io/proxy-redirect-from: "https://k8s-host/"
-    # nginx.ingress.kubernetes.io/proxy-redirect-to: "https://leo-host/"
-    # nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+    nginx.ingress.kubernetes.io/proxy-redirect-from: "SUPPLIED BY LEO"
+    nginx.ingress.kubernetes.io/proxy-redirect-to: "SUPPLIED BY LEO"
+    nginx.ingress.kubernetes.io/rewrite-target: "SUPPLIED BY LEO"
+    nginx.ingress.kubernetes.io/auth-tls-secret: "SUPPLIED BY LEO"
+  path: "SUPPLIED BY LEO"
   hosts:
-    - host: "k8s.app.info"
+    - host: "SUPPLIED BY LEO"
       paths:
-        - "/app(/|$)(.*)"
-  # tls:
-  # - secretName: "tls-secret"
-  #   hosts:
-  #     - "k8s.app.info"
+        - "SUPPLIED BY LEO"
+  tls:
+    - secretName: "SUPPLIED BY LEO"
+      hosts:
+        - "SUPPLIED BY LEO"
