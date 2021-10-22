@@ -4,19 +4,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cromwell.fullname" . }}-api
+  name: {{ include "app.fullname" . }}-depl
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: cromwell
+      component: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        component: cromwell
+        component: {{ .Chart.Name }}
     spec:
       containers:
-        - name: cromwell-container
+        - name: {{ .Chart.Name }}-container
           image: broadinstitute/cromwell:68-8e12ab5
           imagePullPolicy: Always
           ports:

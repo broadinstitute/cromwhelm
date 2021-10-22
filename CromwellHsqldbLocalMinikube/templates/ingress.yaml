@@ -1,8 +1,11 @@
 {{- if .Values.ingress.enabled -}}
+{{- $fullName := include "app.fullname" . -}}
 apiVersion:  networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: cromwell-ingress
+  name: {{ $fullName }}
+  labels:
+  {{- include "app.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
   {{- toYaml . | nindent 4 }}
@@ -26,7 +29,7 @@ spec:
           {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: cromwell-service
+              serviceName: {{ $fullName }}-api
               servicePort: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}
