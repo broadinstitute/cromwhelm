@@ -11,11 +11,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      component: {{ .Chart.Name }}
+      {{- include "app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        component: {{ .Chart.Name }}
+        {{- include "app.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-container
