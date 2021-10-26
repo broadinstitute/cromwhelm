@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: cromwell-pv
+  name: {{ include "app.fullname" . }}-pv
 spec:
   storageClassName: "{{ .Values.persistence.storageClass }}"
   capacity:
@@ -15,7 +15,7 @@ spec:
   {{- end }}
   claimRef:
     namespace: {{ $.Release.Namespace }}
-    name: cromwell-pvc
+    name: {{ include "app.fullname" . }}-pvc
   {{- if .Values.persistence.gcePersistentDisk }}
   gcePersistentDisk:
     pdName: {{ .Values.persistence.gcePersistentDisk }}
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cromwell-pvc
+  name: {{ include "app.fullname" . }}-pvc
 spec:
   storageClassName: "{{ .Values.persistence.storageClass }}"
-  volumeName: cromwell-pv
+  volumeName: {{ include "app.fullname" . }}-pv
   accessModes:
     - {{ .Values.persistence.accessMode }}
   resources:

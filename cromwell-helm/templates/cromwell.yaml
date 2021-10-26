@@ -18,9 +18,9 @@ spec:
         {{- include "app.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
-        - name: cromwell-storage
+        - name: {{ include "app.fullname" . }}-storage
           persistentVolumeClaim:
-            claimName: cromwell-pvc
+            claimName: {{ include "app.fullname" . }}-pvc
       containers:
         - name: {{ .Chart.Name }}-container
           image: broadinstitute/cromwell:68-8e12ab5
