@@ -1,19 +1,15 @@
-To run this in minikube:
+This helm chart is used to deploy Cromwell as an app within Leonardo. 
 
-1. Make sure you have minikube and helm installed (can use homebrew)
-2. `minikube start`
-3. `minikube addons enable metallb `
-4. `minikube ip` (to get IP address of minikube)
-5. `minikube addons configure metallb`, Specify Load Balancer IP range based on minikube ip, eg. 192.168.49.105 to  192.168.49.120)
-6. `helm install cromwell-hsqldb-local cromwell-helm` 
-7. `minikube dashboard`, Check the cromwell pod is happy. If not, delete it so it automatically restart. 
-8. `minikube service cromwell-service`
+Here is a suggested workflow for testing updates to this chart from local Terminal, without redeploying Leonardo/Cromwell.
 
-In the Swagger browser tab that opened, deploy a hello world WDL and verify it produces output! There are 2 sample WDLs
-in the repo; use the non-dockerized one for submitting locally.
+1. Create a workspace in Leonardo and deploy a Cromwell usage via Swagger (https://leonardo-fiab.dsde-dev.broadinstitute.org:30443/#/apps/createApp)
 
-To redeploy the helm chart, execute:
-```
-helm uninstall cromwell-hsqldb-local;
-helm install cromwell-hsqldb-local cromwell-helm
-```
+2. From a Terminal (not within the Leo VM… just on your local computer), do the following commands to set helm/kubectl to point to the right environment:
+   - gcloud auth login (Select your test.firecloud.org account)
+   - gcloud config set project <workspace project ID> (for example, terra-test-5dea92eb)
+   - gcloud container clusters get-credentials --zone=us-central1-a <cluster name> (for example, kecd4047-a970-4088-89dd-003288bcf6f1, see in Google Cloud console, to the right of the Cromwell service)
+
+3. Now you can edit the helm chart locally in your favorite editor. To update the instance of Cromwell running with your new chart, do the following from the directory in which `cromwell-helm` lives:
+   - helm upgrade --namespace=<namepace> <release> cromwell 
+   - Note: you can see the namespace in Google Cloud console to the right of the Cromwell service. Release is the same, with “ns” replaced by “rls”.
+     So for example: helm upgrade --namespace=jlfcsv-gxy-ns jlfcsv-gxy-rls cromwell
