@@ -17,6 +17,10 @@ spec:
       labels:
         {{- include "app.selectorLabels" . | nindent 8 }}
     spec:
+      volumes:
+        - name: cromwell-storage
+          persistentVolumeClaim:
+            claimName: cromwell-pvc
       containers:
         - name: {{ .Chart.Name }}-container
           image: broadinstitute/cromwell:68-8e12ab5
