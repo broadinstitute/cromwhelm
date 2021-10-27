@@ -14,7 +14,7 @@ spec:
     path: {{ .Values.persistence.hostPath }}
   {{- end }}
   claimRef:
-    namespace: {{ $.Release.Namespace }}
+    namespace: {{ .Release.Namespace }}
     name: {{ include "app.fullname" . }}-pvc
   {{- if .Values.persistence.gcePersistentDisk }}
   gcePersistentDisk:
