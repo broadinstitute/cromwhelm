@@ -19,3 +19,11 @@ ingress:
     - secretName: "SUPPLIED BY LEO"
       hosts:
         - "SUPPLIED BY LEO"
+
+persistence:
+  enabled: true
+  storageClass: "manual"
+  size: 10G
+  accessMode: ReadOnlyMany
+  mountPath: "/data"
+  gcePersistentDisk: "SUPPLIED BY LEO"
