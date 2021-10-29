@@ -27,10 +27,31 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "app.fullname" . }}-secrets
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_USER
+              value: {{ .Values.db.user }}
+            - name: POSTGRES_DB
+              value: {{ .Values.db.name }}
+            - name: POSTGRES_SERVICE
+              value: {{ include "app.fullname" . }}-postgres
+            - name: POSTGRES_PORT
+              value: "{{ .Values.db.port }}"
           command:
             - "bin/bash"
             - "-c"
             - >-
              java
+             -Ddatabase.profile=slick.jdbc.PostgresProfile$
+             -Ddatabase.db.driver=org.postgresql.Driver
+             -Ddatabase.db.url=jdbc:postgresql://$POSTGRES_SERVICE:$POSTGRES_PORT/$POSTGRES_DB
+             -Ddatabase.db.user=$POSTGRES_USER
+             -Ddatabase.db.password=$POSTGRES_PASSWORD
+             -Ddatabase.db.port=$POSTGRES_PORT
+             -Ddatabase.db.connectionTimeout=5000
              -jar /app/cromwell.jar
              server
