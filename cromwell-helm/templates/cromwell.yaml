@@ -29,10 +29,7 @@ spec:
             - containerPort: 8000
           env:
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "app.fullname" . }}-secrets
-                  key: POSTGRES_PASSWORD
+              value: {{ include "dbPassword" . | b64enc | quote }}
             - name: POSTGRES_USER
               value: {{ .Values.db.user }}
             - name: POSTGRES_DB
