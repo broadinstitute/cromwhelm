@@ -23,7 +23,7 @@ spec:
             claimName: {{ include "app.fullname" . }}-pvc
       containers:
         - name: {{ .Chart.Name }}-container
-          image: broadinstitute/cromwell:68-8e12ab5
+          image: broadinstitute/cromwell:69-ab51713-SNAP # TODO: Update this to official version once Cromwell 71 is released
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
@@ -38,6 +38,8 @@ spec:
               value: {{ include "app.fullname" . }}-postgres
             - name: POSTGRES_PORT
               value: "{{ .Values.db.port }}"
+            - name: SWAGGER_BASE_PATH
+              value: "{{ .Values.env.swaggerBasePath }}"
           command:
             - "bin/bash"
             - "-c"
