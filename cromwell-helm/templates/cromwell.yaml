@@ -23,7 +23,7 @@ spec:
             claimName: {{ include "app.fullname" . }}-pvc
       containers:
         - name: {{ .Chart.Name }}-container
-          image: broadinstitute/cromwell:69-ab51713-SNAP # TODO: Update this to official version once Cromwell 71 is released
+          image: broadinstitute/cromwell:71-c778c33
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
