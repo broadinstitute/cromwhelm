@@ -21,12 +21,22 @@ spec:
         - name: {{ include "app.fullname" . }}-storage
           persistentVolumeClaim:
             claimName: {{ include "app.fullname" . }}-pvc
+        - name: {{ include "app.fullname" . }}-cromwell-config
+          configMap:
+            name: {{ include "app.fullname" . }}-cromwell-config
+            items:
+              - key: {{ .Values.cromwellConfig.configFile }}
+                path: {{ .Values.cromwellConfig.configFile }}
       containers:
         - name: {{ .Chart.Name }}-container
           image: broadinstitute/cromwell:71-c778c33
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          volumeMounts:
+            - name: {{ include "app.fullname" . }}-cromwell-config
+              mountPath: {{ .Values.cromwellConfig.configDir }}/{{ .Values.cromwellConfig.configFile }}
+              subPath: {{ .Values.cromwellConfig.configFile }}
           env:
             - name: POSTGRES_PASSWORD
               value: {{ include "dbPassword" . | b64enc | quote }}
@@ -52,5 +62,6 @@ spec:
              -Ddatabase.db.password=$POSTGRES_PASSWORD
              -Ddatabase.db.port=$POSTGRES_PORT
              -Ddatabase.db.connectionTimeout=5000
+             -Dconfig.file={{ .Values.cromwellConfig.configDir }}/{{ .Values.cromwellConfig.configFile }}
              -jar /app/cromwell.jar
              server
