@@ -54,8 +54,8 @@ data:
               // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
               // Pipelines and manipulate auth JSONs.
               auth = "application-default"
-              // Endpoint for APIs, no reason to change this unless directed by Google.
-              endpoint-url = "https://lifesciences.googleapis.com/"
+              // Endpoint for API (dependent on 'location')
+              endpoint-url = "{{ .Values.config.papiv2EndpointUrl }}"
               // Will get overridden by email address provided in workflow options, "google_compute_service_account"
               compute-service-account = "application-default"
 
