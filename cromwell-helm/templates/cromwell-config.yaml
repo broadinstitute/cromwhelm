@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-cromwell-config
 data:
-  {{ .Values.cromwellConfig.configFile }}: |-
+  {{ .Values.config.file }}: |-
     include required(classpath("application"))
 
     google {
@@ -23,7 +23,7 @@ data:
         gcs {
           // Will be used if the wdl interacts with files outside of the context of a backend.
           auth = "application-default"
-          project = "{{ .Values.cromwellConfig.gcsProject }}"
+          project = "{{ .Values.config.gcsProject }}"
         }
       }
     }
@@ -35,10 +35,10 @@ data:
           actor-factory = "cromwell.backend.google.pipelines.v2beta.PipelinesApiLifecycleActorFactory"
           config {
             // Google project
-            project = "{{ .Values.cromwellConfig.gcsProject }}"
+            project = "{{ .Values.config.gcsProject }}"
 
             // Base bucket for workflow executions
-            root = "{{ .Values.cromwellConfig.gcsBucket }}"
+            root = "{{ .Values.config.gcsBucket }}"
 
             // Polling for completion backs-off gradually for slower-running jobs.
             // This is the maximum polling interval (in seconds):
@@ -65,7 +65,7 @@ data:
               localization-attempts = 3
 
               // Starting from version 2 beta of the Google Life Sciences API, this is a required attribute for creating pipelines.
-              location = "us-central1"
+              location = "{{ .Values.config.gcsRegion }}"
 
                // Restrict access to VM metadata. Useful in cases when untrusted containers are running under a service
                // account not owned by the submitting user
@@ -76,7 +76,7 @@ data:
               gcs {
                 // A reference to a potentially different auth for manipulating files via engine functions.
                 auth = "application-default"
-                project = "{{ .Values.cromwellConfig.gcsProject }}"
+                project = "{{ .Values.config.gcsProject }}"
               }
             }
           }
