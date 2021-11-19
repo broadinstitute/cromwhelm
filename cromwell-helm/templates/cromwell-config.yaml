@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-cromwell-config
+data:
+  {{ .Values.config.file }}: |-
+    include required(classpath("application"))
+
+    google {
+
+      application-name = "cromwell"
+
+      auths = [
+        {
+          name = "application-default"
+          scheme = "application_default"
+        }
+      ]
+    }
+
+    engine {
+      filesystems {
+        gcs {
+          // Will be used if the wdl interacts with files outside of the context of a backend.
+          auth = "application-default"
+          project = "{{ .Values.config.gcsProject }}"
+        }
+      }
+    }
+
+    backend {
+      default = "Local"
+      providers {
+        PAPIv2 {
+          actor-factory = "cromwell.backend.google.pipelines.v2beta.PipelinesApiLifecycleActorFactory"
+          config {
+            // Google project
+            project = "{{ .Values.config.gcsProject }}"
+
+            // Base bucket for workflow executions
+            root = "{{ .Values.config.gcsBucket }}"
+
+            // Polling for completion backs-off gradually for slower-running jobs.
+            // This is the maximum polling interval (in seconds):
+            maximum-polling-interval = 600
+
+            // Optional Dockerhub Credentials. Can be used to access private docker images.
+            dockerhub {
+              // account = ""
+              // token = ""
+            }
+
+            genomics {
+              // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
+              // Pipelines and manipulate auth JSONs.
+              auth = "application-default"
+              // Endpoint for API (dependent on 'location')
+              endpoint-url = "{{ .Values.config.papiv2EndpointUrl }}"
+              // Will get overridden by email address provided in workflow options, "google_compute_service_account"
+              compute-service-account = "application-default"
+
+              // Pipelines v2 only: specify the number of times localization and delocalization operations should be attempted
+              // There is no logic to determine if the error was transient or not, everything is retried upon failure
+              // Defaults to 3
+              localization-attempts = 3
+
+              // Starting from version 2 beta of the Google Life Sciences API, this is a required attribute for creating pipelines.
+              location = "{{ .Values.config.gcsRegion }}"
+
+               // Restrict access to VM metadata. Useful in cases when untrusted containers are running under a service
+               // account not owned by the submitting user
+               restrict-metadata-access = false
+            }
+
+            filesystems {
+              gcs {
+                // A reference to a potentially different auth for manipulating files via engine functions.
+                auth = "application-default"
+                project = "{{ .Values.config.gcsProject }}"
+              }
+            }
+          }
+        }
+      }
+    }
