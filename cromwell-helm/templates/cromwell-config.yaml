@@ -57,7 +57,7 @@ data:
               // Endpoint for API (dependent on 'location')
               endpoint-url = "{{ .Values.config.papiv2EndpointUrl }}"
               // Will get overridden by email address provided in workflow options, "google_compute_service_account"
-              compute-service-account = "application-default"
+              compute-service-account = "{{ .Values.config.serviceAccount.name }}"
 
               // Pipelines v2 only: specify the number of times localization and delocalization operations should be attempted
               // There is no logic to determine if the error was transient or not, everything is retried upon failure
