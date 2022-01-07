@@ -57,7 +57,7 @@ data:
               // Endpoint for API (dependent on 'location')
               endpoint-url = "{{ .Values.config.papiv2EndpointUrl }}"
               // Will get overridden by email address provided in workflow options, "google_compute_service_account"
-              compute-service-account = "application-default"
+              compute-service-account = "{{ .Values.config.serviceAccount.annotations.gcpServiceAccount }}"
 
               // Pipelines v2 only: specify the number of times localization and delocalization operations should be attempted
               // There is no logic to determine if the error was transient or not, everything is retried upon failure
@@ -78,6 +78,12 @@ data:
                 auth = "application-default"
                 project = "{{ .Values.config.gcsProject }}"
               }
+            }
+
+            virtual-private-cloud {
+              network-label-key = "vpc-network-name"
+              subnetwork-label-key = "vpc-subnetwork-name"
+              auth = "application-default"
             }
           }
         }
