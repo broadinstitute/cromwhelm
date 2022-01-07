@@ -17,6 +17,7 @@ spec:
       labels:
         {{- include "app.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ .Values.config.serviceAccount.name }}
       volumes:
         - name: {{ include "app.fullname" . }}-storage
           persistentVolumeClaim:
