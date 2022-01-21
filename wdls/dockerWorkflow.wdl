@@ -9,6 +9,7 @@ task myTask {
 
     runtime {
         docker: "ubuntu:latest"
+        backend: "PAPIv2"
     }
 
     output {
