@@ -1,8 +1,14 @@
+version 1.0
+
 workflow dockerWorkflow {
     call myTask
 }
 
 task myTask {
+    meta {
+        volatile: true
+    }
+    
     command {
         echo "hello from PAPI"
     }
