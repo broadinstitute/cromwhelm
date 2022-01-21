@@ -15,7 +15,7 @@ Here is a suggested workflow for testing updates to this chart from local Termin
      So for example: helm upgrade --namespace=jlfcsv-gxy-ns jlfcsv-gxy-rls cromwell
 
 **Rules for granting users permissions to run workflows (as the pet itself)**:
-- Add Workflow runner permissions, then Service Account User permissions ONLY the user’s pet SA:
+- Add Workflow runner permissions against the project, then Service Account User permissions against ONLY the user’s pet SA:
    - In Google Cloud console for the project go to IAM & Admin → Service Accounts section. Copy the email address for pet SA
    - Now navigate to IAM section. Click on Add at the top
       - In Principals field paste in the pet SA email address
