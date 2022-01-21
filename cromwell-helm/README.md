@@ -13,3 +13,18 @@ Here is a suggested workflow for testing updates to this chart from local Termin
    - helm upgrade --namespace=<namepace> <release> cromwell 
    - Note: you can see the namespace in Google Cloud console to the right of the Cromwell service. Release is the same, with “ns” replaced by “rls”.
      So for example: helm upgrade --namespace=jlfcsv-gxy-ns jlfcsv-gxy-rls cromwell
+
+**Rules for granting users permissions to run workflows (as the pet itself)**:
+- Add Workflow runner permissions against the project, then Service Account User permissions against ONLY the user’s pet SA:
+   - In Google Cloud console for the project go to IAM & Admin → Service Accounts section. Copy the email address for pet SA
+   - Now navigate to IAM section. Click on Add at the top
+      - In Principals field paste in the pet SA email address
+      - Add below Roles:
+         - Cloud Life Sciences Workflows Runner
+   - Now, navigate back to the Service Accounts section in IAM & Admin
+   - From here navigate to the user’s SA that you want to set permissions for (double click)
+      - Navigate from the ‘Details’ page to the ‘Permissions’ page to the right
+      - Hit the ‘Grant Access’ button underneath the Principals with access to this service account section.
+         - In Principals field, paste in the pet SA email address
+         - Add the below Role:
+            - Service Account User
