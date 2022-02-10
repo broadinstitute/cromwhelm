@@ -9,7 +9,7 @@ Here is a suggested workflow for testing updates to this chart from local Termin
    - gcloud config set project <workspace project ID> (for example, terra-test-5dea92eb)
    - gcloud container clusters get-credentials --zone=us-central1-a <cluster name> (for example, kecd4047-a970-4088-89dd-003288bcf6f1, see in Google Cloud console, to the right of the Cromwell service)
 
-3. Now you can edit the helm chart locally in your favorite editor. To update the instance of Cromwell running with your new chart, do the following from the directory in which `cromwell-helm` lives:
+3. Now you can edit the helm chart locally in your favorite editor. To update the instance of Cromwell running with your new chart:
    - helm upgrade --namespace=<namepace> <release> cromwell 
    - Note: you can see the namespace in Google Cloud console to the right of the Cromwell service. Release is the same, with “ns” replaced by “rls”.
      So for example: helm upgrade --namespace=jlfcsv-gxy-ns jlfcsv-gxy-rls cromwell-helm
