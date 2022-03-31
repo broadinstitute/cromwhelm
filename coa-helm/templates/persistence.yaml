@@ -28,7 +28,7 @@ spec:
       storage: {{ .Values.persistence.mysqlSize }}
 status: {}
 ---
-{{- $rg  := .Values.config.resourceGroup -}}
+{{- $rg  := .Values.persistence.storageResourceGroup -}}
 {{- $storageAccount  := .Values.persistence.storageAccount -}}
 {{- $size  := .Values.persistence.blobPvcSize -}}
 {{- range .Values.containers }}
