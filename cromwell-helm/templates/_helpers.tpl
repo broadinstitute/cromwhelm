@@ -51,6 +51,13 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+JobManager labels
+*/}}
+{{- define "app.jobmanager.selectorLabels" -}}
+app.kubernetes.io/component: {{ .Values.jobmanager.name }}
+{{- end}}
+
+{{/*
 Return postgres database user password.
 Lookup the existing secret values if they exist, or generate a random value
 */}}
