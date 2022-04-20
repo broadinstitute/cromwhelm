@@ -16,7 +16,7 @@ jobs:
         run: |
           currentVersion=$(grep 'version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
 
-          # this will increment only the last version digit. For example, it will update 0.1.10 => 0.1.11
+          # this will increment only the patch version digit. For example, it will update 0.1.10 => 0.1.11
           nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
 
           echo "CURRENT_VERSION=$currentVersion" >> $GITHUB_ENV
