@@ -22,7 +22,7 @@ jobs:
           nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
 
           echo "CURRENT_VERSION=$currentVersion" >> $GITHUB_ENV
-          echo "NEXT_VERSION=nextVersion" >> $GITHUB_ENV
+          echo "NEXT_VERSION=$nextVersion" >> $GITHUB_ENV
 
 #      - name: Update chart.yaml file with new chart version
 #        uses: ./.github/actions/replace
