@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
+        with:
+          ref: ss_auto_update_chart_version
 
       - name: Find out next chart version
         run: |
@@ -38,7 +40,7 @@ jobs:
         env:
           BROADBOT_GITHUB_TOKEN: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
         run: |
-          git checkout ss_auto_update_chart_version
+#          git checkout ss_auto_update_chart_version
           git diff
           git config --global user.name "broadbot"
           git config --global user.email "broadbot@broadinstitute.org"
