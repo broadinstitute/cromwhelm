@@ -35,7 +35,6 @@ jobs:
           helm package cromwell-helm/
           mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
-
       - name: Push changes to GitHub
         env:
           BROADBOT_GITHUB_TOKEN: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
