@@ -21,6 +21,9 @@ jobs:
           # this will increment only the last version digit. For example, it will update 0.1.10 => 0.1.11
           nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
 
+          echo "CURRENT_VERSION=$currentVersion" >> $GITHUB_ENV
+          echo "NEXT_VERSION=nextVersion" >> $GITHUB_ENV
+
 #      - name: Update chart.yaml file with new chart version
 #        uses: ./.github/actions/replace
 #        with:
@@ -31,10 +34,10 @@ jobs:
 
       - name: Update chart.yaml file with new chart version
         run: |
-          sed -i "s/$currentVersion/$nextVersion/" cromwell-helm/Chart.yaml
+          sed -i "s/$CURRENT_VERSION/$NEXT_VERSION/" cromwell-helm/Chart.yaml
 
       - name: Publish the new chart
         run: |
           helm package cromwell-helm/
-          mv cromwell-${nextVersion}.tgz charts/cromwell-${nextVersion}.tgz
+          mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
