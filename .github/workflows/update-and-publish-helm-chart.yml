@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
 
       - name: Find out next chart version
         run: |
@@ -35,11 +33,11 @@ jobs:
           helm package cromwell-helm/
           mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
+
       - name: Push changes to GitHub
         env:
           BROADBOT_GITHUB_TOKEN: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
         run: |
-#          git checkout ss_auto_update_chart_version
           git diff
           git config --global user.name "broadbot"
           git config --global user.email "broadbot@broadinstitute.org"
