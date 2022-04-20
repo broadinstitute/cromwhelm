@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'ss_auto_update_chart_version' # for testing purposes. Remove later
 
 jobs:
   update-and-publish:
@@ -43,4 +42,3 @@ jobs:
           git config --global user.email "broadbot@broadinstitute.org"
           git commit -am "Auto update to cromwell-helm chart version to $NEXT_VERSION"
           git push https://broadbot:$BROADBOT_GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git auto-chart-version-update-$NEXT_VERSION
-
