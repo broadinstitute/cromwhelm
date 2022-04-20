@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Find out next chart version
-      - run: |
+        run: |
           currentVersion=$(grep 'version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
 
           # this will increment only the last version digit. For example, it will update 0.1.10 => 0.1.11
@@ -30,11 +30,11 @@ jobs:
       # OR
 
       - name: Update chart.yaml file with new chart version
-      - run: |
+        run: |
           sed -i "s/$currentVersion/$nextVersion/" cromwell-helm/Chart.yaml
 
       - name: Publish the new chart
-      - run: |
+        run: |
           helm package cromwell-helm/
           mv cromwell-${nextVersion}.tgz charts/cromwell-${nextVersion}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
