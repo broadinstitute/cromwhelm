@@ -1,0 +1,40 @@
+name: update-and-publish-cromwell-helm-chart
+on: pull_request
+#  pull_request:
+#    types:
+#      - closed
+
+jobs:
+  update-and-publish:
+    name: Updates and publishes new cromwell-helm chart
+    # only run this action when a PR is merged (and not on "closed")
+#    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Find out next chart version
+      - run: |
+          currentVersion=$(grep 'version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
+
+          # this will increment only the last version digit. For example, it will update 0.1.10 => 0.1.11
+          nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+
+#      - name: Update chart.yaml file with new chart version
+#        uses: ./.github/actions/replace
+#        with:
+#          files: cromwell-helm/Chart.yaml
+#          replacements: '${{ currentVersion }}=${{ nextVersion }}'
+
+      # OR
+
+      - name: Update chart.yaml file with new chart version
+      - run: |
+          sed -i "s/$currentVersion/$nextVersion/" cromwell-helm/Chart.yaml
+
+      - name: Publish the new chart
+      - run: |
+          helm package cromwell-helm/
+          mv cromwell-${nextVersion}.tgz charts/cromwell-${nextVersion}.tgz
+          helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
