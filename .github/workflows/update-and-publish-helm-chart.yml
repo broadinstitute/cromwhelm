@@ -25,19 +25,24 @@ jobs:
           echo "NEXT_VERSION=$nextVersion" >> $GITHUB_ENV
 
       - name: Update chart.yaml file with new chart version
-        uses: ./.github/actions/replace
-        with:
-          files: cromwell-helm/Chart.yaml
-          replacements: '$CURRENT_VERSION=$NEXT_VERSION'
-
-      # OR
-
-#      - name: Update chart.yaml file with new chart version
-#        run: |
-#          sed -i "s/$CURRENT_VERSION/$NEXT_VERSION/" cromwell-helm/Chart.yaml
+        run: |
+          sed -i "s/$CURRENT_VERSION/$NEXT_VERSION/" cromwell-helm/Chart.yaml
 
       - name: Publish the new chart
         run: |
           helm package cromwell-helm/
           mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
+
+      - name: Push changes to GitHub
+        env:
+          BROADBOT_GITHUB_TOKEN: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
+        run: |
+          cd cromwhelm
+          git checkout ss_auto_update_chart_version
+          git diff
+          git config --global user.name "broadbot"
+          git config --global user.email "broadbot@broadinstitute.org"
+          git commit -am "Auto update to cromwell-helm chart version to $NEXT_VERSION"
+          git push https://broadbot:$BROADBOT_GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git ss_auto_update_chart_version
+
