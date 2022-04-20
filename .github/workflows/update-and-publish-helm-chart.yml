@@ -38,7 +38,6 @@ jobs:
         env:
           BROADBOT_GITHUB_TOKEN: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
         run: |
-          cd cromwhelm
           git checkout ss_auto_update_chart_version
           git diff
           git config --global user.name "broadbot"
