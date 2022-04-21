@@ -30,6 +30,7 @@ spec:
                 path: {{ .Values.config.file }}
       containers:
         - name: {{ .Chart.Name }}-container
+          # Keep this format stable for automatic version bumps from https://github.com/broadinstitute/cromwell/pull/6739
           image: broadinstitute/cromwell:71-c778c33
           imagePullPolicy: Always
           ports:
