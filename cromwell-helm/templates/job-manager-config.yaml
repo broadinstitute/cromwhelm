@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-job-manager-config
+data:
+  nginx.conf: |-
+    # Copied from http://github.com/DataBiosphere/job-manager/blob/8eb82edb6bb091c5da679a0ba85f1a180e343a01/ui/nginx.prod.conf
+    # Updated listen port from 80 to 8000
+    #
+    # nginx server for static assets. For directive documentation, see
+    # http://nginx.org/en/docs/dirindex.html
+
+    # Note: this nginx configuration is a default template, to deploy Job Manager on various types of servers,
+    # such as Google App Engine, Google Kubernetes Engine, etc. please override this file
+
+    # For compatibility with Nginx "unprivileged" blessed base image [0], put the PID somewhere not-privileged [1]
+    # [0] https://github.com/broadinstitute/dsp-appsec-blessed-images/blob/main/nginx/Dockerfile.stable-alpine#L1
+    # [1] https://broadinstitute.slack.com/archives/CADU7L0SZ/p1627588528360200?thread_ts=1627578911.354100&cid=CADU7L0SZ
+      pid /tmp/nginx.pid;
+
+      # Required - just leave the defaults for now.
+      events {}
+
+      http {
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+
+      gzip on;
+      gzip_disable "msie6";
+
+      server {
+        listen 8000;
+
+        root /ui/dist;
+
+        location / {
+          try_files $uri$args $uri$args/ /index.html;
+        }
+      }
+    }

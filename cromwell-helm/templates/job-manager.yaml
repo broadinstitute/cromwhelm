@@ -1,0 +1,87 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}-job-manager-depl
+  labels:
+  {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "app.jobmanager.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.jobmanager.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.jobmanager.name }}-sa
+      # Containers are configured to talk to each other by name
+      # via docker-compose links; make corresponding aliases
+      # to loopback in /etc/hosts
+      hostAliases:
+        - ip: 127.0.0.1
+          hostnames:
+            - ui
+            - api
+      volumes:
+        - name: {{ include "app.fullname" . }}-job-manager-config
+          configMap:
+            name: {{ include "app.fullname" . }}-job-manager-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+      containers:
+        - name: {{ .Values.jobmanager.name }}-api
+          image: "{{ .Values.jobmanager.api.image.repository }}:{{ .Values.jobmanager.api.image.tag | default .Values.jobmanager.applicationVersion }}"
+          args: ["-b", ":{{ .Values.jobmanager.api.service.port }}", "-t", "60"]
+          ports:
+            - containerPort: {{ .Values.jobmanager.api.service.port }}
+          # TODO: VM resources?
+          env:
+            # Make node, pod name accessible to app as env vars
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          {{- if .Values.jobmanager.api.probes.readiness.enabled }}
+          readinessProbe:
+            {{- toYaml .Values.jobmanager.api.probes.readiness.spec | nindent 12 }}
+          {{- end }}
+          {{- if .Values.jobmanager.api.probes.liveness.enabled }}
+          livenessProbe:
+            {{- toYaml .Values.jobmanager.api.probes.liveness.spec | nindent 12 }}
+          {{- end }}
+        - name: {{ .Values.jobmanager.name }}-ui
+          image: "{{ .Values.jobmanager.ui.image.repository }}:{{ .Values.jobmanager.ui.image.tag | default .Values.jobmanager.applicationVersion }}"
+          ports:
+            - containerPort: {{ .Values.jobmanager.ui.service.port }}
+          # TODO: VM resources?
+          env:
+            # Make node, pod name accessible to app as env vars
+            - name: K8S_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          volumeMounts:
+            - name: {{ include "app.fullname" . }}-job-manager-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          {{- if .Values.jobmanager.ui.probes.readiness.enabled }}
+          readinessProbe:
+            {{- toYaml .Values.jobmanager.ui.probes.readiness.spec | nindent 12 }}
+          {{- end }}
+          {{- if .Values.jobmanager.ui.probes.liveness.enabled }}
+          livenessProbe:
+            {{- toYaml .Values.jobmanager.ui.probes.liveness.spec | nindent 12 }}
+          {{- end }}
