@@ -89,10 +89,11 @@ jobmanager:
       type: ClusterIP
       port: 8190
     probes:
+      TODO: Fix these health checks, which may be more than just not being able to connect to Cromwell
       readiness:
-        # ui.probes.readiness.enable -- Whether to configure a readiness probe
+        # api.probes.readiness.enable -- Whether to configure a readiness probe
         enabled: false # TODO: enable after connecting to Cromwell -breilly 20220420
-        # ui.probes.readiness.spec -- Kubernetes spec for readiness probe
+        # api.probes.readiness.spec -- Kubernetes spec for readiness probe
         spec:
           httpGet:
             path: /api/v1/health
@@ -102,9 +103,9 @@ jobmanager:
           failureThreshold: 6
           successThreshold: 1
       liveness:
-        # ui.probes.liveness.enable -- Whether to configure a liveness probe
+        # api.probes.liveness.enable -- Whether to configure a liveness probe
         enabled: false # TODO: enable after connecting to Cromwell -breilly 20220420
-        # ui.probes.liveness.spec -- Kubernetes spec for liveness probe
+        # api.probes.liveness.spec -- Kubernetes spec for liveness probe
         spec:
           httpGet:
             path: /api/v1/health
