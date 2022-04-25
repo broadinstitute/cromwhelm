@@ -30,7 +30,7 @@ jobs:
         run: |
           helm package cromwell-helm/
           pwd
-          mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
+          mv $PWD/cromwell-${NEXT_VERSION}.tgz $PWD/charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
       - name: Push changes to GitHub
