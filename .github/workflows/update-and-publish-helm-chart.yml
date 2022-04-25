@@ -2,7 +2,7 @@ name: update-and-publish-cromwell-helm-chart
 on:
   push:
     branches:
-      - 'ss_fix_chart_location' # remove after testing
+      - 'main'
 
 jobs:
   update-and-publish:
@@ -36,10 +36,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
         run: |
-          git checkout -b auto_update_chart_${NEXT_VERSION}
+          git checkout main
           git add charts/cromwell-${NEXT_VERSION}.tgz
           git diff
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION"
-          git push https://broadbot:$GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git auto_update_chart_${NEXT_VERSION}
+          git push https://broadbot:$GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git main
