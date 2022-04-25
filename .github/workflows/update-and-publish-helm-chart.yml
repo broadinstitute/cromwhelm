@@ -2,7 +2,7 @@ name: update-and-publish-cromwell-helm-chart
 on:
   push:
     branches:
-      - 'main'
+      - 'ss_fix_chart_location' # remove after testing
 
 jobs:
   update-and-publish:
@@ -29,17 +29,17 @@ jobs:
       - name: Publish the new helm chart and update index.yaml
         run: |
           helm package cromwell-helm/
-          mv cromwell-${NEXT_VERSION}.tgz charts
+          mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
       - name: Push changes to GitHub
         env:
           GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
         run: |
-          git checkout main
-          git add charts/cromwell-${NEXT_VERSION}.tgz
+          git checkout -b auto_update_chart_${NEXT_VERSION}
+          git add .
           git diff
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION"
-          git push https://broadbot:$GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git main
+          git push https://broadbot:$GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git auto_update_chart_${NEXT_VERSION}
