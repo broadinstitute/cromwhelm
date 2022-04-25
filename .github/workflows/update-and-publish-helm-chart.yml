@@ -28,8 +28,10 @@ jobs:
 
       - name: Publish the new helm chart and update index.yaml
         run: |
+          set -e
           helm package cromwell-helm/
           pwd
+          find charts
           mv $PWD/cromwell-${NEXT_VERSION}.tgz $PWD/charts/cromwell-${NEXT_VERSION}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
