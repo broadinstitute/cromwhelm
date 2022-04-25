@@ -1,0 +1,44 @@
+name: update-and-publish-cromwell-helm-chart
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  update-and-publish:
+    name: Update and publish new cromwell-helm chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Find out next chart version
+        run: |
+          currentVersion=$(grep 'version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
+
+          # this will increment only the patch version digit. For example, it will update 0.1.10 => 0.1.11
+          nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+
+          echo "CURRENT_VERSION=$currentVersion" >> $GITHUB_ENV
+          echo "NEXT_VERSION=$nextVersion" >> $GITHUB_ENV
+
+      - name: Bump chart version
+        run: |
+          sed -i "s/$CURRENT_VERSION/$NEXT_VERSION/" cromwell-helm/Chart.yaml
+
+      - name: Publish the new helm chart and update index.yaml
+        run: |
+          helm package cromwell-helm/
+          mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
+          helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
+
+      - name: Push changes to GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
+        run: |
+          git checkout main
+          git diff
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION"
+          git push https://broadbot:$GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git main
