@@ -22,7 +22,7 @@ Here is a suggested workflow for testing updates to this chart from local Termin
       - Add below Roles:
          - Cloud Life Sciences Workflows Runner
    - Now, navigate back to the Service Accounts section in IAM & Admin
-   - From here navigate to the user’s SA that you want to set permissions for (double click)
+   - From here navigate to the user’s pet SA that you want to set permissions for (double click) -- *at this step, we are in fact granting the service       account permission to act as itself when running jobs*.
       - Navigate from the ‘Details’ page to the ‘Permissions’ page to the right
       - Hit the ‘Grant Access’ button underneath the Principals with access to this service account section.
          - In Principals field, paste in the pet SA email address
