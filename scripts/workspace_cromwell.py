@@ -1,4 +1,6 @@
 import os
+import json
+from pathlib import Path
 import requests
 import subprocess
 import sys
@@ -48,7 +50,7 @@ def get_app_details(env, app_name):
         }
     )
     if r.status_code == 404:
-        return None, None, None, None
+        return 'DELETED', None, None, None
     else:
         r.raise_for_status()
     result_json = r.json()
@@ -121,13 +123,24 @@ def create_app(env, app_name, pd_name, create_pd):
     r.raise_for_status()
 
 
-# If Cromshell is installed True, else False
-def check_for_cromshell():
-    raise Exception('TODO')
+# Checks that cromshell is installed. Otherwise raises an error.
+def validate_cromshell():
+    print('Scanning for cromshell 2...')
+    validate_command = subprocess.run(['cromshell-alpha', 'version'], capture_output=True, check=True, encoding='utf-8')
+    version = str.strip(validate_command.stderr).split(' cromshell ')[-1]
+    print(f'Cromshell 2 version detected: {version}')
 
 
-def configure_cromshell(env, app_name):
-    raise Exception('TODO')
+def configure_cromshell(env, proxy_url):
+    file = f'{str(Path.home())}/.cromshell/cromshell_config.json'
+    configuration = {
+        'cromwell_server': proxy_url.split("swagger/", 1)[0],
+        'requests_timeout': 5,
+        'gcloud_token_email': env['user_email'],
+        'referer_header_url': env['referer']
+    }
+    with open(file, 'w') as filetowrite:
+        filetowrite.write(json.dumps(configuration, indent=2))
 
 
 # Submits the request to delete an app (note: does not block while deletion completes)
@@ -176,11 +189,11 @@ def start_command(env):
 
         if app_status == 'RUNNING':
             print(f'Cromwell running with URLs: {proxy_urls}')
-            configure_cromshell(env, app_name)
+            configure_cromshell(env, proxy_urls['cromwell-service'])
         else:
             raise Exception(f'Unexpected app state {app_status} for app {app_name}. If the app is left behind, try running "{sys.argv[0]} delete"')
     else:
-        print(f'Cannot continue. Existing CROMWELL app found (app_name={app_name}; app_status={app_status}).')
+        print(f'Existing CROMWELL app found (app_name={app_name}; app_status={app_status}).')
         exit(1)
 
 
@@ -200,10 +213,15 @@ def status_command(env):
 
 
 def stop_command(env):
-    app = check_for_app(env)
+    app_name, app_status = check_for_app(env)
+    pd_name = check_for_pd(env)
 
-    if app is not None:
-        delete_app(env, app, False)
+    print(f'app_name={app_name}; app_status={app_status}, pd_name={pd_name}')
+
+    print(f'Will remove the app but leave the persistent disk which can be reconnected to.')
+
+    if app_name is not None:
+        delete_app(env, app_name, False)
 
 
 def delete_command(env):
@@ -218,7 +236,7 @@ def delete_command(env):
             exit(1)
         else:
             print('CROMWELL app stopped. Deleting persistent disk...')
-            raise Exception('TODO')
+            raise Exception('TODO: Delete from stopped. For now, you can run "start" and then delete to remove the disk.')
     else:
         delete_app(env, app_name, delete_pd=True)
 
@@ -252,6 +270,9 @@ def main():
     else:
         env['leonardo_url'] = 'https://leonardo.dsde-prod.broadinstitute.org/'
         env['referer'] = 'https://app.terra.bio/'
+
+    # Before going any further, check that cromshell2 is installed:
+    validate_cromshell()
 
     # Fetch the token:
     token_fetch_command = subprocess.run(['gcloud', 'auth', 'print-access-token', env['user_email']], capture_output=True, check=True, encoding='utf-8')
