@@ -188,10 +188,11 @@ def start_command(env):
             print(f'Current {app_name} status: {app_status}...')
 
         if app_status == 'RUNNING':
-            print(f'Cromwell running with URLs: {proxy_urls}')
             configure_cromshell(env, proxy_urls['cromwell-service'])
         else:
             raise Exception(f'Unexpected app state {app_status} for app {app_name}. If the app is left behind, try running "{sys.argv[0]} delete"')
+
+        print('Cromwell app successfully and cromshell2 has been configured to access it')
     else:
         print(f'Existing CROMWELL app found (app_name={app_name}; app_status={app_status}).')
         exit(1)
