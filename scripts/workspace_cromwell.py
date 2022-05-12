@@ -17,14 +17,16 @@ def check_for_app(env):
           'includeDeleted': 'false'
         },
         headers = {
-            'Authorization': f'Bearer {env["token"]}',
-            'Referer': 'https://bvdp-saturn-dev.appspot.com/'
+            'Authorization': f'Bearer {env["token"]}'
         }
     )
     r.raise_for_status()
 
     for potential_app in r.json():
-        if potential_app['appType'] == 'CROMWELL':
+        if potential_app['appType'] == 'CROMWELL' and (
+                str(potential_app['auditInfo']['creator']) == env['owner_email']
+                or str(potential_app['auditInfo']['creator']) == env['user_email']
+        ) :
             potential_app_name = potential_app['appName']
             potential_app_status = potential_app['status']
 
@@ -45,8 +47,7 @@ def get_app_details(env, app_name):
             'includeDeleted': 'true'
         },
         headers={
-            'Authorization': f'Bearer {env["token"]}',
-            'Referer': 'https://bvdp-saturn-dev.appspot.com/'
+            'Authorization': f'Bearer {env["token"]}'
         }
     )
     if r.status_code == 404:
@@ -68,8 +69,7 @@ def check_for_pd(env):
             'includeDeleted': 'false'
         },
         headers={
-            'Authorization': f'Bearer {env["token"]}',
-            'Referer': 'https://bvdp-saturn-dev.appspot.com/'
+            'Authorization': f'Bearer {env["token"]}'
         }
     )
     r.raise_for_status()
@@ -116,8 +116,7 @@ def create_app(env, app_name, pd_name, create_pd):
             'appType': 'CROMWELL'
         },
         headers = {
-            'Authorization': f'Bearer {env["token"]}',
-            'Referer': 'https://bvdp-saturn-dev.appspot.com/'
+            'Authorization': f'Bearer {env["token"]}'
         }
     )
     r.raise_for_status()
@@ -153,8 +152,7 @@ def delete_app(env, app_name, delete_pd):
             'deleteDisk': 'true' if delete_pd else 'false'
         },
         headers={
-            'Authorization': f'Bearer {env["token"]}',
-            'Referer': 'https://bvdp-saturn-dev.appspot.com/'
+            'Authorization': f'Bearer {env["token"]}'
         }
     )
     r.raise_for_status()
@@ -261,6 +259,7 @@ def main():
         'workspace_name': os.environ['WORKSPACE_NAME'],
         'workspace_bucket': os.environ['WORKSPACE_BUCKET'],
         'user_email': os.environ.get('PET_SA_EMAIL', default = os.environ['OWNER_EMAIL']),
+        'owner_email': os.environ['OWNER_EMAIL'],
         'google_project': os.environ['GOOGLE_PROJECT'],
     }
 
