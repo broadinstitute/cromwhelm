@@ -75,7 +75,9 @@ def check_for_pd(env):
     r.raise_for_status()
 
     for potential_disk in r.json():
-        return potential_disk['name']
+        if (str(potential_disk['auditInfo']['creator']) == env['owner_email'] or
+                str(potential_disk['auditInfo']['creator']) == env['user_email']):
+            return potential_disk['name']
 
     return None
 
