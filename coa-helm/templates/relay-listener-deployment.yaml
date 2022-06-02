@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: relaylistener
+  name: relaylistener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: relaylistener
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: relaylistener
+    spec:
+      containers:
+        - name: relaylistener
+          image: {{ .Values.images.relaylistener }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LISTENER_RELAYCONNECTIONSTRING
+              value: {{ .Values.config.relayListenerConnectionString }}
+            - name: LISTENER_RELAYCONNECTIONNAME
+              value: {{ .Values.config.relayListenerConnectionName }}
+            - name: LISTENER_TARGETPROPERTIES_TARGETHOST
+              value: {{ .Values.config.relayListenerTargetHost }}
+            - name: LISTENER_TARGETPROPERTIES_REMOVEENTITYPATHFROMHTTPURL
+              value: "true"
+            - name: LISTENER_REQUESTINSPECTORS
+              value: "HEADERS_LOGGER"
+      imagePullSecrets:
+        - name: acr-secret

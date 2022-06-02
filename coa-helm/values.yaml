@@ -1,6 +1,7 @@
 ﻿service:
   tesPort: 80
   cromwellPort: 8000
+  relayListenerPort: 80
 
 config:
   resourceGroup: RUNTIME_PARAMETER
@@ -15,12 +16,18 @@ config:
   disableBatchScheduling: false
   dockerInDockerImageName: ""
   usePreemptibleVmsOnly: false
+  relayListenerConnectionString: RUNTIME_PARAMETER
+  relayListenerConnectionName: RUNTIME_PARAMETER
+#  relayListenerSamResourceId:
+#  relayListenerSamUrl:
+  relayListenerTargetHost: "http://cromwell:8000/"
 
 images:
   mysql: mysql:latest
-  cromwell: broadinstitute/cromwell:70
+  cromwell: broadinstitute/cromwell:79
   tes: mcr.microsoft.com/cromwellonazure/tes:2
   triggerservice: mcr.microsoft.com/cromwellonazure/triggerservice:2
+  relaylistener: terradevacrpublic.azurecr.io/terra-azure-relay-listeners:b26c311
 
 containers:
   - configuration
