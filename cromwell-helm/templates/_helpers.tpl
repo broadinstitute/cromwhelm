@@ -65,6 +65,14 @@ app.kubernetes.io/component: {{ .Values.batchAnalysisUI.name }}
 {{- end}}
 
 {{/*
+CBAS Service labels
+*/}}
+{{- define "app.cbas.selectorLabels" -}}
+app.kubernetes.io/component: {{ .Values.batchAnalysisUI.name }}
+{{- end}}
+
+
+{{/*
 Return postgres database user password.
 Lookup the existing secret values if they exist, or generate a random value
 */}}
