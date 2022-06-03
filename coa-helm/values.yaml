@@ -18,8 +18,9 @@ config:
   usePreemptibleVmsOnly: false
   relayListenerConnectionString: RUNTIME_PARAMETER
   relayListenerConnectionName: RUNTIME_PARAMETER
-#  relayListenerSamResourceId:
-#  relayListenerSamUrl:
+  relayListenerSamResourceId: RUNTIME_PARAMETER
+  relayListenerSamResourceType: "workspace"
+  relayListenerSamUrl: RUNTIME_PARAMETER
   relayListenerTargetHost: "http://cromwell:8000/"
 
 images:
@@ -27,7 +28,7 @@ images:
   cromwell: broadinstitute/cromwell:79
   tes: mcr.microsoft.com/cromwellonazure/tes:2
   triggerservice: mcr.microsoft.com/cromwellonazure/triggerservice:2
-  relaylistener: terradevacrpublic.azurecr.io/terra-azure-relay-listeners:b26c311
+  relaylistener: terradevacrpublic.azurecr.io/terra-azure-relay-listeners:bb18347 # https://github.com/DataBiosphere/terra-azure-relay-listeners/pull/17
 
 containers:
   - configuration
