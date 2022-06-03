@@ -1,0 +1,25 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}-batch-analysis-ui-depl
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.batchAnalysisUI.name }}-container
+          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:hello-world-ui-2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080 #Note: This might be changed in https://broadworkbench.atlassian.net/browse/BW-1189

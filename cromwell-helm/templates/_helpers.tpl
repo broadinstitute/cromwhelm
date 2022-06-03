@@ -58,6 +58,13 @@ app.kubernetes.io/component: {{ .Values.jobmanager.name }}
 {{- end}}
 
 {{/*
+Batch Analysis UI labels
+*/}}
+{{- define "app.batchAnalysisUI.selectorLabels" -}}
+app.kubernetes.io/component: {{ .Values.batchAnalysisUI.name }}
+{{- end}}
+
+{{/*
 Return postgres database user password.
 Lookup the existing secret values if they exist, or generate a random value
 */}}
