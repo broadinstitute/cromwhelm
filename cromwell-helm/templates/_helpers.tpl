@@ -68,7 +68,7 @@ app.kubernetes.io/component: {{ .Values.batchAnalysisUI.name }}
 CBAS Service labels
 */}}
 {{- define "app.cbas.selectorLabels" -}}
-app.kubernetes.io/component: {{ .Values.batchAnalysisUI.name }}
+app.kubernetes.io/component: {{ .Values.cbas.name }}
 {{- end}}
 
 
