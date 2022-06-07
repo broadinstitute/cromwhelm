@@ -266,7 +266,7 @@ def main():
     }
 
     # Determine leonardo URL from google project name (only works with post PPW projects):
-    if str.startswith(env['google_project'], 'terra-dev'):
+    if (str.startswith(env['google_project'], 'terra-dev') or str.startswith(env['google_project'], 'terra-vpc-sc-dev')):
         env['leonardo_url'] = 'https://leonardo.dsde-dev.broadinstitute.org/'
         env['referer'] = 'https://bvdp-saturn-dev.appspot.com/'
     else:
