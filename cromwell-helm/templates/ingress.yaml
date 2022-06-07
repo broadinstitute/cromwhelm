@@ -31,6 +31,10 @@ spec:
             backend:
               serviceName: {{ $fullName }}-api
               servicePort: {{ $.Values.service.port }}
+          - path: {{ . }}
+            backend:
+              serviceName: {{ $fullName }}-ui
+              servicePort: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}
 {{- end }}

@@ -1,0 +1,14 @@
+###########################
+# External Service
+###########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "app.fullname" . }}-ui
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
