@@ -1,16 +1,13 @@
-###########################
-# External Service for API and Swagger
-###########################
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "app.fullname" . }}-api
+  name: {{ include "app.fullname" . }}-cromwell-svc
   labels:
   {{- include "app.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
   selector:
-    {{- include "app.selectorLabels" . | nindent 4 }}
+  {{- include "app.cromwell.selectorLabels" . | nindent 4 }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

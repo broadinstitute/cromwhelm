@@ -17,6 +17,7 @@ spec:
       labels:
         {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 8 }}
     spec:
+      hostname: {{ .Values.batchAnalysisUI.name }}
       containers:
         - name: {{ .Values.batchAnalysisUI.name }}-container
           image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:hello-world-ui-2

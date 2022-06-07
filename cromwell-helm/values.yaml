@@ -13,6 +13,11 @@ config:
     name: "SUPPLIED BY LEO"
     annotations:
       gcpServiceAccount: "SUPPLIED BY LEO"
+  proxy:
+    conf_dir: /etc/nginx
+    conf_file: nginx.conf
+    www_dir: /www/data
+    www_file: index.html
 
 ingress:
   enabled: true
@@ -114,6 +119,9 @@ jobmanager:
           periodSeconds: 10
           failureThreshold: 30 # 5 minutes before restarted
           successThreshold: 1
+
+cromwell:
+  name: cromwell-api
 
 batchAnalysisUI:
   name: batch-analysis-ui
