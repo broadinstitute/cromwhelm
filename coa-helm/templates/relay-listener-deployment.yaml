@@ -31,6 +31,12 @@ spec:
             - name: LISTENER_TARGETPROPERTIES_REMOVEENTITYPATHFROMHTTPURL
               value: "true"
             - name: LISTENER_REQUESTINSPECTORS
-              value: "HEADERS_LOGGER"
+              value: "SAM_CHECKER"
+            - name: LISTENER_SAMINSPECTORPROPERTIES_SAMURL
+              value: {{ .Values.config.relayListenerSamUrl }}
+            - name: LISTENER_SAMINSPECTORPROPERTIES_SAMRESOURCEID
+              value: {{ .Values.config.relayListenerSamResourceId }}
+            - name: LISTENER_SAMINSPECTORPROPERTIES_SAMRESOURCETYPE
+              value: {{ .Values.config.relayListenerSamResourceType }}
       imagePullSecrets:
         - name: acr-secret
