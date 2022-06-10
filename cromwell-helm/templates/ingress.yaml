@@ -29,7 +29,7 @@ spec:
           {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}-api
+              serviceName: {{ $fullName }}-reverse-proxy
               servicePort: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}

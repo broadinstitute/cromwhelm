@@ -58,6 +58,13 @@ app.kubernetes.io/component: {{ .Values.jobmanager.name }}
 {{- end}}
 
 {{/*
+Cromwell API labels
+*/}}
+{{- define "app.cromwell.selectorLabels" -}}
+app.kubernetes.io/component: {{ .Values.cromwell.name }}
+{{- end}}
+
+{{/*
 Batch Analysis UI labels
 */}}
 {{- define "app.batchAnalysisUI.selectorLabels" -}}
