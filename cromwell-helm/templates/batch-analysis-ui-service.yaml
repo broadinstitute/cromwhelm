@@ -10,5 +10,5 @@ spec:
   selector:
     {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 4 }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+    - port: 8080
+      targetPort: 8080
