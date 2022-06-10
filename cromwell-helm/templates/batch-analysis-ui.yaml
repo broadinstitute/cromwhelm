@@ -20,7 +20,7 @@ spec:
       hostname: {{ .Values.batchAnalysisUI.name }}
       containers:
         - name: {{ .Values.batchAnalysisUI.name }}-container
-          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:hello-world-ui-2
+          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:hello-world-ui-3
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080 #Note: This might be changed in https://broadworkbench.atlassian.net/browse/BW-1189
+            - containerPort: 8080
