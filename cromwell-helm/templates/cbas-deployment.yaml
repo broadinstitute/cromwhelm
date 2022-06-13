@@ -23,3 +23,10 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+      volumes:
+        - name: {{ include "app.fullname" . }}-cbas-config
+          configMap:
+            name: {{ include "app.fullname" . }}-cbas-config
+            items:
+              - key: {{ .Values.config.file }}
+                path: {{ .Values.config.file }}
