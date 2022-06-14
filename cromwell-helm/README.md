@@ -7,14 +7,28 @@ Here is a suggested workflow for testing updates to this chart from local Termin
 2. From a Terminal (not within the Leo VM… just on your local computer), do the following commands to set helm/kubectl to point to the right environment:
    - Login to your `test.firecloud.org` account with the Google Cloud CLI: `gcloud auth login`
    - Configure `gcloud` to use your workspace's project: `gcloud config set project <workspace project ID>` (for example: `terra-test-5dea92eb`)
-   - Identify the name of the GKE cluster associated with your workspace: `gcloud container clusters list --zone=us-central1-a --project=<workspace project ID>` (the workspace project ID is the same as in the previous step.)
-   - Write the cluster credentials as a `kubeconfig` entry, configuring your local `kubectl` installation to communicate with the GKE cluster for your workspace: `gcloud container clusters get-credentials --zone=us-central1-a <cluster name>` (obtain the cluster name from the previous step; e.g. `kecd4047-a970-4088-89dd-003288bcf6f1`)
+   - Identify the the GKE cluster name associated with your workspace: `gcloud container clusters list --zone=us-central1-a --project=<workspace project ID>` (the workspace project ID is the one you used in the previous step)
+   - Run the following command to write the GKE cluster credentials as a `kubeconfig` entry (thereby configuring your local `kubectl` installation to communicate with the GKE cluster for your workspace): `gcloud container clusters get-credentials --zone=us-central1-a <cluster name>` (obtain the cluster name from the previous step; e.g. `kecd4047-a970-4088-89dd-003288bcf6f1`)
 
 3. Now you can edit the helm chart locally in your favorite editor:
    - Identify the namespace: `kubectl get namespaces`
    - Identify the release: Release is the same as the namespace, with `ns` replaced by `rls` (e.g. for the namespace `abcdef-ghi-ns`, the release is `abcdef-ghi-rls`)
    - Update the instance of Cromwell running with your new chart: `helm upgrade --namespace=<namepace> <release> cromwell-helm` 
-      - Note: you can also see the namespace in Google Cloud console to the right of the Cromwell service. Release is the same, with “ns” replaced by “rls”.
+      - Note: you can also see the namespace in Google Cloud console to the right of the Cromwell service.
+   - If you see `Error: UPGRADE FAILED: ...` refer to the Troubleshooting section below.
+
+**Troubleshooting**: 
+
+You may encounter the following error when trying to run `helm upgrade`:
+
+`Error: UPGRADE FAILED: cannot patch "<release>-depl" with kind Deployment: Deployment.apps "<release>-depl" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/component":"cromwell-api"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable`
+
+At the time of this writing, the cause of this problem is not known to us. 
+However, you can work around it by (1) deleting the deploy and (2) retrying the command:
+
+1. `kubectl delete deploy <release>-depl --namespace=<namespace>`
+2. `helm upgrade --namespace=<namepace> <release> cromwell-helm`
+
 
 **Rules for granting users permissions to run workflows (as the pet itself)**:
 - Add Workflow runner permissions against the project, then Service Account User permissions against ONLY the user’s pet SA:
