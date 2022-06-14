@@ -16,7 +16,7 @@ data:
         # For now, keep serving 'cromwell' at proxy root, but we should consider this deprecated and
         # update clients to use `/cromwell/` when talking to the Cromwell service.
         location / {
-          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/status;
         }
 
         # Reference to ngingx's local content

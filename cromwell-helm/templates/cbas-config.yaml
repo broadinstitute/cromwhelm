@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-cbas-config
 data:
-  {{ .Values.config.file }}: |-
+  {{ .Values.config.cbas.conf_file }}: |-
     workflow-engines:
       cromwell:
-        baseUri: "http://localhost:8000"
-        healthUri: "http://localhost:8000/engine/v1/status"
+        baseUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000"
+        healthUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status"
