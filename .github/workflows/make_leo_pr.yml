@@ -1,4 +1,4 @@
-name: Make publish PRs
+name: Make Leonardo PR
 
 on:
   workflow_dispatch:
@@ -16,7 +16,6 @@ on:
 jobs:
   make-leonardo-pr:
     name: Create Leonardo PR
-    runs-on: self-hosted # Faster machines; see https://github.com/broadinstitute/cromwell/settings/actions/runners
     steps:
       - name: Clone leonardo
         uses: actions/checkout@v2
