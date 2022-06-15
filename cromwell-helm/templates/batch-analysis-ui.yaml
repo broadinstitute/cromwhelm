@@ -18,9 +18,20 @@ spec:
         {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 8 }}
     spec:
       hostname: {{ .Values.batchAnalysisUI.name }}
+      volumes:
+        - name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+          configMap:
+            name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+            items:
+              - key: {{ .Values.config.cbasUI.conf_file }}
+                path: {{ .Values.config.cbasUI.conf_file }}
       containers:
         - name: {{ .Values.batchAnalysisUI.name }}-container
-          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:hello-world-ui-3
+          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:cjl_BW-1291
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+              mountPath: {{ .Values.config.cbasUI.conf_dir }}/{{ .Values.config.cbasUI.conf_file }}
+              subPath: {{ .Values.config.cbasUI.conf_file }}

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+data:
+  {{ .Values.config.cbasUI.conf_file }}: |-
+    {
+      "cbasUrlRoot" : "{{ .Values.ingress.path }}/cbas"
+    }
