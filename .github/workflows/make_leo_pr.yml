@@ -22,12 +22,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: broadinstitute/leonardo
-          token: ${{ secrets.BROADBOT_GITHUB_TOKEN }} # Has to be set at checkout AND later when pushing to work
+          token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
           path: leonardo
       - name: Update & push to leonardo
         id: update-and-push
         env:
-          BROADBOT_GITHUB_TOKEN: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
+          BROADBOT_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
         run: |
           cd leonardo
           JIRA_TICKET=${{ github.event.inputs.jira_ticket }}
@@ -49,12 +49,12 @@ jobs:
           git config --global user.name "broadbot"
           git config --global user.email "broadbot@broadinstitute.org"
           git commit -m "Updating Cromwell version to ${NEW_CROMWELL_HELM_V}"
-          git push https://broadbot:$BROADBOT_GITHUB_TOKEN@github.com/broadinstitute/leonardo.git ${NEW_BRANCH_NAME}
+          git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/leonardo.git ${NEW_BRANCH_NAME}
           echo ::set-output name=NEW_BRANCH_NAME::${NEW_BRANCH_NAME}
       - name: Create leonardo PR
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.BROADBOT_GITHUB_TOKEN }}
+          github-token: ${{ secrets.BROADBOT_TOKEN }}
           script: |
             const result = await github.rest.pulls.create({
               title: '${{ github.event.inputs.jira_ticket }}: Update Cromwell version to ${{ github.event.inputs.new_cromwell_helm_version }}',
