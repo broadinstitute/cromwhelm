@@ -13,10 +13,18 @@ data:
       server {
         listen 8000;
 
-        # For now, keep serving 'cromwell' at proxy root, but we should consider this deprecated and
-        # update clients to use `/cromwell/` when talking to the Cromwell service.
+
         location / {
-          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
+          proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
+        }
+
+        # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
+        # update clients to use `/cromwell/` when talking to the Cromwell APIs.
+        location /api/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
+        }
+        location /engine/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
         }
 
         # Reference to ngingx's local content
@@ -25,9 +33,6 @@ data:
         }
 
         # Proxying to other hosts by subpath:
-        location /batch-analysis-ui/ {
-          proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
-        }
         location /cbas/ {
           proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
         }
