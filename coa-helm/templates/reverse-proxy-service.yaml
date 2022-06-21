@@ -1,0 +1,16 @@
+###########################
+# External Service for API and Swagger
+###########################
+apiVersion: v1
+kind: Service
+metadata:
+  name: coa-proxy-svc
+  labels:
+    io.kompose.service: coa-proxy-svc
+spec:
+  type: {{ .Values.proxyService.type }}
+  selector:
+    io.kompose.service: coa-proxy-svc
+  ports:
+    - port: {{ .Values.proxyService.port }}
+      targetPort: {{ .Values.proxyService.port }}

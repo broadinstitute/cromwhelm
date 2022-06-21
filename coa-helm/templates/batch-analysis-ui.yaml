@@ -1,0 +1,37 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coa-batch-analysis-ui-depl
+  labels:
+    io.kompose.service: coa-batch-analysis-ui-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coa-batch-analysis-ui-depl
+  template:
+    metadata:
+      labels:
+        io.kompose.service: coa-batch-analysis-ui-depl
+    spec:
+      hostname: {{ .Values.batchAnalysisUI.name }}
+      volumes:
+        - name: coa-batch-analysis-ui-config
+          configMap:
+            name: coa-batch-analysis-ui-config
+            items:
+              - key: {{ .Values.config.cbasUI.conf_file }}
+                path: {{ .Values.config.cbasUI.conf_file }}
+      containers:
+        - name: {{ .Values.batchAnalysisUI.name }}-container
+          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:cjl_BW-1291
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: coa-batch-analysis-ui-config
+              mountPath: {{ .Values.config.cbasUI.conf_dir }}/{{ .Values.config.cbasUI.conf_file }}
+              subPath: {{ .Values.config.cbasUI.conf_file }}

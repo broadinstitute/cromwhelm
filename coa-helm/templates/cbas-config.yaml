@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coa-cbas-config
+data:
+  {{ .Values.config.cbas.conf_file }}: |-
+    workflow-engines:
+      cromwell:
+        baseUri: "http://cromwell:8000"
+        healthUri: "http://cromwell:8000/engine/v1/status"

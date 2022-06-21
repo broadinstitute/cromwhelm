@@ -1,0 +1,44 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coa-proxy-depl
+  labels:
+    io.kompose.service: coa-proxy-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coa-proxy-depl
+  template:
+    metadata:
+      labels:
+        io.kompose.service: coa-proxy-depl
+    spec:
+      # serviceAccountName: {{ .Values.config.serviceAccount.name }}
+      volumes:
+        - name: coa-proxy-config
+          configMap:
+            name: coa-proxy-config
+            items:
+              - key: {{ .Values.config.proxy.conf_file }}
+                path: {{ .Values.config.proxy.conf_file }}
+              - key: {{ .Values.config.proxy.www_file }}
+                path: {{ .Values.config.proxy.www_file }}
+      containers:
+        - name: reverse-proxy-container
+          image: nginx:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: coa-proxy-config
+              mountPath: {{ .Values.config.proxy.conf_dir }}/{{ .Values.config.proxy.conf_file }}
+              subPath: {{ .Values.config.proxy.conf_file }}
+            - name: coa-proxy-config
+              mountPath: {{ .Values.config.proxy.www_dir }}/{{ .Values.config.proxy.www_file }}
+              subPath: {{ .Values.config.proxy.www_file }}
+
+          command: ["nginx"]

@@ -1,0 +1,39 @@
+###########################
+# Deployment
+###########################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coa-cbas-depl
+  labels:
+    io.kompose.service: coa-cbas-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coa-cbas-depl
+  template:
+    metadata:
+      labels:
+        io.kompose.service: coa-cbas-depl
+    spec:
+      containers:
+        - name: {{ .Values.cbas.name }}-container
+          image: us.gcr.io/broad-dsp-gcr-public/composite-batch-analysis-service:0.0.5
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: coa-cbas-config
+              mountPath: {{ .Values.config.cbas.conf_dir }}/{{ .Values.config.cbas.conf_file }}
+              subPath: {{ .Values.config.cbas.conf_file }}
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: {{ .Values.config.cbas.conf_dir }}/{{ .Values.config.cbas.conf_file }}
+      volumes:
+        - name: coa-cbas-config
+          configMap:
+            name: coa-cbas-config
+            items:
+              - key: {{ .Values.config.cbas.conf_file }}
+                path: {{ .Values.config.cbas.conf_file }}
