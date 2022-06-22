@@ -10,7 +10,7 @@ metadata:
 spec:
   type: {{ .Values.proxyService.type }}
   selector:
-    io.kompose.service: coa-proxy-svc
+    io.kompose.service: coa-proxy-depl
   ports:
     - port: {{ .Values.proxyService.port }}
       targetPort: {{ .Values.proxyService.port }}
