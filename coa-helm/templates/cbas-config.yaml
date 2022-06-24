@@ -2,9 +2,15 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: coa-cbas-config
+
+# Refer to https://github.com/DataBiosphere/terra-batch-analysis/blob/8a1bc33f870667c1a94a4958a5ed3f880d7a91fb/service/src/main/resources/application.yml#L46-L49
+#   for CBAS configuration options.
 data:
   {{ .Values.config.cbas.conf_file }}: |-
     workflow-engines:
       cromwell:
         baseUri: "http://cromwell:8000"
         healthUri: "http://cromwell:8000/engine/v1/status"
+    terra.common:
+      tracing:
+        stackdriverExportEnabled: false
