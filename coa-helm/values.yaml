@@ -2,6 +2,9 @@
   tesPort: 80
   cromwellPort: 8000
   relayListenerPort: 80
+  # proxyService
+  type: ClusterIP
+  port: 8000
 
 config:
   resourceGroup: RUNTIME_PARAMETER
@@ -62,12 +65,6 @@ db:
   port: 3306
   user: cromwell
   password: cromwell
-
-###
-
-proxyService:
-  type: ClusterIP
-  port: 8000
 
 cbas:
   name: cbas

@@ -1,13 +1,4 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: coa-cbas-svc
-  labels:
-    io.kompose.service: coa-cbas-svc
-spec:
-  selector:
-    io.kompose.service: coa-cbas-depl
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+{{- include "cromwell-common.cbas-api-service" (list . "coa-helm.cbas-api-service") -}}
+{{- define "coa-helm.cbas-api-service" -}}
+# Overrides go here
+{{- end -}}
