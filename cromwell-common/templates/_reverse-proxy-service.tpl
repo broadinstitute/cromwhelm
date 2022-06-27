@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "app.fullname" . }}-reverse-proxy
+  name: {{ include "app.fullname" . }}-reverse-proxy-service
   labels:
   {{- include "app.labels" . | nindent 4 }}
 spec:

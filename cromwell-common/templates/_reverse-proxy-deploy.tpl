@@ -16,9 +16,9 @@ spec:
     {{- include "app.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
-        - name: {{ include "app.fullname" . }}-proxy-config
+        - name: {{ include "app.fullname" . }}-reverse-proxy-config
           configMap:
-            name: {{ include "app.fullname" . }}-proxy-config
+            name: {{ include "app.fullname" . }}-reverse-proxy-config
             items:
               - key: {{ .Values.config.proxy.conf_file }}
                 path: {{ .Values.config.proxy.conf_file }}
@@ -31,10 +31,10 @@ spec:
           ports:
             - containerPort: 8000
           volumeMounts:
-            - name: {{ include "app.fullname" . }}-proxy-config
+            - name: {{ include "app.fullname" . }}-reverse-proxy-config
               mountPath: {{ .Values.config.proxy.conf_dir }}/{{ .Values.config.proxy.conf_file }}
               subPath: {{ .Values.config.proxy.conf_file }}
-            - name: {{ include "app.fullname" . }}-proxy-config
+            - name: {{ include "app.fullname" . }}-reverse-proxy-config
               mountPath: {{ .Values.config.proxy.www_dir }}/{{ .Values.config.proxy.www_file }}
               subPath: {{ .Values.config.proxy.www_file }}
 
