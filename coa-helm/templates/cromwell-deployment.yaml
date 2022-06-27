@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: {{ include "app.fullname" . }}-cromwell-deploy
   labels:
-    io.kompose.service: cromwell
-  name: cromwell
+    {{- include "app.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: cromwell
+      {{- include "app.cromwell.selectorLabels" . | nindent 6 }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        io.kompose.service: cromwell
+        {{- include "app.cromwell.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - args:
