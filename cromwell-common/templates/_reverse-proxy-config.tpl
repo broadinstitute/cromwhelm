@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "app.fullname" . }}-proxy-config
+  name: {{ include "app.fullname" . }}-reverse-proxy-config
 data:
   {{ .Values.config.proxy.conf_file }}: |-
     daemon off;
@@ -13,7 +13,6 @@ data:
     http {
       server {
         listen 8000;
-
 
         location / {
           proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
