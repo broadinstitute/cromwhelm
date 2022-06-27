@@ -25,7 +25,7 @@ config:
   relayListenerSamResourceId: RUNTIME_PARAMETER
   relayListenerSamResourceType: "workspace"
   relayListenerSamUrl: RUNTIME_PARAMETER
-  relayListenerTargetHost: "http://coa-proxy-svc:8000/"
+  relayListenerTargetHost: "http://coa-reverse-proxy-service:8000/"
   proxy:
     conf_dir: /etc/nginx
     conf_file: nginx.conf
@@ -65,6 +65,9 @@ db:
   port: 3306
   user: cromwell
   password: cromwell
+
+cromwell:
+  name: coa-cromwell-svc
 
 cbas:
   name: cbas
