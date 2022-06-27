@@ -1,0 +1,75 @@
+{{- define "cbas-libchart.reverse-proxy-config.tpl" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-reverse-proxy-config
+data:
+  {{ .Values.config.proxy.conf_file }}: |-
+    daemon off;
+
+    events {
+      worker_connections 1024;
+    }
+    http {
+      server {
+        listen 8000;
+
+        location / {
+          proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
+        }
+
+        # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
+        # update clients to use `/cromwell/` when talking to the Cromwell APIs.
+        location /api/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
+        }
+        location /engine/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
+        }
+
+        # Reference to ngingx's local content
+        location /index.html {
+          alias /www/data/index.html;
+        }
+
+        # Proxying to other hosts by subpath:
+        location /cbas/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
+        }
+        location /cromwell/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
+        }
+      }
+    }
+  {{ .Values.config.proxy.www_file }}: |-
+    <!doctype html>
+    <html>
+      <head>
+        <title>Hello nginx</title>
+        <meta charset="utf-8" />
+      </head>
+      <body>
+        <h1>
+          Cromwell as an App Proxy
+        </h1>
+        <p> Now serving from the cbas-libchart Library Chart! </p>
+        <p> This is the Cromwell as an App proxy. Valid internal paths:</p>
+        <ul>
+          <li> Batch Analysis UI: <a href="./"> batch-analysis-ui/ </a> </li>
+          <li> CBAS: /cbas/
+          <ul>
+            <li> eg: <a href="./cbas/swagger-ui.html"> cbas/swagger-ui.html </a> </li>
+            <li> eg: <a href="./cbas/status"> cbas/status </a> </li>
+          </ul>
+          </li>
+          <li> Cromwell: <a href="./cromwell/"> cromwell/ </a> </li>
+          <ul>
+            <li> eg: <a href="./engine/v1/version"> engine/v1/version </a> </li>
+          </ul>
+        </ul>
+      </body>
+    </html>
+{{- end -}}
+{{- define "cbas-libchart.reverse-proxy-config" -}}
+{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.reverse-proxy-config.tpl") -}}
+{{- end -}}
