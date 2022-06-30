@@ -39,3 +39,41 @@ spec:
 {{- define "terra-batch-libchart.cbas-api-deploy" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-deploy.tpl") -}}
 {{- end -}}
+
+
+{{- define "terra-batch-libchart.cbas-api-service.tpl" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "app.fullname" . }}-cbas-svc
+  labels:
+  {{- include "app.labels" . | nindent 4 }}
+spec:
+  selector:
+  {{- include "app.cbas.selectorLabels" . | nindent 4 }}
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+{{- end -}}
+{{- define "terra-batch-libchart.cbas-api-service" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-service.tpl") -}}
+{{- end -}}
+
+
+{{- define "terra-batch-libchart.cbas-api-config.tpl" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-cbas-config
+data:
+  {{ .Values.config.cbas.conf_file }}: |-
+    workflow-engines:
+      cromwell:
+        baseUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000"
+        healthUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status"
+
+{{- end -}}
+{{- define "terra-batch-libchart.cbas-api-config" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-config.tpl") -}}
+{{- end -}}
