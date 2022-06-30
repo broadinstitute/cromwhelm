@@ -1,4 +1,4 @@
-{{- define "cbas-libchart.reverse-proxy-service.tpl" -}}
+{{- define "terra-batch-libchart.reverse-proxy-service.tpl" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -13,6 +13,6 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
 {{- end -}}
-{{- define "cbas-libchart.reverse-proxy-service" -}}
-{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.reverse-proxy-service.tpl") -}}
+{{- define "terra-batch-libchart.reverse-proxy-service" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.reverse-proxy-service.tpl") -}}
 {{- end -}}

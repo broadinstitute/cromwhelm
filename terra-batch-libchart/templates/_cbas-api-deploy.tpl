@@ -1,4 +1,4 @@
-{{- define "cbas-libchart.cbas-api-deploy.tpl" -}}
+{{- define "terra-batch-libchart.cbas-api-deploy.tpl" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,6 +36,6 @@ spec:
               - key: {{ .Values.config.cbas.conf_file }}
                 path: {{ .Values.config.cbas.conf_file }}
 {{- end -}}
-{{- define "cbas-libchart.cbas-api-deploy" -}}
-{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.cbas-api-deploy.tpl") -}}
+{{- define "terra-batch-libchart.cbas-api-deploy" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-deploy.tpl") -}}
 {{- end -}}

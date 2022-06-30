@@ -1,4 +1,4 @@
-{{- define "cbas-libchart.reverse-proxy-deploy.tpl" -}}
+{{- define "terra-batch-libchart.reverse-proxy-deploy.tpl" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,6 +40,6 @@ spec:
 
           command: ["nginx"]
 {{- end -}}
-{{- define "cbas-libchart.reverse-proxy-deploy" -}}
-{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.reverse-proxy-deploy.tpl") -}}
+{{- define "terra-batch-libchart.reverse-proxy-deploy" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.reverse-proxy-deploy.tpl") -}}
 {{- end -}}

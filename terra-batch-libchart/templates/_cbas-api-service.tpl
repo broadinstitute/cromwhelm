@@ -1,4 +1,4 @@
-{{- define "cbas-libchart.cbas-api-service.tpl" -}}
+{{- define "terra-batch-libchart.cbas-api-service.tpl" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -13,6 +13,6 @@ spec:
       port: 8080
       targetPort: 8080
 {{- end -}}
-{{- define "cbas-libchart.cbas-api-service" -}}
-{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.cbas-api-service.tpl") -}}
+{{- define "terra-batch-libchart.cbas-api-service" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-service.tpl") -}}
 {{- end -}}

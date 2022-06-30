@@ -1,4 +1,4 @@
-{{- define "cbas-libchart.cbas-api-config.tpl" -}}
+{{- define "terra-batch-libchart.cbas-api-config.tpl" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,6 +11,6 @@ data:
         healthUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status"
 
 {{- end -}}
-{{- define "cbas-libchart.cbas-api-config" -}}
-{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.cbas-api-config.tpl") -}}
+{{- define "terra-batch-libchart.cbas-api-config" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-config.tpl") -}}
 {{- end -}}

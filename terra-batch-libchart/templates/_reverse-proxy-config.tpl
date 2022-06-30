@@ -1,4 +1,4 @@
-{{- define "cbas-libchart.reverse-proxy-config.tpl" -}}
+{{- define "terra-batch-libchart.reverse-proxy-config.tpl" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -52,7 +52,7 @@ data:
         <h1>
           Cromwell as an App Proxy
         </h1>
-        <p> Now serving from the cbas-libchart Library Chart! </p>
+        <p> Now serving from the terra-batch-libchart Library Chart! </p>
         <p> This is the Cromwell as an App proxy. Valid internal paths:</p>
         <ul>
           <li> Batch Analysis UI: <a href="./"> batch-analysis-ui/ </a> </li>
@@ -70,6 +70,6 @@ data:
       </body>
     </html>
 {{- end -}}
-{{- define "cbas-libchart.reverse-proxy-config" -}}
-{{- include "cbas-libchart.util.merge" (append . "cbas-libchart.reverse-proxy-config.tpl") -}}
+{{- define "terra-batch-libchart.reverse-proxy-config" -}}
+{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.reverse-proxy-config.tpl") -}}
 {{- end -}}
