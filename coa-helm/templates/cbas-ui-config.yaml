@@ -1,8 +1,0 @@
-{{- include "terra-batch-libchart.cbas-ui-config" (list . "coa-helm.cbas-ui-config") -}}
-{{- define "coa-helm.cbas-ui-config" -}}
-data:
-  {{ .Values.config.cbasUI.conf_file }}: |-
-    {
-      "cbasUrlRoot" : "{{ .Values.config.relayListenerEndpoint }}/{{ .Values.config.relayListenerConnectionName }}/cbas"
-    }
-{{- end -}}
