@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - args:
-            -  java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell-application.conf -jar /app/cromwell.jar server
+            -  java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
           command:
             - /bin/sh
             - -c
@@ -44,6 +44,8 @@ spec:
               name: inputs-claim1
             - mountPath: /outputs
               name: outputs-claim1
+            - mountPath: /configuration/cromwell
+              name: cromwell-config-volume
       restartPolicy: Always
       volumes:
         - name: cromwell-tmp-claim
@@ -67,8 +69,100 @@ spec:
         - name: outputs-claim1
           persistentVolumeClaim:
             claimName: outputs-claim1
+        - name: cromwell-config-volume
+          configMap:
+            name: {{ include "app.fullname" . }}-cromwell-config
 status: {}
 
 ---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "app.fullname" . }}-cromwell-svc
+  labels:
+  {{- include "app.labels" . | nindent 4 }}
+spec:
+  selector:
+  {{- include "app.cromwell.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ .Values.service.cromwellPort | quote }}
+      port: {{ .Values.service.cromwellPort }}
+      targetPort: {{ .Values.service.cromwellPort }}
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-cromwell-config
+data:
+  cromwell-application.conf: |-
+    include required(classpath("application"))
+
+    akka.http.host-connection-pool.pool-implementation = legacy
+
+    call-caching {
+      enabled = false
+    }
+
+    system {
+      input-read-limits {
+        lines = 1000000
+      }
+    }
+
+    engine {
+      filesystems {
+        local {
+          enabled: true
+        }
+        http {
+          enabled: true
+        }
+      }
+    }
+
+    workflow-options {
+      workflow-log-dir: "/cromwell-workflow-logs"
+      workflow-log-temporary: false
+    }
+
+    backend {
+      default = "TES"
+      providers {
+        TES {
+          actor-factory = "cromwell.backend.impl.tes.TesBackendLifecycleActorFactory"
+          config {
+            filesystems {
+              http { }
+            }
+            root = "/cromwell-executions"
+            dockerRoot = "/cromwell-executions"
+            endpoint = "http://tes/v1/tasks"
+            use_tes_11_preview_backend_parameters = true
+            default-runtime-attributes {
+              cpu: 1
+              failOnStderr: false
+              continueOnReturnCode: 0
+              memory: "2 GB"
+              disk: "10 GB"
+              preemptible: true
+            }
+          }
+        }
+      }
+    }
+
+    database {
+      db.url = "jdbc:mysql://mysqldb/cromwell_db?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+      db.user = "cromwell"
+      db.password = "cromwell"
+      db.driver = "com.mysql.cj.jdbc.Driver"
+      profile = "slick.jdbc.MySQLProfile$"
+      db.connectionTimeout = 15000
+    }
 
 
