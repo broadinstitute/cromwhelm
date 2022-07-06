@@ -157,9 +157,9 @@ data:
     }
 
     database {
-      db.url = "jdbc:mysql://mysqldb/cromwell_db?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
-      db.user = "cromwell"
-      db.password = "cromwell"
+      db.url = "jdbc:mysql://mysqldb/{{ .Values.config.cromwell.database }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+      db.user = {{ .Values.config.cromwell.username | quote }}
+      db.password = {{ .Values.config.cromwell.password | quote }}
       db.driver = "com.mysql.cj.jdbc.Driver"
       profile = "slick.jdbc.MySQLProfile$"
       db.connectionTimeout = 15000
