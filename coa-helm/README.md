@@ -9,4 +9,5 @@ You should not attempt to deploy it without understanding these manual steps (no
 
 Notes for deploying:
 - This chart depends on the Library Chart `terra-batch-libchart`. At the top level of this repository, run `helm dependency update coa-helm` to populate `coa-helm/charts` with the packaged `terra-batch-libchart` dependency.
-- After running `helm dependency update coa-helm`, run `helm upgrade -f your_local_values.yaml cromwell-azure ./coa-helm`
+- Populate `local_values.yaml` (or, preferably, make your own copy to avoid accidentally committing changes).
+- After running `helm dependency update coa-helm`, run `helm upgrade -f local_values.yaml cromwell-azure ./coa-helm`
