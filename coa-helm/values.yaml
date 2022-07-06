@@ -2,6 +2,9 @@
   tesPort: 80
   cromwellPort: 8000
   relayListenerPort: 80
+  # proxyService
+  type: ClusterIP
+  port: 8000
 
 config:
   resourceGroup: RUNTIME_PARAMETER
@@ -17,11 +20,23 @@ config:
   dockerInDockerImageName: ""
   usePreemptibleVmsOnly: false
   relayListenerConnectionString: RUNTIME_PARAMETER
+  relayListenerEndpoint: RUNTIME_PARAMETER
   relayListenerConnectionName: RUNTIME_PARAMETER
   relayListenerSamResourceId: RUNTIME_PARAMETER
   relayListenerSamResourceType: "workspace"
   relayListenerSamUrl: RUNTIME_PARAMETER
-  relayListenerTargetHost: "http://cromwell:8000/"
+  relayListenerTargetHost: "http://coa-reverse-proxy-service:8000/"
+  proxy:
+    conf_dir: /etc/nginx
+    conf_file: nginx.conf
+    www_dir: /www/data
+    www_file: index.html
+  cbas:
+    conf_dir: /etc/conf
+    conf_file: cbas.yaml
+  cbasUI:
+    conf_file: config.json
+    conf_dir: /usr/share/nginx/html
 
 images:
   mysql: mysql:latest
@@ -50,3 +65,13 @@ db:
   port: 3306
   user: cromwell
   password: cromwell
+
+cromwell:
+  name: coa-cromwell-svc
+
+cbas:
+  name: cbas
+
+batchAnalysisUI:
+  name: batch-analysis-ui
+
