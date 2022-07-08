@@ -13,11 +13,6 @@ data:
       server {
         listen 8000;
 
-
-        location / {
-          proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
-        }
-
         # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
         # update clients to use `/cromwell/` when talking to the Cromwell APIs.
         location /api/ {
@@ -38,6 +33,10 @@ data:
         }
         location /cromwell/ {
           proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
+        }
+
+        location / {
+          proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
         }
       }
     }
