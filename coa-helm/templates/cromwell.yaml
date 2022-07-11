@@ -1,0 +1,168 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}-cromwell-deploy
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "app.cromwell.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        {{- include "app.cromwell.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - args:
+            -  java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
+          command:
+            - /bin/sh
+            - -c
+          image: {{ .Values.images.cromwell }}
+          name: cromwell
+          stdin: true
+          tty: true
+          ports:
+            - containerPort: {{ .Values.service.cromwellPort }}
+          resources: {}
+          volumeMounts:
+            - mountPath: /cromwell-tmp
+              name: cromwell-tmp-claim
+            - mountPath: /configuration
+              name: configuration-claim1
+            - mountPath: /cromwell-executions
+              name: cromwell-executions-claim1
+            - mountPath: /cromwell-workflow-logs
+              name: cromwell-workflow-logs-claim1
+            - mountPath: /workflows
+              name: workflows-claim1
+            - mountPath: /inputs
+              name: inputs-claim1
+            - mountPath: /outputs
+              name: outputs-claim1
+            - mountPath: /configuration/cromwell
+              name: cromwell-config-volume
+      restartPolicy: Always
+      volumes:
+        - name: cromwell-tmp-claim
+          persistentVolumeClaim:
+            claimName: cromwell-tmp-claim
+        - name: configuration-claim1
+          persistentVolumeClaim:
+            claimName: configuration-claim1
+        - name: cromwell-executions-claim1
+          persistentVolumeClaim:
+            claimName: cromwell-executions-claim1
+        - name: cromwell-workflow-logs-claim1
+          persistentVolumeClaim:
+            claimName: cromwell-workflow-logs-claim1
+        - name: workflows-claim1
+          persistentVolumeClaim:
+            claimName: workflows-claim1
+        - name: inputs-claim1
+          persistentVolumeClaim:
+            claimName: inputs-claim1
+        - name: outputs-claim1
+          persistentVolumeClaim:
+            claimName: outputs-claim1
+        - name: cromwell-config-volume
+          configMap:
+            name: {{ include "app.fullname" . }}-cromwell-config
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "app.fullname" . }}-cromwell-svc
+  labels:
+  {{- include "app.labels" . | nindent 4 }}
+spec:
+  selector:
+  {{- include "app.cromwell.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ .Values.service.cromwellPort | quote }}
+      port: {{ .Values.service.cromwellPort }}
+      targetPort: {{ .Values.service.cromwellPort }}
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-cromwell-config
+data:
+  cromwell-application.conf: |-
+    include required(classpath("application"))
+
+    akka.http.host-connection-pool.pool-implementation = legacy
+
+    call-caching {
+      enabled = false
+    }
+
+    system {
+      input-read-limits {
+        lines = 1000000
+      }
+    }
+
+    engine {
+      filesystems {
+        local {
+          enabled: true
+        }
+        http {
+          enabled: true
+        }
+      }
+    }
+
+    workflow-options {
+      workflow-log-dir: "/cromwell-workflow-logs"
+      workflow-log-temporary: false
+    }
+
+    backend {
+      default = "TES"
+      providers {
+        TES {
+          actor-factory = "cromwell.backend.impl.tes.TesBackendLifecycleActorFactory"
+          config {
+            filesystems {
+              http { }
+            }
+            root = "/cromwell-executions"
+            dockerRoot = "/cromwell-executions"
+            endpoint = "http://tes/v1/tasks"
+            use_tes_11_preview_backend_parameters = true
+            default-runtime-attributes {
+              cpu: 1
+              failOnStderr: false
+              continueOnReturnCode: 0
+              memory: "2 GB"
+              disk: "10 GB"
+              preemptible: true
+            }
+          }
+        }
+      }
+    }
+
+    database {
+      db.url = "jdbc:mysql://mysqldb/{{ .Values.db.name }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+      db.user = {{ .Values.db.user | quote }}
+      db.password = {{ .Values.db.password | quote }}
+      db.driver = "com.mysql.cj.jdbc.Driver"
+      profile = "slick.jdbc.MySQLProfile$"
+      db.connectionTimeout = 15000
+    }
+
+
