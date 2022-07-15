@@ -27,7 +27,7 @@ spec:
                 path: {{ .Values.config.cbasUI.conf_file }}
       containers:
         - name: {{ .Values.batchAnalysisUI.name }}-container
-          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:cjl_BW-1291
+          image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
