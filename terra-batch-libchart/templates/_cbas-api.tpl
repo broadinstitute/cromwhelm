@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.cbas.name }}-container
-          image: us.gcr.io/broad-dsp-gcr-public/composite-batch-analysis-service:0.0.8
+          image: {{ .Values.cbas.image }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

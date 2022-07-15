@@ -25,7 +25,7 @@ spec:
                 path: {{ .Values.config.cbasUI.conf_file }}
       containers:
         - name: {{ .Values.batchAnalysisUI.name }}-container
-          image: us.gcr.io/broad-dsp-gcr-public/terra-batch-analysis-ui:sshah-final-check
+          image: {{ .Values.batchAnalysisUI.image }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
