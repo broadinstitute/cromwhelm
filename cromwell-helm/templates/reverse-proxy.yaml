@@ -1,7 +1,15 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "app.fullname" . }}-proxy-config
+{{ include "terra-batch-libchart.reverse-proxy-deploy" (list . "cromwell-helm.reverse-proxy-deploy") }}
+{{ define "cromwell-helm.reverse-proxy-deploy" }}
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ .Values.config.serviceAccount.name }}
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.reverse-proxy-config" (list . "cromwell-helm.reverse-proxy-config") }}
+{{ define "cromwell-helm.reverse-proxy-config" }}
 data:
   {{ .Values.config.proxy.conf_file }}: |-
     daemon off;
@@ -49,11 +57,11 @@ data:
       </head>
       <body>
         <h1>
-          Cromwell as an App Proxy
+          Cromwell as an App Proxy.
         </h1>
         <p> This is the Cromwell as an App proxy. Valid internal paths:</p>
         <ul>
-          <li> Batch Analysis UI: <a href="./batch-analysis-ui/"> batch-analysis-ui/ </a> </li>
+          <li> Batch Analysis UI: <a href="./"> batch-analysis-ui/ </a> </li>
           <li> CBAS: /cbas/
           <ul>
             <li> eg: <a href="./cbas/swagger-ui.html"> cbas/swagger-ui.html </a> </li>
@@ -67,3 +75,10 @@ data:
         </ul>
       </body>
     </html>
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.reverse-proxy-service" (list . "cromwell-helm.reverse-proxy-service") }}
+{{ define "cromwell-helm.reverse-proxy-service" }}
+{{ end }}

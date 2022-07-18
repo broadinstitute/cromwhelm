@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.cbas.name }}-container
-          image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.9
+          image: {{ .Values.cbas.image }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
