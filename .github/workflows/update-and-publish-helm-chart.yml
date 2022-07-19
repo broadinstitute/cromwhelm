@@ -14,7 +14,7 @@ jobs:
 
       - name: Find out next chart version
         run: |
-          currentVersion=$(grep 'version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
+          currentVersion=$(grep '^version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
 
           # this will increment only the patch version digit. For example, it will update 0.1.10 => 0.1.11
           nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
