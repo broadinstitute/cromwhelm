@@ -18,7 +18,7 @@ data:
         listen 8000;
 
         location / {
-          proxy_pass http://{{ include "app.fullname" . }}-batch-analysis-ui-svc:8080/;
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
         }
 
         # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
@@ -58,7 +58,7 @@ data:
         <p> Now serving from the terra-batch-libchart Library Chart! </p>
         <p> This is the Cromwell as an App proxy. Valid internal paths:</p>
         <ul>
-          <li> Batch Analysis UI: <a href="./"> batch-analysis-ui/ </a> </li>
+          <li> Batch Analysis UI: <a href="./"> cbas-ui/ </a> </li>
           <li> CBAS: /cbas/
           <ul>
             <li> eg: <a href="./cbas/swagger-ui.html"> cbas/swagger-ui.html </a> </li>
