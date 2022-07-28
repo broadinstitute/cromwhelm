@@ -64,10 +64,10 @@ app.kubernetes.io/component: {{ .Values.cromwell.name }}
 
 
 {{/*
-Batch Analysis UI labels
+CBAS UI labels
 */}}
-{{- define "app.batchAnalysisUI.selectorLabels" -}}
-app.kubernetes.io/component: {{ .Values.batchAnalysisUI.name }}
+{{- define "app.cbasUI.selectorLabels" -}}
+app.kubernetes.io/component: {{ .Values.cbasUI.name }}
 {{- end}}
 
 

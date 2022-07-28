@@ -2,35 +2,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}-batch-analysis-ui-depl
+  name: {{ include "app.fullname" . }}-cbas-ui-depl
   labels:
     {{- include "app.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 6 }}
+      {{- include "app.cbasUI.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 8 }}
+        {{- include "app.cbasUI.selectorLabels" . | nindent 8 }}
     spec:
-      hostname: {{ .Values.batchAnalysisUI.name }}
+      hostname: {{ .Values.cbasUI.name }}
       volumes:
-        - name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+        - name: {{ include "app.fullname" . }}-cbas-ui-config
           configMap:
-            name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+            name: {{ include "app.fullname" . }}-cbas-ui-config
             items:
               - key: {{ .Values.config.cbasUI.conf_file }}
                 path: {{ .Values.config.cbasUI.conf_file }}
       containers:
-        - name: {{ .Values.batchAnalysisUI.name }}-container
-          image: {{ .Values.batchAnalysisUI.image }}
+        - name: {{ .Values.cbasUI.name }}-container
+          image: {{ .Values.cbasUI.image }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+            - name: {{ include "app.fullname" . }}-cbas-ui-config
               mountPath: {{ .Values.config.cbasUI.conf_dir }}/{{ .Values.config.cbasUI.conf_file }}
               subPath: {{ .Values.config.cbasUI.conf_file }}
 
@@ -44,12 +44,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "app.fullname" . }}-batch-analysis-ui-svc
+  name: {{ include "app.fullname" . }}-cbas-ui-svc
   labels:
   {{- include "app.labels" . | nindent 4 }}
 spec:
   selector:
-  {{- include "app.batchAnalysisUI.selectorLabels" . | nindent 4 }}
+  {{- include "app.cbasUI.selectorLabels" . | nindent 4 }}
   ports:
     - protocol: TCP
       port: 8080
@@ -64,7 +64,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "app.fullname" . }}-batch-analysis-ui-config
+  name: {{ include "app.fullname" . }}-cbas-ui-config
 {{- end -}}
 {{- define "terra-batch-libchart.cbas-ui-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-ui-config.tpl") -}}
