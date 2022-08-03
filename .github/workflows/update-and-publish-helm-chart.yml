@@ -12,9 +12,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
         with:
-          repository: broadinstitute/cromwhelm
           token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
-          path: cromwhelm
 
       - name: Find out next chart version
         run: |
