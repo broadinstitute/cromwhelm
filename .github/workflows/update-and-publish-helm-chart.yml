@@ -35,7 +35,7 @@ jobs:
 
       - name: Push changes to GitHub
         env:
-          GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
+          BROADBOT_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
         run: |
           git checkout main
           git diff
@@ -43,4 +43,4 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION"
-          git push https://broadbot:$GITHUB_TOKEN@github.com/broadinstitute/cromwhelm.git main
+          git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/cromwhelm.git main
