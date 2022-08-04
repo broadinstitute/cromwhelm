@@ -43,7 +43,7 @@ jobs:
           git checkout main
           git diff
           git add .
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "broadbot"
+          git config --global user.email "broadbot@broadinstitute.org"
           git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION"
           git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/cromwhelm.git main
