@@ -24,6 +24,13 @@ config:
   cbasUI:
     conf_file: config.json
     conf_dir: /usr/share/nginx/html
+  wds:
+    conf_dir: /etc/conf
+    conf_file: cbas.yaml
+  postgres:
+    startup_dir: /docker-entrypoint-initdb.d
+    startup_scripts:
+      create_dbs: create_dbs.sh
 
 ingress:
   enabled: true
@@ -52,10 +59,13 @@ persistence:
   gcePersistentDisk: "SUPPLIED BY LEO"
 
 db:
-  name: cromwell
   port: 5432
   user: postgres_user
   password: "SUPPLIED BY LEO"
+  wds:
+    dbname: wds
+  cromwell:
+    dbname: cromwell
 
 jobmanager:
   name: jobmanager
@@ -136,6 +146,10 @@ cbasUI:
 cbas:
   name: cbas
   image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.13
+
+wds:
+  name: wds
+  image: gcr.io/broad-dsde-dev/workspacedata
 
 env:
   swaggerBasePath: "SUPPLIED BY LEO"

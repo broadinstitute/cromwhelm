@@ -45,7 +45,7 @@ spec:
             - name: POSTGRES_USER
               value: {{ .Values.db.user }}
             - name: POSTGRES_DB
-              value: {{ .Values.db.name }}
+              value: {{ .Values.db.cromwell.dbname }}
             - name: POSTGRES_SERVICE
               value: {{ include "app.fullname" . }}-postgres
             - name: POSTGRES_PORT
