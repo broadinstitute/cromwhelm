@@ -29,8 +29,11 @@ config:
     conf_file: cbas.yaml
   postgres:
     startup_dir: /docker-entrypoint-initdb.d
+    helper_dir: /wds-helpers
     startup_scripts:
-      create_dbs: create_dbs.sh
+      # Numbered because scripts in initdb.d are run in alphabetical order:
+      create_dbs: 01_create_dbs.sh
+      seed_wds: 02_seed_wds.sql
 
 ingress:
   enabled: true
