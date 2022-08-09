@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: mysqldb
+  name: mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mysqldb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: mysqldb
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_MULTIPLE_DATABASES
+              value: "{{ .Values.db.wds.dbname }},{{ .Values.db.cromwell.dbname }}"
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.db.password }}
+          image: {{ .Values.images.mysql }}
+          name: mysqldb
+          stdin: true
+          tty: true
+          ports:
+            - containerPort: {{ .Values.db.port }}
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysqldb-data-claim
+            - mountPath: /configuration
+              name: configuration-claim1
+      restartPolicy: Always
+      volumes:
+        - name: mysqldb-data-claim
+          persistentVolumeClaim:
+            claimName: mysqldb-data-claim
+        - name: configuration-claim1
+          persistentVolumeClaim:
+            claimName: configuration-claim1
+        - name: {{ include "app.fullname" . }}-mysql-startup
+          configMap:
+            name: {{ include "app.fullname" . }}-mysql-startup
+            items:
+              - key: {{ .Values.config.mysql.startup_scripts.create_dbs }}
+                path: {{ .Values.config.mysql.startup_scripts.create_dbs }}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: mysqldb
+  name: mysqldb
+spec:
+  ports:
+    - name: {{ .Values.db.port | quote }}
+      port: {{ .Values.db.port }}
+      targetPort: {{ .Values.db.port }}
+  selector:
+    io.kompose.service: mysqldb
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-mysql-startup
+data:
+  {{ .Values.config.mysql.startup_scripts.create_dbs }}: |-
+    #!/bin/bash
+    # Copied (and then adapted for mysql) from: https://github.com/mrts/docker-postgresql-multiple-databases/blob/master/create-multiple-postgresql-databases.sh
+
+    set -e
+    set -u
+
+    function create_user_and_database() {
+    	local database=$1
+    	echo "  Creating user and database '$database'"
+    	mysql --username "{{ .Values.db.user | quote }}" -p'{{ .Values.db.password }}' <<-EOSQL
+    	    CREATE DATABASE $database;
+    	    GRANT ALL PRIVILEGES ON DATABASE $database TO {{ .Values.db.user | quote }};
+    EOSQL
+    }
+
+    if [ -n "$MYSQL_MULTIPLE_DATABASES" ]; then
+    	echo "Multiple database creation requested: $MYSQL_MULTIPLE_DATABASES"
+    	for db in $(echo $MYSQL_MULTIPLE_DATABASES | tr ',' ' '); do
+    		create_user_and_database $db
+    	done
+    	echo "Multiple databases created"
+    fi

@@ -157,7 +157,7 @@ data:
     }
 
     database {
-      db.url = "jdbc:mysql://mysqldb/{{ .Values.db.name }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+      db.url = "jdbc:mysql://mysqldb/{{ .Values.db.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
       db.user = {{ .Values.db.user | quote }}
       db.password = {{ .Values.db.password | quote }}
       db.driver = "com.mysql.cj.jdbc.Driver"

@@ -28,19 +28,6 @@ spec:
           env:
             - name: SPRING_CONFIG_LOCATION
               value: {{ .Values.config.wds.conf_dir }}/{{ .Values.config.wds.conf_file }}
-            - name: WDS_DB_HOST
-              value: {{ include "app.fullname" . }}-postgres
-            - name: WDS_DB_PASSWORD
-              value: {{ include "dbPassword" . | b64enc | quote }}
-            - name: WDS_DB_USER
-              value: {{ .Values.db.user }}
-            - name: WDS_DB_NAME
-              value: {{ .Values.db.name }}
-            - name: WDS_DB_PORT
-              value: "{{ .Values.db.port }}"
-            - name: SWAGGER_BASE_PATH
-              value: "{{ .Values.env.swaggerBasePath }}"
-
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
           configMap:
@@ -71,26 +58,4 @@ spec:
 {{- end -}}
 {{- define "terra-batch-libchart.wds-service" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.wds-service.tpl") -}}
-{{- end -}}
-
-
-{{- define "terra-batch-libchart.wds-config.tpl" -}}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "app.fullname" . }}-wds-config
-data:
-  {{ .Values.config.wds.conf_file }}: |-
-    spring:
-      datasource:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.db.port }}/{{ .Values.db.wds.dbname }}
-        username: {{ .Values.db.user }}
-        password: {{ include "dbPassword" . | b64enc | quote }}
-      liquibase:
-        change-log: classpath:db/changelog.xml
-        enabled: true
-
-{{- end -}}
-{{- define "terra-batch-libchart.wds-config" -}}
-{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.wds-config.tpl") -}}
 {{- end -}}

@@ -18,9 +18,9 @@ data:
   {{ .Values.config.wds.conf_file }}: |-
     spring:
       datasource:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.db.port }}/{{ .Values.db.wds.dbname }}
-        username: {{ .Values.db.user }}
-        password: {{ include "dbPassword" . | b64enc | quote }}
+        url: jdbc:mysql://mysqldb/{{ .Values.db.wds.dbname }}
+        username: {{ .Values.db.user | quote }}
+        password: {{ .Values.db.password | quote }}
       liquibase:
         change-log: classpath:db/changelog.xml
         enabled: true
