@@ -72,6 +72,10 @@ data:
       cromwell:
         baseUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000"
         healthUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status"
+    wds:
+      baseUri: "http://{{ include "app.fullname" . }}-wds-svc:8080"
+      healthcheckEndpoint: "/swagger/swagger-ui.html"
+
 
 {{- end -}}
 {{- define "terra-batch-libchart.cbas-api-config" -}}
