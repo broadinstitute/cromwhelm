@@ -37,6 +37,10 @@ config:
   cbasUI:
     conf_file: config.json
     conf_dir: /usr/share/nginx/html
+  mysql:
+    startup_dir: /docker-entrypoint-initdb.d
+    startup_scripts:
+      create_dbs: 01_create_dbs.sh
 
 images:
   mysql: mysql:latest
@@ -61,10 +65,13 @@ persistence:
   storageAccount: RUNTIME_PARAMETER
 
 db:
-  name: RUNTIME_PARAMETER
   port: 3306
   user: RUNTIME_PARAMETER
   password: RUNTIME_PARAMETER
+  wds:
+    dbname: wds
+  cromwell:
+    dbname: cromwell
 
 cromwell:
   name: coa-cromwell-svc

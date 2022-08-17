@@ -1,0 +1,26 @@
+{{ include "terra-batch-libchart.wds-deploy" (list . "cromwell-helm.wds-deploy") }}
+{{ define "cromwell-helm.wds-deploy" }}
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.wds-service" (list . "cromwell-helm.wds-service") }}
+{{ define "cromwell-helm.wds-service" }}
+{{ end }}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "app.fullname" . }}-wds-config
+data:
+  {{ .Values.config.wds.conf_file }}: |-
+    spring:
+      datasource:
+        url: jdbc:mysql://mysqldb/{{ .Values.db.wds.dbname }}
+        username: {{ .Values.db.user | quote }}
+        password: {{ .Values.db.password | quote }}
+      liquibase:
+        change-log: classpath:db/changelog.xml
+        enabled: true

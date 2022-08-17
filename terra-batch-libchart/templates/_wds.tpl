@@ -40,7 +40,6 @@ spec:
               value: "{{ .Values.db.port }}"
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
-
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
           configMap:
