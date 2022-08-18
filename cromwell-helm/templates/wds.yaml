@@ -12,4 +12,14 @@
 
 {{ include "terra-batch-libchart.wds-config" (list . "cromwell-helm.wds-config") }}
 {{ define "cromwell-helm.wds-config" }}
+data:
+  {{ .Values.config.wds.conf_file }}: |-
+    spring:
+      datasource:
+        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.db.port }}/{{ .Values.db.wds.dbname }}
+        username: {{ .Values.db.user }}
+        password: {{ include "dbPassword" . | b64enc | quote }}
+      liquibase:
+        change-log: classpath:db/changelog.xml
+        enabled: true
 {{ end }}

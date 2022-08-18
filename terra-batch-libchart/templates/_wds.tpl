@@ -78,17 +78,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-wds-config
-data:
-  {{ .Values.config.wds.conf_file }}: |-
-    spring:
-      datasource:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.db.port }}/{{ .Values.db.wds.dbname }}
-        username: {{ .Values.db.user }}
-        password: {{ include "dbPassword" . | b64enc | quote }}
-      liquibase:
-        change-log: classpath:db/changelog.xml
-        enabled: true
-
 {{- end -}}
 {{- define "terra-batch-libchart.wds-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.wds-config.tpl") -}}
