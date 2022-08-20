@@ -33,11 +33,11 @@ spec:
             - name: WDS_DB_PASSWORD
               value: {{ include "dbPassword" . | b64enc | quote }}
             - name: WDS_DB_USER
-              value: {{ .Values.db.user }}
+              value: {{ .Values.postgres.user }}
             - name: WDS_DB_NAME
-              value: {{ .Values.db.name }}
+              value: {{ .Values.postgres.wds.dbname }}
             - name: WDS_DB_PORT
-              value: "{{ .Values.db.port }}"
+              value: "{{ .Values.postgres.port }}"
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
 
@@ -83,8 +83,8 @@ data:
   {{ .Values.config.wds.conf_file }}: |-
     spring:
       datasource:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.db.port }}/{{ .Values.db.wds.dbname }}
-        username: {{ .Values.db.user }}
+        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.wds.dbname }}
+        username: {{ .Values.postgres.user }}
         password: {{ include "dbPassword" . | b64enc | quote }}
       liquibase:
         change-log: classpath:db/changelog.xml

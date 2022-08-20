@@ -37,6 +37,9 @@ config:
   cbasUI:
     conf_file: config.json
     conf_dir: /usr/share/nginx/html
+  wds:
+    conf_dir: /etc/conf
+    conf_file: wds.yaml
   postgres:
     startup_dir: /docker-entrypoint-initdb.d
     helper_dir: /wds-helpers
@@ -85,3 +88,9 @@ cbas:
   name: cbas
   image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.18
 
+wds:
+  name: wds
+  image: gcr.io/broad-dsde-dev/workspacedata
+
+env:
+  swaggerBasePath: "SUPPLIED BY LEO"
