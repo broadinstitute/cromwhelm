@@ -19,15 +19,15 @@ spec:
       containers:
         - env:
             - name: MYSQL_DATABASE
-              value: {{ .Values.db.name }}
+              value: {{ .Values.mysql.name }}
             - name: MYSQL_ROOT_PASSWORD
-              value: {{ .Values.db.password }}
+              value: {{ .Values.mysql.password }}
           image: {{ .Values.images.mysql }}
           name: mysqldb
           stdin: true
           tty: true
           ports:
-            - containerPort: {{ .Values.db.port }}
+            - containerPort: {{ .Values.mysql.port }}
           resources: {}
           volumeMounts:
             - mountPath: /var/lib/mysql

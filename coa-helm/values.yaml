@@ -37,6 +37,13 @@ config:
   cbasUI:
     conf_file: config.json
     conf_dir: /usr/share/nginx/html
+  postgres:
+    startup_dir: /docker-entrypoint-initdb.d
+    helper_dir: /wds-helpers
+    startup_scripts:
+      # Numbered because scripts in initdb.d are run in alphabetical order:
+      create_dbs: 01_create_dbs.sh
+      seed_wds: 02_seed_wds.sql
 
 images:
   mysql: mysql:latest
@@ -60,11 +67,20 @@ persistence:
   storageResourceGroup: RUNTIME_PARAMETER
   storageAccount: RUNTIME_PARAMETER
 
-db:
+mysql:
   name: RUNTIME_PARAMETER
   port: 3306
   user: RUNTIME_PARAMETER
   password: RUNTIME_PARAMETER
+
+postgres:
+  port: 5432
+  user: postgres_user
+  password: "SUPPLIED BY LEO"
+  wds:
+    dbname: wds
+  cromwell:
+    dbname: cromwell
 
 cromwell:
   name: coa-cromwell-svc

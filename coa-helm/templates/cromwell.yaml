@@ -157,9 +157,9 @@ data:
     }
 
     database {
-      db.url = "jdbc:mysql://mysqldb/{{ .Values.db.name }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
-      db.user = {{ .Values.db.user | quote }}
-      db.password = {{ .Values.db.password | quote }}
+      db.url = "jdbc:mysql://mysqldb/{{ .Values.mysql.name }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+      db.user = {{ .Values.mysql.user | quote }}
+      db.password = {{ .Values.mysql.password | quote }}
       db.driver = "com.mysql.cj.jdbc.Driver"
       profile = "slick.jdbc.MySQLProfile$"
       db.connectionTimeout = 15000

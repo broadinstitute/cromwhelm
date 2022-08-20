@@ -22,9 +22,9 @@ metadata:
   name: mysqldb
 spec:
   ports:
-    - name: {{ .Values.db.port | quote }}
-      port: {{ .Values.db.port }}
-      targetPort: {{ .Values.db.port }}
+    - name: {{ .Values.mysql.port | quote }}
+      port: {{ .Values.mysql.port }}
+      targetPort: {{ .Values.mysql.port }}
   selector:
     io.kompose.service: mysqldb
 status:
