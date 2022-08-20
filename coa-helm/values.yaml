@@ -46,7 +46,6 @@ config:
       seed_wds: 02_seed_wds.sql
 
 images:
-  mysql: mysql:latest
   cromwell: broadinstitute/cromwell:84-3a19be6-SNAP
   tes: mcr.microsoft.com/cromwellonazure/tes:2
   triggerservice: mcr.microsoft.com/cromwellonazure/triggerservice:2
@@ -63,20 +62,13 @@ containers:
 persistence:
   blobPvcSize: 10Gi
   cromwellTmpSize: 32Gi
-  mysqlSize: 32Gi
   storageResourceGroup: RUNTIME_PARAMETER
   storageAccount: RUNTIME_PARAMETER
-
-mysql:
-  name: RUNTIME_PARAMETER
-  port: 3306
-  user: RUNTIME_PARAMETER
-  password: RUNTIME_PARAMETER
 
 postgres:
   port: 5432
   user: postgres_user
-  password: "SUPPLIED BY LEO"
+  password: "RUNTIME_PARAMETER"
   wds:
     dbname: wds
   cromwell:
