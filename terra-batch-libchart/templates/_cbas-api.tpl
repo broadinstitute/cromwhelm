@@ -75,7 +75,8 @@ data:
     wds:
       baseUri: "http://{{ include "app.fullname" . }}-wds-svc:8080"
       healthcheckEndpoint: "/swagger/swagger-ui.html"
-
+      instanceId: "15f36863-30a5-4cab-91f7-52be439f1175"
+      apiV: "v0.2"
 
 {{- end -}}
 {{- define "terra-batch-libchart.cbas-api-config" -}}
