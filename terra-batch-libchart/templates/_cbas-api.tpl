@@ -66,18 +66,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-cbas-config
-data:
-  {{ .Values.config.cbas.conf_file }}: |-
-    workflow-engines:
-      cromwell:
-        baseUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000"
-        healthUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status"
-    wds:
-      baseUri: "http://{{ include "app.fullname" . }}-wds-svc:8080"
-      healthcheckEndpoint: "/swagger/swagger-ui.html"
-      instanceId: "15f36863-30a5-4cab-91f7-52be439f1175"
-      apiV: "v0.2"
-
 {{- end -}}
 {{- define "terra-batch-libchart.cbas-api-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-config.tpl") -}}
