@@ -71,6 +71,78 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-reverse-proxy-config
+data:
+  {{ .Values.config.proxy.conf_file }}: |-
+    daemon off;
+
+    events {
+      worker_connections 1024;
+    }
+    http {
+      server {
+        listen 8000;
+
+        # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
+        # update clients to use `/cromwell/` when talking to the Cromwell APIs.
+        location /api/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
+        }
+        location /engine/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
+        }
+
+        # Reference to ngingx's local content
+        location /index.html {
+          alias /www/data/index.html;
+        }
+
+        # Proxying to other hosts by subpath:
+        location /cbas/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
+        }
+        location /cromwell/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
+        }
+        location /wds/ {
+          proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
+        }
+
+        location / {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
+        }
+      }
+    }
+  {{ .Values.config.proxy.www_file }}: |-
+    <!doctype html>
+    <html>
+      <head>
+        <title>Hello nginx</title>
+        <meta charset="utf-8" />
+      </head>
+      <body>
+        <h1>
+          Cromwell as an App Proxy.
+        </h1>
+        <p> This is the Cromwell as an App proxy. Valid internal paths:</p>
+        <ul>
+          <li> Batch Analysis UI: <a href="./"> cbas-ui/ </a> </li>
+          <li> CBAS: /cbas/
+          <ul>
+            <li> eg: <a href="./cbas/swagger-ui.html"> cbas/swagger-ui.html </a> </li>
+            <li> eg: <a href="./cbas/status"> cbas/status </a> </li>
+          </ul>
+          </li>
+          <li> Cromwell: <a href="./cromwell/"> cromwell/ </a> </li>
+          <ul>
+            <li> eg: <a href="./cromwell/engine/v1/version"> cromwell/engine/v1/version </a> </li>
+          </ul>
+          <li> WDS: <a href="./wds/"> wds/ </a> </li>
+          <ul>
+            <li> eg: <a href="./wds/swagger/swagger-ui.html"> WDS Swagger </a> </li>
+          </ul>
+        </ul>
+      </body>
+    </html>
 {{- end -}}
 {{- define "terra-batch-libchart.reverse-proxy-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.reverse-proxy-config.tpl") -}}
