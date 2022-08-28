@@ -1,21 +1,7 @@
-###########################
-# Deployment
-###########################
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "app.fullname" . }}-depl
-  labels:
-    {{- include "app.labels" . | nindent 4 }}
+{{ include "terra-batch-libchart.cromwell-deploy" (list . "cromwell-helm.cromwell-deploy") }}
+{{ define "cromwell-helm.cromwell-deploy" }}
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      {{- include "app.cromwell.selectorLabels" . | nindent 6 }}
   template:
-    metadata:
-      labels:
-        {{- include "app.cromwell.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.config.serviceAccount.name }}
       volumes:
@@ -40,16 +26,6 @@ spec:
               mountPath: {{ .Values.config.dir }}/{{ .Values.config.file }}
               subPath: {{ .Values.config.file }}
           env:
-            - name: POSTGRES_PASSWORD
-              value: {{ include "dbPassword" . | b64enc | quote }}
-            - name: POSTGRES_USER
-              value: {{ .Values.postgres.user }}
-            - name: POSTGRES_DB
-              value: {{ .Values.postgres.cromwell.dbname }}
-            - name: POSTGRES_SERVICE
-              value: {{ include "app.fullname" . }}-postgres
-            - name: POSTGRES_PORT
-              value: "{{ .Values.postgres.port }}"
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
           command:
@@ -57,13 +33,110 @@ spec:
             - "-c"
             - >-
              java
-             -Ddatabase.profile=slick.jdbc.PostgresProfile$
-             -Ddatabase.db.driver=org.postgresql.Driver
-             -Ddatabase.db.url=jdbc:postgresql://$POSTGRES_SERVICE:$POSTGRES_PORT/$POSTGRES_DB
-             -Ddatabase.db.user=$POSTGRES_USER
-             -Ddatabase.db.password=$POSTGRES_PASSWORD
-             -Ddatabase.db.port=$POSTGRES_PORT
+             -Ddatabase.db.port="{{ .Values.postgres.port }}"
              -Ddatabase.db.connectionTimeout=5000
              -Dconfig.file={{ .Values.config.dir }}/{{ .Values.config.file }}
              -jar /app/cromwell.jar
              server
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.cromwell-service" (list . "cromwell-helm.cromwell-service") }}
+{{ define "cromwell-helm.cromwell-service" }}
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.cromwell-config" (list . "cromwell-helm.cromwell-config") }}
+{{ define "cromwell-helm.cromwell-config" }}
+data:
+  {{ .Values.config.file }}: |-
+    include required(classpath("application"))
+
+    google {
+
+      application-name = "cromwell"
+
+      auths = [
+        {
+          name = "application-default"
+          scheme = "application_default"
+        }
+      ]
+    }
+
+    engine {
+      filesystems {
+        gcs {
+          // Will be used if the wdl interacts with files outside of the context of a backend.
+          auth = "application-default"
+          project = "{{ .Values.config.gcsProject }}"
+        }
+      }
+    }
+
+    backend {
+      default = "PAPIv2"
+      providers {
+        PAPIv2 {
+          actor-factory = "cromwell.backend.google.pipelines.v2beta.PipelinesApiLifecycleActorFactory"
+          config {
+            // Google project
+            project = "{{ .Values.config.gcsProject }}"
+
+            // Base bucket for workflow executions
+            root = "{{ .Values.config.gcsBucket }}"
+
+            // Polling for completion backs-off gradually for slower-running jobs.
+            // This is the maximum polling interval (in seconds):
+            maximum-polling-interval = 600
+
+            // Optional Dockerhub Credentials. Can be used to access private docker images.
+            dockerhub {
+              // account = ""
+              // token = ""
+            }
+
+            genomics {
+              // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
+              // Pipelines and manipulate auth JSONs.
+              auth = "application-default"
+              // Endpoint for API (dependent on 'location')
+              endpoint-url = "{{ .Values.config.papiv2EndpointUrl }}"
+              // Will get overridden by email address provided in workflow options, "google_compute_service_account"
+              compute-service-account = "{{ .Values.config.serviceAccount.annotations.gcpServiceAccount }}"
+
+              // Pipelines v2 only: specify the number of times localization and delocalization operations should be attempted
+              // There is no logic to determine if the error was transient or not, everything is retried upon failure
+              // Defaults to 3
+              localization-attempts = 3
+
+              // Starting from version 2 beta of the Google Life Sciences API, this is a required attribute for creating pipelines.
+              location = "{{ .Values.config.gcsRegion }}"
+
+               // Restrict access to VM metadata. Useful in cases when untrusted containers are running under a service
+               // account not owned by the submitting user
+               restrict-metadata-access = false
+            }
+
+            filesystems {
+              gcs {
+                // A reference to a potentially different auth for manipulating files via engine functions.
+                auth = "application-default"
+                project = "{{ .Values.config.gcsProject }}"
+              }
+            }
+
+            virtual-private-cloud {
+              network-label-key = "vpc-network-name"
+              subnetwork-label-key = "vpc-subnetwork-name"
+              auth = "application-default"
+            }
+          }
+        }
+      }
+    }
+
+{{ include "cromwell-application.database.conf" . | indent 4 }}
+{{ end }}
