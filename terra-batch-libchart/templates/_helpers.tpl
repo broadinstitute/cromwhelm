@@ -5,7 +5,6 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
 
-
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -24,14 +23,12 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
-
 {{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "app.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
-
 
 {{/*
 Common labels
@@ -45,7 +42,6 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
-
 {{/*
 Selector labels
 */}}
@@ -54,6 +50,12 @@ app.kubernetes.io/name: {{ include "app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+JobManager labels
+*/}}
+{{- define "app.jobmanager.selectorLabels" -}}
+app.kubernetes.io/component: {{ .Values.jobmanager.name }}
+{{- end}}
 
 {{/*
 Cromwell API labels
@@ -62,14 +64,12 @@ Cromwell API labels
 app.kubernetes.io/component: {{ .Values.cromwell.name }}
 {{- end}}
 
-
 {{/*
 CBAS UI labels
 */}}
 {{- define "app.cbasUI.selectorLabels" -}}
 app.kubernetes.io/component: {{ .Values.cbasUI.name }}
 {{- end}}
-
 
 {{/*
 CBAS Service labels
@@ -78,14 +78,12 @@ CBAS Service labels
 app.kubernetes.io/component: {{ .Values.cbas.name }}
 {{- end}}
 
-
 {{/*
 WDS Service labels
 */}}
 {{- define "app.wds.selectorLabels" -}}
 app.kubernetes.io/component: {{ .Values.wds.name }}
 {{- end}}
-
 
 {{/*
 Return postgres database user password.

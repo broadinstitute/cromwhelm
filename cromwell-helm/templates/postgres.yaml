@@ -31,7 +31,7 @@ spec:
         - name: postgres-container
           image: postgres
           ports:
-            - containerPort: {{ .Values.db.port }}
+            - containerPort: {{ .Values.postgres.port }}
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
@@ -46,9 +46,9 @@ spec:
             - name: POSTGRES_PASSWORD
               value: {{ include "dbPassword" . | b64enc | quote }}
             - name: POSTGRES_USER
-              value: {{ .Values.db.user }}
+              value: {{ .Values.postgres.user }}
             - name: POSTGRES_MULTIPLE_DATABASES
-              value: "{{ .Values.db.cromwell.dbname }},{{ .Values.db.wds.dbname }}"
+              value: "{{ .Values.postgres.cromwell.dbname }},{{ .Values.postgres.wds.dbname }}"
 ---
 ###########################
 # Cluster IP Service
@@ -62,8 +62,8 @@ spec:
   selector:
     component: postgres
   ports:
-    - port: {{ .Values.db.port }}
-      targetPort: {{ .Values.db.port }}
+    - port: {{ .Values.postgres.port }}
+      targetPort: {{ .Values.postgres.port }}
 ---
 ####################################
 # Database setup as a startup script
