@@ -16,7 +16,7 @@
 {{ define "coa-helm.cbas-api-config" }}
 # Overrides go here
 data:
-  {{ .Values.config.cbas.conf_file }}: |-
+  {{ .Values.cbas.conf_file }}: |-
     workflow-engines:
       cromwell:
         baseUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000'

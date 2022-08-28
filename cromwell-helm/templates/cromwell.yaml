@@ -12,8 +12,8 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-cromwell-config
             items:
-              - key: {{ .Values.config.file }}
-                path: {{ .Values.config.file }}
+              - key: {{ .Values.cromwell.config.file }}
+                path: {{ .Values.cromwell.config.file }}
       containers:
         - name: {{ .Chart.Name }}-container
           # Keep this format stable for automatic version bumps from https://github.com/broadinstitute/cromwell/pull/6739
@@ -23,8 +23,8 @@ spec:
             - containerPort: 8000
           volumeMounts:
             - name: {{ include "app.fullname" . }}-cromwell-config
-              mountPath: {{ .Values.config.dir }}/{{ .Values.config.file }}
-              subPath: {{ .Values.config.file }}
+              mountPath: {{ .Values.cromwell.config.dir }}/{{ .Values.cromwell.config.file }}
+              subPath: {{ .Values.cromwell.config.file }}
           env:
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
@@ -35,7 +35,7 @@ spec:
              java
              -Ddatabase.db.port="{{ .Values.postgres.port }}"
              -Ddatabase.db.connectionTimeout=5000
-             -Dconfig.file={{ .Values.config.dir }}/{{ .Values.config.file }}
+             -Dconfig.file={{ .Values.cromwell.config.dir }}/{{ .Values.cromwell.config.file }}
              -jar /app/cromwell.jar
              server
 {{ end }}
@@ -51,7 +51,7 @@ spec:
 {{ include "terra-batch-libchart.cromwell-config" (list . "cromwell-helm.cromwell-config") }}
 {{ define "cromwell-helm.cromwell-config" }}
 data:
-  {{ .Values.config.file }}: |-
+  {{ .Values.cromwell.config.file }}: |-
     include required(classpath("application"))
 
     google {

@@ -23,11 +23,11 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - name: {{ include "app.fullname" . }}-wds-config
-              mountPath: {{ .Values.config.wds.conf_dir }}/{{ .Values.config.wds.conf_file }}
-              subPath: {{ .Values.config.wds.conf_file }}
+              mountPath: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
+              subPath: {{ .Values.wds.conf_file }}
           env:
             - name: SPRING_CONFIG_LOCATION
-              value: {{ .Values.config.wds.conf_dir }}/{{ .Values.config.wds.conf_file }}
+              value: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
             - name: WDS_DB_HOST
               value: {{ include "app.fullname" . }}-postgres
             - name: WDS_DB_PASSWORD
@@ -46,8 +46,8 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-wds-config
             items:
-              - key: {{ .Values.config.wds.conf_file }}
-                path: {{ .Values.config.wds.conf_file }}
+              - key: {{ .Values.wds.conf_file }}
+                path: {{ .Values.wds.conf_file }}
 {{- end -}}
 {{- define "terra-batch-libchart.wds-deploy" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.wds-deploy.tpl") -}}
@@ -80,7 +80,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-wds-config
 data:
-  {{ .Values.config.wds.conf_file }}: |-
+  {{ .Values.wds.conf_file }}: |-
     spring:
       datasource:
         url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.wds.dbname }}

@@ -21,8 +21,8 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-cbas-ui-config
             items:
-              - key: {{ .Values.config.cbasUI.conf_file }}
-                path: {{ .Values.config.cbasUI.conf_file }}
+              - key: {{ .Values.cbasUI.conf_file }}
+                path: {{ .Values.cbasUI.conf_file }}
       containers:
         - name: {{ .Values.cbasUI.name }}-container
           image: {{ .Values.cbasUI.image }}
@@ -31,8 +31,8 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - name: {{ include "app.fullname" . }}-cbas-ui-config
-              mountPath: {{ .Values.config.cbasUI.conf_dir }}/{{ .Values.config.cbasUI.conf_file }}
-              subPath: {{ .Values.config.cbasUI.conf_file }}
+              mountPath: {{ .Values.cbasUI.conf_dir }}/{{ .Values.cbasUI.conf_file }}
+              subPath: {{ .Values.cbasUI.conf_file }}
 
 {{- end -}}
 {{- define "terra-batch-libchart.cbas-ui-deploy" -}}

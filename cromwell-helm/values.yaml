@@ -1,10 +1,4 @@
-service:
-  type: ClusterIP
-  port: 8000
-
 config:
-  dir: /etc/conf
-  file: papi.conf
   gcsBucket: "SUPPLIED BY LEO"
   gcsProject: "SUPPLIED BY LEO"
   gcsRegion: us-central1 # TODO: SUPPLY VIA LEO (BW-924)
@@ -13,27 +7,6 @@ config:
     name: "SUPPLIED BY LEO"
     annotations:
       gcpServiceAccount: "SUPPLIED BY LEO"
-  proxy:
-    conf_dir: /etc/nginx
-    conf_file: nginx.conf
-    www_dir: /www/data
-    www_file: index.html
-  cbas:
-    conf_dir: /etc/conf
-    conf_file: cbas.yaml
-  cbasUI:
-    conf_file: config.json
-    conf_dir: /usr/share/nginx/html
-  wds:
-    conf_dir: /etc/conf
-    conf_file: wds.yaml
-  postgres:
-    startup_dir: /docker-entrypoint-initdb.d
-    helper_dir: /wds-helpers
-    startup_scripts:
-      # Numbered because scripts in initdb.d are run in alphabetical order:
-      create_dbs: 01_create_dbs.sh
-      seed_wds: 02_seed_wds.sql
 
 ingress:
   enabled: true
@@ -69,6 +42,48 @@ postgres:
     dbname: wds
   cromwell:
     dbname: cromwell
+  startup_dir: /docker-entrypoint-initdb.d
+  helper_dir: /wds-helpers
+  startup_scripts: # Numbered because scripts in initdb.d are run in alphabetical order
+    create_dbs: 01_create_dbs.sh
+    seed_wds: 02_seed_wds.sql
+
+proxy:
+  port: 8000
+  type: ClusterIP
+  conf_dir: /etc/nginx
+  conf_file: nginx.conf
+  www_dir: /www/data
+  www_file: index.html
+
+cromwell:
+  name: cromwell-api
+  image: 
+  port: 8000
+  config:
+    dir: /etc/conf
+    file: papi.conf
+
+cbasUI:
+  name: cbas-ui
+  image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.8
+  conf_file: config.json
+  conf_dir: /usr/share/nginx/html
+
+cbas:
+  name: cbas
+  image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.18
+  conf_dir: /etc/conf
+  conf_file: cbas.yaml
+
+wds:
+  name: wds
+  image: gcr.io/broad-dsde-dev/workspacedata
+  conf_dir: /etc/conf
+  conf_file: wds.yaml
+
+env:
+  swaggerBasePath: "SUPPLIED BY LEO"
 
 jobmanager:
   name: jobmanager
@@ -139,21 +154,3 @@ jobmanager:
           failureThreshold: 30 # 5 minutes before restarted
           successThreshold: 1
 
-cromwell:
-  name: cromwell-api
-  port: 8000
-
-cbasUI:
-  name: cbas-ui
-  image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.9
-
-cbas:
-  name: cbas
-  image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.19
-
-wds:
-  name: wds
-  image: gcr.io/broad-dsde-dev/workspacedata
-
-env:
-  swaggerBasePath: "SUPPLIED BY LEO"

@@ -20,10 +20,10 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-reverse-proxy-config
             items:
-              - key: {{ .Values.config.proxy.conf_file }}
-                path: {{ .Values.config.proxy.conf_file }}
-              - key: {{ .Values.config.proxy.www_file }}
-                path: {{ .Values.config.proxy.www_file }}
+              - key: {{ .Values.proxy.conf_file }}
+                path: {{ .Values.proxy.conf_file }}
+              - key: {{ .Values.proxy.www_file }}
+                path: {{ .Values.proxy.www_file }}
       containers:
         - name: reverse-proxy-container
           image: nginx:latest
@@ -32,11 +32,11 @@ spec:
             - containerPort: 8000
           volumeMounts:
             - name: {{ include "app.fullname" . }}-reverse-proxy-config
-              mountPath: {{ .Values.config.proxy.conf_dir }}/{{ .Values.config.proxy.conf_file }}
-              subPath: {{ .Values.config.proxy.conf_file }}
+              mountPath: {{ .Values.proxy.conf_dir }}/{{ .Values.proxy.conf_file }}
+              subPath: {{ .Values.proxy.conf_file }}
             - name: {{ include "app.fullname" . }}-reverse-proxy-config
-              mountPath: {{ .Values.config.proxy.www_dir }}/{{ .Values.config.proxy.www_file }}
-              subPath: {{ .Values.config.proxy.www_file }}
+              mountPath: {{ .Values.proxy.www_dir }}/{{ .Values.proxy.www_file }}
+              subPath: {{ .Values.proxy.www_file }}
 
           command: ["nginx"]
 
@@ -54,12 +54,12 @@ metadata:
   labels:
   {{- include "app.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.proxy.type }}
   selector:
     {{- include "app.selectorLabels" . | nindent 4 }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+    - port: {{ .Values.proxy.port }}
+      targetPort: {{ .Values.proxy.port }}
 {{- end -}}
 {{- define "terra-batch-libchart.reverse-proxy-service" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.reverse-proxy-service.tpl") -}}
@@ -72,7 +72,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-reverse-proxy-config
 data:
-  {{ .Values.config.proxy.conf_file }}: |-
+  {{ .Values.proxy.conf_file }}: |-
     daemon off;
 
     events {
@@ -112,7 +112,7 @@ data:
         }
       }
     }
-  {{ .Values.config.proxy.www_file }}: |-
+  {{ .Values.proxy.www_file }}: |-
     <!doctype html>
     <html>
       <head>

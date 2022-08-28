@@ -23,18 +23,18 @@ spec:
             - containerPort: 8080
           volumeMounts:
             - name: {{ include "app.fullname" . }}-cbas-config
-              mountPath: {{ .Values.config.cbas.conf_dir }}/{{ .Values.config.cbas.conf_file }}
-              subPath: {{ .Values.config.cbas.conf_file }}
+              mountPath: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}
+              subPath: {{ .Values.cbas.conf_file }}
           env:
             - name: SPRING_CONFIG_LOCATION
-              value: {{ .Values.config.cbas.conf_dir }}/{{ .Values.config.cbas.conf_file }}
+              value: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}
       volumes:
         - name: {{ include "app.fullname" . }}-cbas-config
           configMap:
             name: {{ include "app.fullname" . }}-cbas-config
             items:
-              - key: {{ .Values.config.cbas.conf_file }}
-                path: {{ .Values.config.cbas.conf_file }}
+              - key: {{ .Values.cbas.conf_file }}
+                path: {{ .Values.cbas.conf_file }}
 {{- end -}}
 {{- define "terra-batch-libchart.cbas-api-deploy" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cbas-api-deploy.tpl") -}}
