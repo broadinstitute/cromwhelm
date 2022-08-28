@@ -27,7 +27,7 @@ spec:
                 path: {{ .Values.postgres.startup_scripts.seed_wds }}
       containers:
         - name: postgres-container
-          image: postgres
+          image: {{ .Values.postgres.image }}
           ports:
             - containerPort: {{ .Values.postgres.port }}
           volumeMounts:

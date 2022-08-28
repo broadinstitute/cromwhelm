@@ -26,7 +26,7 @@ spec:
                 path: {{ .Values.proxy.www_file }}
       containers:
         - name: reverse-proxy-container
-          image: nginx:latest
+          image: {{ .Values.proxy.image }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8000

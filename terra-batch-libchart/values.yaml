@@ -4,6 +4,7 @@ cromwell:
   port: 8000
 
 proxy:
+  image: nginx:latest
   port: 8000
   type: ClusterIP
   conf_dir: /etc/nginx
@@ -30,6 +31,7 @@ wds:
   conf_file: wds.yaml
 
 postgres:
+  image: postgres
   port: 5432
   user: postgres_user
   password: "RUNTIME_PARAMETER"
