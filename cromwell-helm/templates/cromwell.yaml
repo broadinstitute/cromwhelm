@@ -7,7 +7,7 @@ spec:
       volumes:
         - name: {{ include "app.fullname" . }}-storage
           persistentVolumeClaim:
-            claimName: {{ include "app.fullname" . }}-pvc
+            claimName: {{ include "app.fullname" . }}-postgres-pvc
         - name: {{ include "app.fullname" . }}-cromwell-config
           configMap:
             name: {{ include "app.fullname" . }}-cromwell-config

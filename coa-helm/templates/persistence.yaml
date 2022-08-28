@@ -12,7 +12,9 @@ spec:
     requests:
       storage: {{ .Values.persistence.cromwellTmpSize }}
 status: {}
+
 ---
+
 {{- $rg  := .Values.persistence.storageResourceGroup -}}
 {{- $storageAccount  := .Values.persistence.storageAccount -}}
 {{- $size  := .Values.persistence.blobPvcSize -}}
@@ -28,7 +30,9 @@ parameters:
   resourceGroup: {{ $rg }}
   storageAccount: {{ $storageAccount }}
   containerName: {{ . }}
+
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -42,3 +46,18 @@ spec:
   storageClassName: blob-{{ . }}
 ---
 {{- end }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "app.fullname" . }}-postgres-pvc
+  creationTimestamp: null
+  labels:
+    io.kompose.service: {{ include "app.fullname" . }}-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.blobPvcSize }}
+status: {}

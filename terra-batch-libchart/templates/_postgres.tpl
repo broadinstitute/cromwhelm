@@ -113,16 +113,3 @@ data:
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-config.tpl") -}}
 {{- end -}}
 
-
-{{- define "terra-batch-libchart.postgres-volume.tpl" -}}
-{{- end -}}
-{{- define "terra-batch-libchart.postgres-volume" -}}
-{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-volume.tpl") -}}
-{{- end -}}
-
-
-{{- define "terra-batch-libchart.postgres-volumeclaim.tpl" -}}
-{{- end -}}
-{{- define "terra-batch-libchart.postgres-volumeclaim" -}}
-{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-volumeclaim.tpl") -}}
-{{- end -}}
