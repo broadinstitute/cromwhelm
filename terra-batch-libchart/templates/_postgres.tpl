@@ -112,4 +112,3 @@ data:
 {{- define "terra-batch-libchart.postgres-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-config.tpl") -}}
 {{- end -}}
-
