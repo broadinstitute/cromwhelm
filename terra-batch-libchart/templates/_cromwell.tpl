@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}-cromwell-deploy
+  name: {{ include "app.fullname" . }}-cromwell-depl
   labels:
     {{- include "app.labels" . | nindent 4 }}
 spec:
