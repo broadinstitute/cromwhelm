@@ -157,11 +157,11 @@ data:
     }
 
     database {
-      db.url = "jdbc:mysql://mysqldb/{{ .Values.db.name }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
-      db.user = {{ .Values.db.user | quote }}
-      db.password = {{ .Values.db.password | quote }}
-      db.driver = "com.mysql.cj.jdbc.Driver"
-      profile = "slick.jdbc.MySQLProfile$"
+      db.url = "jdbc:postgresql://coa-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+      db.user = {{ .Values.postgres.user | quote }}
+      db.password = {{ .Values.postgres.password | b64enc | quote }}
+      db.driver = "org.postgresql.Driver"
+      profile = "slick.jdbc.PostgresProfile$"
       db.connectionTimeout = 15000
     }
 

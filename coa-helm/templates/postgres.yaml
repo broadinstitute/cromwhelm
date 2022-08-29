@@ -1,0 +1,35 @@
+{{ include "terra-batch-libchart.postgres-deploy" (list . "coa-helm.postgres-deploy") }}
+{{ define "coa-helm.postgres-deploy" }}
+# Overrides go here
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.postgres-service" (list . "coa-helm.postgres-service") }}
+{{ define "coa-helm.postgres-service" }}
+# Overrides go here
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.postgres-config" (list . "coa-helm.postgres-config") }}
+{{ define "coa-helm.postgres-config" }}
+# Overrides go here
+{{ end }}
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "app.fullname" . }}-postgres-pvc
+  creationTimestamp: null
+  labels:
+    io.kompose.service: {{ include "app.fullname" . }}-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.blobPvcSize }}
+status: {}
