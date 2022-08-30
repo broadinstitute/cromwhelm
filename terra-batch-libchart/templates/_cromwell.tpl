@@ -54,7 +54,7 @@ metadata:
 {{- end -}}
 
 
-{{- define "cromwell-application.database.conf" -}}
+{{- define "terra-batch-libchart.cromwell-config.database.conf" -}}
 
 database {
   db.url = "jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
