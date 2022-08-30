@@ -13,7 +13,7 @@
 {{ include "terra-batch-libchart.cbas-api-config" (list . "cromwell-helm.cbas-api-config") }}
 {{ define "cromwell-helm.cbas-api-config" }}
 data:
-  {{ .Values.config.cbas.conf_file }}: |-
+  {{ .Values.cbas.conf_file }}: |-
     workflow-engines:
       cromwell:
         baseUri: "http://{{ include "app.fullname" . }}-cromwell-svc:8000"

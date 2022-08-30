@@ -15,17 +15,19 @@ spec:
   {{- end }}
   claimRef:
     namespace: {{ .Release.Namespace }}
-    name: {{ include "app.fullname" . }}-pvc
+    name: {{ include "app.fullname" . }}-postgres-pvc
   {{- if .Values.persistence.gcePersistentDisk }}
   gcePersistentDisk:
     pdName: {{ .Values.persistence.gcePersistentDisk }}
     fsType: ext4
   {{- end }}
+
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "app.fullname" . }}-pvc
+  name: {{ include "app.fullname" . }}-postgres-pvc
 spec:
   storageClassName: "{{ .Values.persistence.storageClass }}"
   volumeName: {{ include "app.fullname" . }}-pv
@@ -34,4 +36,5 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.size }}
-  {{- end }}
+  
+{{- end }}

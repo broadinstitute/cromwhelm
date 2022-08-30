@@ -21,13 +21,13 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-postgres-startup
             items:
-              - key: {{ .Values.config.postgres.startup_scripts.create_dbs }}
-                path: {{ .Values.config.postgres.startup_scripts.create_dbs }}
-              - key: {{ .Values.config.postgres.startup_scripts.seed_wds }}
-                path: {{ .Values.config.postgres.startup_scripts.seed_wds }}
+              - key: {{ .Values.postgres.startup_scripts.create_dbs }}
+                path: {{ .Values.postgres.startup_scripts.create_dbs }}
+              - key: {{ .Values.postgres.startup_scripts.seed_wds }}
+                path: {{ .Values.postgres.startup_scripts.seed_wds }}
       containers:
         - name: postgres-container
-          image: postgres
+          image: {{ .Values.postgres.image }}
           ports:
             - containerPort: {{ .Values.postgres.port }}
           volumeMounts:
@@ -35,11 +35,11 @@ spec:
               mountPath: /var/lib/postgresql/data
               subPath: postgres
             - name: {{ include "app.fullname" . }}-postgres-startup
-              mountPath: {{ .Values.config.postgres.startup_dir }}/{{ .Values.config.postgres.startup_scripts.create_dbs }}
-              subPath: {{ .Values.config.postgres.startup_scripts.create_dbs }}
+              mountPath: {{ .Values.postgres.startup_dir }}/{{ .Values.postgres.startup_scripts.create_dbs }}
+              subPath: {{ .Values.postgres.startup_scripts.create_dbs }}
             - name: {{ include "app.fullname" . }}-postgres-startup
-              mountPath: {{ .Values.config.postgres.helper_dir }}/{{ .Values.config.postgres.startup_scripts.seed_wds }}
-              subPath: {{ .Values.config.postgres.startup_scripts.seed_wds }}
+              mountPath: {{ .Values.postgres.helper_dir }}/{{ .Values.postgres.startup_scripts.seed_wds }}
+              subPath: {{ .Values.postgres.startup_scripts.seed_wds }}
           env:
             - name: POSTGRES_PASSWORD
               value: {{ include "dbPassword" . | b64enc | quote }}
@@ -77,7 +77,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "app.fullname" . }}-postgres-startup
 data:
-  {{ .Values.config.postgres.startup_scripts.create_dbs }}: |-
+  {{ .Values.postgres.startup_scripts.create_dbs }}: |-
     #!/bin/bash
     # Copied from: https://github.com/mrts/docker-postgresql-multiple-databases/blob/master/create-multiple-postgresql-databases.sh
 
@@ -103,7 +103,7 @@ data:
     fi
 
   # Note: seed_wds can be run manually to create some contents in the entity database, to be accessed later using GET and PATCH
-  {{ .Values.config.postgres.startup_scripts.seed_wds }}: |-
+  {{ .Values.postgres.startup_scripts.seed_wds }}: |-
     INSERT INTO entity_type (id, name, workspace_id) VALUES (1337, 'FOO', '15f36863-30a5-4cab-91f7-52be439f1175');
     INSERT INTO entity(entity_type, name, deleted, attributes) VALUES (1337, 'FOO1', false, '{"foo_rating": "1000"}'::jsonb);
     INSERT INTO entity(entity_type, name, deleted, attributes) VALUES (1337, 'FOO2', false, '{"foo_rating": "21"}'::jsonb);
@@ -111,18 +111,4 @@ data:
 {{- end -}}
 {{- define "terra-batch-libchart.postgres-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-config.tpl") -}}
-{{- end -}}
-
-
-{{- define "terra-batch-libchart.postgres-volume.tpl" -}}
-{{- end -}}
-{{- define "terra-batch-libchart.postgres-volume" -}}
-{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-volume.tpl") -}}
-{{- end -}}
-
-
-{{- define "terra-batch-libchart.postgres-volumeclaim.tpl" -}}
-{{- end -}}
-{{- define "terra-batch-libchart.postgres-volumeclaim" -}}
-{{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-volumeclaim.tpl") -}}
 {{- end -}}

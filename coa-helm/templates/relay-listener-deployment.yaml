@@ -18,25 +18,25 @@ spec:
     spec:
       containers:
         - name: relaylistener
-          image: {{ .Values.images.relaylistener }}
+          image: {{ .Values.relaylistener.image }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.relaylistener.port }}
           env:
             - name: LISTENER_RELAYCONNECTIONSTRING
-              value: {{ .Values.config.relayListenerConnectionString }}
+              value: {{ .Values.relaylistener.connectionString }}
             - name: LISTENER_RELAYCONNECTIONNAME
-              value: {{ .Values.config.relayListenerConnectionName }}
+              value: {{ .Values.relaylistener.connectionName }}
             - name: LISTENER_TARGETPROPERTIES_TARGETHOST
-              value: {{ .Values.config.relayListenerTargetHost }}
+              value: {{ .Values.relaylistener.targetHost }}
             - name: LISTENER_TARGETPROPERTIES_REMOVEENTITYPATHFROMHTTPURL
               value: "true"
             - name: LISTENER_REQUESTINSPECTORS
               value: "SAM_CHECKER"
             - name: LISTENER_SAMINSPECTORPROPERTIES_SAMURL
-              value: {{ .Values.config.relayListenerSamUrl }}
+              value: {{ .Values.relaylistener.samUrl }}
             - name: LISTENER_SAMINSPECTORPROPERTIES_SAMRESOURCEID
-              value: {{ .Values.config.relayListenerSamResourceId }}
+              value: {{ .Values.relaylistener.samResourceId }}
             - name: LISTENER_SAMINSPECTORPROPERTIES_SAMRESOURCETYPE
-              value: {{ .Values.config.relayListenerSamResourceType }}
+              value: {{ .Values.relaylistener.samResourceType }}
       imagePullSecrets:
         - name: acr-secret

@@ -42,10 +42,10 @@ spec:
               value: {{ .Values.config.dockerInDockerImageName }}
             - name: UsePreemptibleVmsOnly
               value: {{ .Values.config.usePreemptibleVmsOnly | quote}}
-          image: {{ .Values.images.tes }}
+          image: {{ .Values.tes.image }}
           name: tes
           ports:
-            - containerPort: {{ .Values.service.tesPort }}
+            - containerPort: {{ .Values.tes.port }}
           resources: {}
           volumeMounts:
             - mountPath: /outputs
@@ -67,9 +67,9 @@ metadata:
   name: tes
 spec:
   ports:
-    - name: {{ .Values.service.tesPort | quote }}
-      port: {{ .Values.service.tesPort }}
-      targetPort: {{ .Values.service.tesPort }}
+    - name: {{ .Values.tes.port | quote }}
+      port: {{ .Values.tes.port }}
+      targetPort: {{ .Values.tes.port }}
   selector:
     io.kompose.service: tes
 status:

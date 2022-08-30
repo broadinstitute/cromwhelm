@@ -30,7 +30,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}-reverse-proxy-service
-              servicePort: {{ $.Values.service.port }}
+              servicePort: {{ $.Values.proxy.port }}
           {{- end }}
     {{- end }}
 {{- end }}

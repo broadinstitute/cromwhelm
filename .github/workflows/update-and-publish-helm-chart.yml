@@ -17,23 +17,29 @@ jobs:
 
       - name: Find out next chart version
         run: |
-          currentVersion=$(grep '^version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
+          currentVersionGCP=$(grep '^version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
+          currentVersionCOA=$(grep '^version:' coa-helm/Chart.yaml | awk '{print $NF}')
 
           # this will increment only the patch version digit. For example, it will update 0.1.10 => 0.1.11
-          nextVersion=$(echo ${currentVersion} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          nextVersionGCP=$(echo ${currentVersionGCP} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          nextVersionCOA=$(echo ${currentVersionGCP} | awk -F. -v OFS=. '{$NF += 1 ; print}')
 
-          echo "CURRENT_VERSION=$currentVersion" >> $GITHUB_ENV
-          echo "NEXT_VERSION=$nextVersion" >> $GITHUB_ENV
+          echo "CURRENT_VERSION_GCP=$currentVersionGCP" >> $GITHUB_ENV
+          echo "NEXT_VERSION_GCP=$nextVersionGCP" >> $GITHUB_ENV
+
+          echo "CURRENT_VERSION_COA=$currentVersionCOA" >> $GITHUB_ENV
+          echo "NEXT_VERSION_COA=$nextVersionCOA" >> $GITHUB_ENV
 
       - name: Bump chart version
         run: |
-          sed -i "s/$CURRENT_VERSION/$NEXT_VERSION/" cromwell-helm/Chart.yaml
+          sed -i "s/$CURRENT_VERSION_GCP/$NEXT_VERSION_GCP/" cromwell-helm/Chart.yaml
+          sed -i "s/$CURRENT_VERSION_COA/$NEXT_VERSION_COA/" coa-helm/Chart.yaml
 
       - name: Publish the new helm chart and update index.yaml
         run: |
           helm dependency update cromwell-helm/
           helm package cromwell-helm/
-          mv cromwell-${NEXT_VERSION}.tgz charts/cromwell-${NEXT_VERSION}.tgz
+          mv cromwell-${NEXT_VERSION_GCP}.tgz charts/cromwell-${NEXT_VERSION_GCP}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
       - name: Push changes to GitHub
@@ -45,5 +51,5 @@ jobs:
           git add .
           git config --global user.name "broadbot"
           git config --global user.email "broadbot@broadinstitute.org"
-          git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION"
+          git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION_GCP and coa-helm chart version to $NEXT_VERSION_COA"
           git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/cromwhelm.git main

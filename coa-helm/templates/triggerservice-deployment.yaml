@@ -25,7 +25,7 @@ spec:
               value: {{ .Values.config.applicationInsightsAccountName }}
             - name: CosmosDbAccountName
               value: {{ .Values.config.cosmosDbAccountName }}
-          image: {{ .Values.images.triggerservice }}
+          image: {{ .Values.triggerservice.image }}
           name: triggerservice
           resources: {}
       restartPolicy: Always

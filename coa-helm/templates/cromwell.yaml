@@ -1,33 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "app.fullname" . }}-cromwell-deploy
-  labels:
-    {{- include "app.labels" . | nindent 4 }}
+{{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ define "coa-helm.cromwell-deploy" }}
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      {{- include "app.cromwell.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: Recreate
   template:
-    metadata:
-      labels:
-        {{- include "app.cromwell.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - args:
-            -  java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
+            - java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
           command:
             - /bin/sh
             - -c
-          image: {{ .Values.images.cromwell }}
+          image: {{ .Values.cromwell.image }}
           name: cromwell
           stdin: true
           tty: true
           ports:
-            - containerPort: {{ .Values.service.cromwellPort }}
+            - containerPort: {{ .Values.cromwell.port }}
           resources: {}
           volumeMounts:
             - mountPath: /cromwell-tmp
@@ -73,31 +60,20 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-cromwell-config
 status: {}
+{{ end }}
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "app.fullname" . }}-cromwell-svc
-  labels:
-  {{- include "app.labels" . | nindent 4 }}
-spec:
-  selector:
-  {{- include "app.cromwell.selectorLabels" . | nindent 4 }}
-  ports:
-    - name: {{ .Values.service.cromwellPort | quote }}
-      port: {{ .Values.service.cromwellPort }}
-      targetPort: {{ .Values.service.cromwellPort }}
+{{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
+{{ define "coa-helm.cromwell-service" }}
 status:
   loadBalancer: {}
+{{ end }}
 
 ---
 
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "app.fullname" . }}-cromwell-config
+{{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
+{{ define "coa-helm.cromwell-config" }}
 data:
   cromwell-application.conf: |-
     include required(classpath("application"))
@@ -156,13 +132,5 @@ data:
       }
     }
 
-    database {
-      db.url = "jdbc:postgresql://coa-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
-      db.user = {{ .Values.postgres.user | quote }}
-      db.password = {{ .Values.postgres.password | b64enc | quote }}
-      db.driver = "org.postgresql.Driver"
-      profile = "slick.jdbc.PostgresProfile$"
-      db.connectionTimeout = 15000
-    }
-
-
+{{ include "terra-batch-libchart.cromwell-config.database.conf" . | indent 4 }}
+{{ end }}
