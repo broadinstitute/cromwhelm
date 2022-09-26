@@ -14,12 +14,16 @@ exports:
       www_dir: /www/data
       www_file: index.html
 
+    # Note: If you change the location of cbas-ui image config, please also update publish.yml in cbas-ui
+    #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
       image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.8
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
 
+    # Note: If you change the location of cbas image config, please also update publish.yml in cbas
+    #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
       image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.18
