@@ -3,7 +3,7 @@ entries:
   Cromwell with Postgres:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-09-27T21:17:35.841280736Z"
+    created: "2022-09-27T22:18:03.5034052Z"
     description: Simple Cromwell deployment with Postgres database
     digest: dcb4a05c3517b1b8fab34c79444bf57fc876c398e0573f1562352d5ea1ddd823
     name: Cromwell with Postgres
@@ -14,7 +14,7 @@ entries:
   CromwellHsqldbLocalMinikube:
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.842015971Z"
+    created: "2022-09-27T22:18:03.504118795Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 3dd85df71a65c04306a195df27f066dc67f7a46e5b271ead0759c1819323f54a
     name: CromwellHsqldbLocalMinikube
@@ -24,7 +24,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.841736758Z"
+    created: "2022-09-27T22:18:03.503860897Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: a4b97391c01fc03322d82605c47b887b37a1254cfbbf22bf47ab8d31d3114831
     name: CromwellHsqldbLocalMinikube
@@ -34,7 +34,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.841479045Z"
+    created: "2022-09-27T22:18:03.503591999Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 68d53f23cea57a45c49ec37a2b22a54d8ca937ed5271501676f86ddf86f693f2
     name: CromwellHsqldbLocalMinikube
@@ -45,7 +45,24 @@ entries:
   cromwell:
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-09-27T21:17:35.958710367Z"
+    created: "2022-09-27T22:18:03.616998455Z"
+    dependencies:
+    - import-values:
+      - common
+      name: terra-batch-libchart
+      repository: file://../terra-batch-libchart
+      version: 0.0.2
+    description: Simple Cromwell deployment with Postgres database with Local and
+      PAPIv2 (application-default) backends configured.
+    digest: 4624b2d51295a7dcc27bb728edcfdafabc1a5c66de1751ad3c0382b1920db679
+    name: cromwell
+    type: application
+    urls:
+    - https://broadinstitute.github.io/cromwhelm/charts/cromwell-0.2.96.tgz
+    version: 0.2.96
+  - apiVersion: v2
+    appVersion: 85-6227be9-SNAP
+    created: "2022-09-27T22:18:03.615838064Z"
     dependencies:
     - import-values:
       - common
@@ -62,7 +79,7 @@ entries:
     version: 0.2.95
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-09-27T21:17:35.956655069Z"
+    created: "2022-09-27T22:18:03.614282875Z"
     dependencies:
     - import-values:
       - common
@@ -79,7 +96,7 @@ entries:
     version: 0.2.94
   - apiVersion: v2
     appVersion: 85-6894936-SNAP
-    created: "2022-09-27T21:17:35.955484913Z"
+    created: "2022-09-27T22:18:03.612625687Z"
     dependencies:
     - import-values:
       - common
@@ -96,7 +113,7 @@ entries:
     version: 0.2.93
   - apiVersion: v2
     appVersion: 85-6894936-SNAP
-    created: "2022-09-27T21:17:35.954340358Z"
+    created: "2022-09-27T22:18:03.611177398Z"
     dependencies:
     - import-values:
       - common
@@ -113,7 +130,7 @@ entries:
     version: 0.2.92
   - apiVersion: v2
     appVersion: 85-6894936-SNAP
-    created: "2022-09-27T21:17:35.953168902Z"
+    created: "2022-09-27T22:18:03.610050607Z"
     dependencies:
     - import-values:
       - common
@@ -130,7 +147,7 @@ entries:
     version: 0.2.91
   - apiVersion: v2
     appVersion: 85-e3f1ad0-SNAP
-    created: "2022-09-27T21:17:35.952040748Z"
+    created: "2022-09-27T22:18:03.608912215Z"
     dependencies:
     - import-values:
       - common
@@ -147,7 +164,7 @@ entries:
     version: 0.2.90
   - apiVersion: v2
     appVersion: 85-4884f73-SNAP
-    created: "2022-09-27T21:17:35.950198059Z"
+    created: "2022-09-27T22:18:03.607065929Z"
     dependencies:
     - import-values:
       - common
@@ -164,7 +181,7 @@ entries:
     version: 0.2.89
   - apiVersion: v2
     appVersion: 85-01d63af-SNAP
-    created: "2022-09-27T21:17:35.9489569Z"
+    created: "2022-09-27T22:18:03.605918337Z"
     dependencies:
     - import-values:
       - common
@@ -181,7 +198,7 @@ entries:
     version: 0.2.88
   - apiVersion: v2
     appVersion: 85-f289382-SNAP
-    created: "2022-09-27T21:17:35.947779943Z"
+    created: "2022-09-27T22:18:03.604753446Z"
     dependencies:
     - import-values:
       - common
@@ -198,7 +215,7 @@ entries:
     version: 0.2.87
   - apiVersion: v2
     appVersion: 85-54fed3e-SNAP
-    created: "2022-09-27T21:17:35.945810849Z"
+    created: "2022-09-27T22:18:03.603397256Z"
     dependencies:
     - import-values:
       - common
@@ -215,7 +232,7 @@ entries:
     version: 0.2.86
   - apiVersion: v2
     appVersion: 85-54fed3e-SNAP
-    created: "2022-09-27T21:17:35.943988461Z"
+    created: "2022-09-27T22:18:03.601204472Z"
     dependencies:
     - import-values:
       - common
@@ -232,7 +249,7 @@ entries:
     version: 0.2.85
   - apiVersion: v2
     appVersion: 84-b5ef39a-SNAP
-    created: "2022-09-27T21:17:35.942846307Z"
+    created: "2022-09-27T22:18:03.600043881Z"
     dependencies:
     - import-values:
       - common
@@ -249,7 +266,7 @@ entries:
     version: 0.2.84
   - apiVersion: v2
     appVersion: 84-b5ef39a-SNAP
-    created: "2022-09-27T21:17:35.941688251Z"
+    created: "2022-09-27T22:18:03.59890869Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -264,7 +281,7 @@ entries:
     version: 0.2.83
   - apiVersion: v2
     appVersion: 84-79afa29-SNAP
-    created: "2022-09-27T21:17:35.940544596Z"
+    created: "2022-09-27T22:18:03.597783498Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -279,7 +296,7 @@ entries:
     version: 0.2.82
   - apiVersion: v2
     appVersion: 84-79afa29-SNAP
-    created: "2022-09-27T21:17:35.939417042Z"
+    created: "2022-09-27T22:18:03.596656806Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -294,7 +311,7 @@ entries:
     version: 0.2.81
   - apiVersion: v2
     appVersion: 84-79afa29-SNAP
-    created: "2022-09-27T21:17:35.938297589Z"
+    created: "2022-09-27T22:18:03.595558214Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -309,7 +326,7 @@ entries:
     version: 0.2.80
   - apiVersion: v2
     appVersion: 84-e802f29-SNAP
-    created: "2022-09-27T21:17:35.936380597Z"
+    created: "2022-09-27T22:18:03.593693028Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -324,7 +341,7 @@ entries:
     version: 0.2.79
   - apiVersion: v2
     appVersion: 84-e802f29-SNAP
-    created: "2022-09-27T21:17:35.934327198Z"
+    created: "2022-09-27T22:18:03.591743543Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -339,7 +356,7 @@ entries:
     version: 0.2.78
   - apiVersion: v2
     appVersion: 84-3a19be6-SNAP
-    created: "2022-09-27T21:17:35.932748822Z"
+    created: "2022-09-27T22:18:03.589938956Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -354,7 +371,7 @@ entries:
     version: 0.2.77
   - apiVersion: v2
     appVersion: 84-3a19be6-SNAP
-    created: "2022-09-27T21:17:35.931616168Z"
+    created: "2022-09-27T22:18:03.588816565Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -369,7 +386,7 @@ entries:
     version: 0.2.76
   - apiVersion: v2
     appVersion: 84-3a19be6-SNAP
-    created: "2022-09-27T21:17:35.930510515Z"
+    created: "2022-09-27T22:18:03.587698273Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -384,7 +401,7 @@ entries:
     version: 0.2.75
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-09-27T21:17:35.929374561Z"
+    created: "2022-09-27T22:18:03.586594681Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -399,7 +416,7 @@ entries:
     version: 0.2.74
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-09-27T21:17:35.928158902Z"
+    created: "2022-09-27T22:18:03.585495089Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -414,7 +431,7 @@ entries:
     version: 0.2.73
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-09-27T21:17:35.927014347Z"
+    created: "2022-09-27T22:18:03.584373298Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -429,7 +446,7 @@ entries:
     version: 0.2.72
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-09-27T21:17:35.92581019Z"
+    created: "2022-09-27T22:18:03.583177207Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -444,7 +461,7 @@ entries:
     version: 0.2.71
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-09-27T21:17:35.923017956Z"
+    created: "2022-09-27T22:18:03.581895316Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -459,7 +476,7 @@ entries:
     version: 0.2.70
   - apiVersion: v2
     appVersion: 84-890fd1d-SNAP
-    created: "2022-09-27T21:17:35.921147366Z"
+    created: "2022-09-27T22:18:03.57875434Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -474,7 +491,7 @@ entries:
     version: 0.2.69
   - apiVersion: v2
     appVersion: 84-c2d59fb-SNAP
-    created: "2022-09-27T21:17:35.920027012Z"
+    created: "2022-09-27T22:18:03.577635648Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -489,7 +506,7 @@ entries:
     version: 0.2.68
   - apiVersion: v2
     appVersion: 84-c2d59fb-SNAP
-    created: "2022-09-27T21:17:35.918874257Z"
+    created: "2022-09-27T22:18:03.576529456Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -504,7 +521,7 @@ entries:
     version: 0.2.67
   - apiVersion: v2
     appVersion: 84-c2d59fb-SNAP
-    created: "2022-09-27T21:17:35.917868209Z"
+    created: "2022-09-27T22:18:03.575523964Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -519,7 +536,7 @@ entries:
     version: 0.2.66
   - apiVersion: v2
     appVersion: 84-2eb5843-SNAP
-    created: "2022-09-27T21:17:35.91685366Z"
+    created: "2022-09-27T22:18:03.574514271Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -534,7 +551,7 @@ entries:
     version: 0.2.65
   - apiVersion: v2
     appVersion: 84-df7c09c-SNAP
-    created: "2022-09-27T21:17:35.915831911Z"
+    created: "2022-09-27T22:18:03.573516179Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -549,7 +566,7 @@ entries:
     version: 0.2.64
   - apiVersion: v2
     appVersion: 84-df7c09c-SNAP
-    created: "2022-09-27T21:17:35.914826563Z"
+    created: "2022-09-27T22:18:03.572502086Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -564,7 +581,7 @@ entries:
     version: 0.2.63
   - apiVersion: v2
     appVersion: 84-df7c09c-SNAP
-    created: "2022-09-27T21:17:35.913794913Z"
+    created: "2022-09-27T22:18:03.571476894Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -579,7 +596,7 @@ entries:
     version: 0.2.62
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.912709661Z"
+    created: "2022-09-27T22:18:03.570419902Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -594,7 +611,7 @@ entries:
     version: 0.2.61
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.911303494Z"
+    created: "2022-09-27T22:18:03.569099611Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -609,7 +626,7 @@ entries:
     version: 0.2.60
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.908839576Z"
+    created: "2022-09-27T22:18:03.56662193Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -624,7 +641,7 @@ entries:
     version: 0.2.59
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.907845728Z"
+    created: "2022-09-27T22:18:03.565603337Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -639,7 +656,7 @@ entries:
     version: 0.2.58
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.90684528Z"
+    created: "2022-09-27T22:18:03.564594645Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -654,7 +671,7 @@ entries:
     version: 0.2.57
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.905830532Z"
+    created: "2022-09-27T22:18:03.563579952Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -669,7 +686,7 @@ entries:
     version: 0.2.56
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.904805882Z"
+    created: "2022-09-27T22:18:03.56256656Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -684,7 +701,7 @@ entries:
     version: 0.2.55
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.903798034Z"
+    created: "2022-09-27T22:18:03.561541968Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -699,7 +716,7 @@ entries:
     version: 0.2.54
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.902763084Z"
+    created: "2022-09-27T22:18:03.560504875Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -714,7 +731,7 @@ entries:
     version: 0.2.53
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.901676232Z"
+    created: "2022-09-27T22:18:03.559406584Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -729,7 +746,7 @@ entries:
     version: 0.2.52
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.900248764Z"
+    created: "2022-09-27T22:18:03.556757903Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -744,7 +761,7 @@ entries:
     version: 0.2.51
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.898679989Z"
+    created: "2022-09-27T22:18:03.555725411Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -759,7 +776,7 @@ entries:
     version: 0.2.50
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.896351477Z"
+    created: "2022-09-27T22:18:03.554011924Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -774,7 +791,7 @@ entries:
     version: 0.2.49
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-09-27T21:17:35.895343129Z"
+    created: "2022-09-27T22:18:03.553007631Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -789,7 +806,7 @@ entries:
     version: 0.2.48
   - apiVersion: v2
     appVersion: 84-7a744d9-SNAP
-    created: "2022-09-27T21:17:35.89434028Z"
+    created: "2022-09-27T22:18:03.552000839Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -804,7 +821,7 @@ entries:
     version: 0.2.47
   - apiVersion: v2
     appVersion: 84-12f5463-SNAP
-    created: "2022-09-27T21:17:35.893331232Z"
+    created: "2022-09-27T22:18:03.550942147Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -819,7 +836,7 @@ entries:
     version: 0.2.46
   - apiVersion: v2
     appVersion: 83-5b3b664-SNAP
-    created: "2022-09-27T21:17:35.892300283Z"
+    created: "2022-09-27T22:18:03.549948154Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -834,7 +851,7 @@ entries:
     version: 0.2.45
   - apiVersion: v2
     appVersion: 83-5b3b664-SNAP
-    created: "2022-09-27T21:17:35.891256533Z"
+    created: "2022-09-27T22:18:03.548937261Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -849,7 +866,7 @@ entries:
     version: 0.2.44
   - apiVersion: v2
     appVersion: 83-95c550e-SNAP
-    created: "2022-09-27T21:17:35.890145179Z"
+    created: "2022-09-27T22:18:03.547883969Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -864,7 +881,7 @@ entries:
     version: 0.2.43
   - apiVersion: v2
     appVersion: 83-56d3d1d-SNAP
-    created: "2022-09-27T21:17:35.888218387Z"
+    created: "2022-09-27T22:18:03.546806877Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -879,7 +896,7 @@ entries:
     version: 0.2.42
   - apiVersion: v2
     appVersion: 82-fd5a6b5-SNAP
-    created: "2022-09-27T21:17:35.886634911Z"
+    created: "2022-09-27T22:18:03.545401588Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -894,7 +911,7 @@ entries:
     version: 0.2.41
   - apiVersion: v2
     appVersion: 82-293f233-SNAP
-    created: "2022-09-27T21:17:35.885547459Z"
+    created: "2022-09-27T22:18:03.543823399Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 014f07b51427194832a261e5738a88bb730dd6c8baf74c514849998729c1c112
@@ -905,7 +922,7 @@ entries:
     version: 0.2.40
   - apiVersion: v2
     appVersion: 82-06a7aea-SNAP
-    created: "2022-09-27T21:17:35.883979884Z"
+    created: "2022-09-27T22:18:03.542015713Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 87976d844453c0498a6c0f46b464952d6ad41f2afec98fbd9b3f5a136ffd97f1
@@ -916,7 +933,7 @@ entries:
     version: 0.2.39
   - apiVersion: v2
     appVersion: 82-06a7aea-SNAP
-    created: "2022-09-27T21:17:35.883125243Z"
+    created: "2022-09-27T22:18:03.541167319Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: f8fc326c3882c4d694d0613159130cadce9bbf666dc3ae8722f2435da3614109
@@ -927,7 +944,7 @@ entries:
     version: 0.2.38
   - apiVersion: v2
     appVersion: 82-d79ac35-SNAP
-    created: "2022-09-27T21:17:35.882270502Z"
+    created: "2022-09-27T22:18:03.540299326Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 082ad1e2759f570f76f70da8c12e69c6bae726d2abd0b375e23e877bb5ddc494
@@ -938,7 +955,7 @@ entries:
     version: 0.2.37
   - apiVersion: v2
     appVersion: 82-e28dcb1-SNAP
-    created: "2022-09-27T21:17:35.881378759Z"
+    created: "2022-09-27T22:18:03.539440332Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 6351b992da2bcc0881ad6170bed6881fab1ee8a6db60765923cf4d0990d87a2d
@@ -949,7 +966,7 @@ entries:
     version: 0.2.36
   - apiVersion: v2
     appVersion: 82-e28dcb1-SNAP
-    created: "2022-09-27T21:17:35.880491616Z"
+    created: "2022-09-27T22:18:03.538563839Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 312a4bc83d3d0ade1f63b93c679d289dcee2cab501b276549af9da9625643479
@@ -960,7 +977,7 @@ entries:
     version: 0.2.35
   - apiVersion: v2
     appVersion: 82-0325524-SNAP
-    created: "2022-09-27T21:17:35.879579073Z"
+    created: "2022-09-27T22:18:03.537721445Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: bf987512611d4273553815a82a810a29e71bb671bb98dbc9bbe2123ef2070ee0
@@ -971,7 +988,7 @@ entries:
     version: 0.2.34
   - apiVersion: v2
     appVersion: 82-30874d9-SNAP
-    created: "2022-09-27T21:17:35.877682882Z"
+    created: "2022-09-27T22:18:03.536859251Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 140aab4adad7d3131d52d62195831c60f5981a52792d6723067729f5907ee56a
@@ -982,7 +999,7 @@ entries:
     version: 0.2.33
   - apiVersion: v2
     appVersion: 82-30874d9-SNAP
-    created: "2022-09-27T21:17:35.876329717Z"
+    created: "2022-09-27T22:18:03.535943358Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 4bd3a396d9bfd86e35b2c04858224402d8e3eb183601b8ff907f8befa5cad607
@@ -993,7 +1010,7 @@ entries:
     version: 0.2.32
   - apiVersion: v2
     appVersion: 82-30874d9-SNAP
-    created: "2022-09-27T21:17:35.875498177Z"
+    created: "2022-09-27T22:18:03.533832474Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 2c5a713ae6852ae59893be57a6da555933818e1ff653c4f164e2ac3e824edb06
@@ -1004,7 +1021,7 @@ entries:
     version: 0.2.31
   - apiVersion: v2
     appVersion: 81-3e9aec2-SNAP
-    created: "2022-09-27T21:17:35.874666037Z"
+    created: "2022-09-27T22:18:03.532602783Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: ca132ae31365d43e38d3dea60c785b97a6dfc16ebe7735e25032daef1a7c7515
@@ -1015,7 +1032,7 @@ entries:
     version: 0.2.30
   - apiVersion: v2
     appVersion: 81-3e9aec2-SNAP
-    created: "2022-09-27T21:17:35.873825197Z"
+    created: "2022-09-27T22:18:03.531753989Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: d9f147d78ef35a860c3fa29df8774d81318aec5acdcbdb820580bc14b2c70fbd
@@ -1026,7 +1043,7 @@ entries:
     version: 0.2.29
   - apiVersion: v2
     appVersion: 81-21fc23f-SNAP
-    created: "2022-09-27T21:17:35.872954655Z"
+    created: "2022-09-27T22:18:03.530903596Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 62ad4b19f1776ae88b005420916d7e40735026f1e992921bfb2b1c2483fd19d3
@@ -1037,7 +1054,7 @@ entries:
     version: 0.2.28
   - apiVersion: v2
     appVersion: 81-5f48ded-SNAP
-    created: "2022-09-27T21:17:35.872116515Z"
+    created: "2022-09-27T22:18:03.530069802Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 0e3494e27718b10ade5faed864d8d670608d95f7e95b2c5f25a20a7327df4124
@@ -1048,7 +1065,7 @@ entries:
     version: 0.2.27
   - apiVersion: v2
     appVersion: 81-a35e80e-SNAP
-    created: "2022-09-27T21:17:35.871242773Z"
+    created: "2022-09-27T22:18:03.529238708Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 7c4ed6d362e774c35d9a64ae9cd57bc7bab6d891f62494e9b30ab924df6a1eff
@@ -1059,7 +1076,7 @@ entries:
     version: 0.2.26
   - apiVersion: v2
     appVersion: 81-c106cc4-SNAP
-    created: "2022-09-27T21:17:35.870328729Z"
+    created: "2022-09-27T22:18:03.528391114Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 6331223bddca4a8dbc774c764fea2d45826a92d0c4f524dbcf9fa810d0938deb
@@ -1070,7 +1087,7 @@ entries:
     version: 0.2.25
   - apiVersion: v2
     appVersion: 81-c1cda84-SNAP
-    created: "2022-09-27T21:17:35.869368183Z"
+    created: "2022-09-27T22:18:03.527540221Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 47931fcbb11bccf56abcab0617dd1a8cb6db17233cef98debb9edf36924bca27
@@ -1081,7 +1098,7 @@ entries:
     version: 0.2.24
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-09-27T21:17:35.858687271Z"
+    created: "2022-09-27T22:18:03.526665027Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: e68b2efd2b0a0cf544127db385abd809b831fa01d7273c913ddacb238b0c2cda
@@ -1092,7 +1109,7 @@ entries:
     version: 0.2.23
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-09-27T21:17:35.857724824Z"
+    created: "2022-09-27T22:18:03.525741934Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 3726dff5ff43975b21fdc26a96f9fe917001781d9bee8ae0529b48ba6d72d825
@@ -1103,7 +1120,7 @@ entries:
     version: 0.2.22
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-09-27T21:17:35.856858683Z"
+    created: "2022-09-27T22:18:03.518040191Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: f5f33a454c553189bfb0323f56aa70f92b9ffeb40afdeebb74f01df8fe6012a9
@@ -1114,7 +1131,7 @@ entries:
     version: 0.2.21
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-09-27T21:17:35.856021643Z"
+    created: "2022-09-27T22:18:03.517195098Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: fd4aae1bf094775758815279e7b3cf3ce59df316c4b6bd65f0eb97004c3b499b
@@ -1125,7 +1142,7 @@ entries:
     version: 0.2.20
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-09-27T21:17:35.855162502Z"
+    created: "2022-09-27T22:18:03.516353004Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 9c34fc70a0750b45dc64d4b2b3f61d614ecce989d8d81f3e3177cf896609c5a2
@@ -1136,7 +1153,7 @@ entries:
     version: 0.2.19
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-09-27T21:17:35.854323961Z"
+    created: "2022-09-27T22:18:03.51552471Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: a5c2e63be43f298c648f8c08251bc64f30aafc34a5722a47380637432816f3a6
@@ -1147,7 +1164,7 @@ entries:
     version: 0.2.18
   - apiVersion: v2
     appVersion: 80-7e067d5-SNAP
-    created: "2022-09-27T21:17:35.853508422Z"
+    created: "2022-09-27T22:18:03.514667716Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 4a5c0cc353760be69a322198489d448ea54f7f0d704070def2c2edfd1eff3dcc
@@ -1158,7 +1175,7 @@ entries:
     version: 0.2.17
   - apiVersion: v2
     appVersion: 80-b78af4e-SNAP
-    created: "2022-09-27T21:17:35.85263568Z"
+    created: "2022-09-27T22:18:03.513845823Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: edf3dc2ca4592aa01452a990c3aa0b330e13d49cc1ac82d90ac81a283b2d65e5
@@ -1169,7 +1186,7 @@ entries:
     version: 0.2.16
   - apiVersion: v2
     appVersion: 80-b78af4e-SNAP
-    created: "2022-09-27T21:17:35.851873044Z"
+    created: "2022-09-27T22:18:03.513100828Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: df44f4ff8d373a0746d01daeb798e8f04366b634eb7a7a60f5690f5591e68bc8
@@ -1180,7 +1197,7 @@ entries:
     version: 0.2.15
   - apiVersion: v2
     appVersion: 80-b78af4e-SNAP
-    created: "2022-09-27T21:17:35.850917098Z"
+    created: "2022-09-27T22:18:03.512383433Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 2ef1a32d284a66331534d34da4d58dadd3711c736f239bb42254e8b10e4a822c
@@ -1191,7 +1208,7 @@ entries:
     version: 0.2.14
   - apiVersion: v2
     appVersion: 80-d0dd831-SNAP
-    created: "2022-09-27T21:17:35.848622388Z"
+    created: "2022-09-27T22:18:03.511659939Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 86c1caa83c7b2b9c5d35493690d5c56df30f07237f2332ccf6082525b45375a6
@@ -1202,7 +1219,7 @@ entries:
     version: 0.2.13
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-09-27T21:17:35.847883053Z"
+    created: "2022-09-27T22:18:03.510896045Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: a59cadb41d7c50e2137e4a33eb8a73439c728b40854f161cee625b75484aac40
@@ -1213,7 +1230,7 @@ entries:
     version: 0.2.12
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-09-27T21:17:35.847174819Z"
+    created: "2022-09-27T22:18:03.509375256Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 5663d3564b940f4bbfdde33e8d455921a99cd4e8b33171cc8b4f479b3b71f4fb
@@ -1224,7 +1241,7 @@ entries:
     version: 0.2.11
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-09-27T21:17:35.846472985Z"
+    created: "2022-09-27T22:18:03.508062166Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: f353535c613b6cb3036cbe15250c8cf34758f14eec899f67ba4d97491a152f30
@@ -1235,7 +1252,7 @@ entries:
     version: 0.2.10
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-09-27T21:17:35.950892493Z"
+    created: "2022-09-27T22:18:03.607784923Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 0b03a2fe499d3f1b3fb9677fb60ccdc4223a2bd833bd36ab8a6a076181c69cce
@@ -1246,7 +1263,7 @@ entries:
     version: 0.2.9
   - apiVersion: v2
     appVersion: 79-49f3ef1-SNAP
-    created: "2022-09-27T21:17:35.937134433Z"
+    created: "2022-09-27T22:18:03.594411223Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 8f58d4383aa4390657bea4e4dca09845d97994f208bcfbb22ce36f99ea36a20c
@@ -1257,7 +1274,7 @@ entries:
     version: 0.2.8
   - apiVersion: v2
     appVersion: 79-841bf43-SNAP
-    created: "2022-09-27T21:17:35.921885001Z"
+    created: "2022-09-27T22:18:03.579463334Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: d324c52841e41cec39659b77a06b24c8df61e5800be06fffa6b63f0bdd92467a
@@ -1268,7 +1285,7 @@ entries:
     version: 0.2.7
   - apiVersion: v2
     appVersion: 79-c57b611-SNAP
-    created: "2022-09-27T21:17:35.909574711Z"
+    created: "2022-09-27T22:18:03.567508123Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 31f26825a77b65382341fa8b977c6e135433b779306a74a725623fe4db422687
@@ -1279,7 +1296,7 @@ entries:
     version: 0.2.6
   - apiVersion: v2
     appVersion: 79-c57b611-SNAP
-    created: "2022-09-27T21:17:35.89704801Z"
+    created: "2022-09-27T22:18:03.554703419Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 8943aaf0feb2e7fa7093f485f633edda1861b05b06fefacf095cb7db37d897b2
@@ -1290,7 +1307,7 @@ entries:
     version: 0.2.5
   - apiVersion: v2
     appVersion: 79-69b85e0-SNAP
-    created: "2022-09-27T21:17:35.884675017Z"
+    created: "2022-09-27T22:18:03.542706308Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: fb496f60543fe77c6c496fe8415d0060846a5b7a811388e93ac38eacc71701d7
@@ -1301,7 +1318,7 @@ entries:
     version: 0.2.4
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-09-27T21:17:35.842487194Z"
+    created: "2022-09-27T22:18:03.504589791Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: c2f977edbf7d89a5bf2fbf4ec73f3bbf2891f89ff0a8702892870559ec7f5eb2
@@ -1312,7 +1329,7 @@ entries:
     version: 0.1.10
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-09-27T21:17:35.845311729Z"
+    created: "2022-09-27T22:18:03.507030973Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 109d47515f35689e3b778780f37574855895e8bca72f3b5dacf24923898119ea
@@ -1323,7 +1340,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-09-27T21:17:35.844757103Z"
+    created: "2022-09-27T22:18:03.506609376Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 810251c2557c8fae747ed3c2edec01a42ea9d63eb5ebb9b62cdba81cb067bf97
@@ -1334,7 +1351,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-09-27T21:17:35.844211576Z"
+    created: "2022-09-27T22:18:03.50618978Z"
     description: Simple Cromwell deployment with Postgres database running jobs locally
     digest: e9b28fac462f69f48c89bc28d8d168cd3dcdbdab5b8243d0d09e6129fbfe7fd4
     name: cromwell
@@ -1344,7 +1361,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.843819358Z"
+    created: "2022-09-27T22:18:03.505852882Z"
     description: Simple Cromwell deployment with Postgres database running jobs locally
     digest: ae59ae9fa9765891d8e15f1e477901a55cbd1346621d7b7029298323c5f5fbf5
     name: cromwell
@@ -1354,7 +1371,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.84345224Z"
+    created: "2022-09-27T22:18:03.505503785Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: cf318a0ac13836eb71312058f512e8e9f92e58a4cbb061f41c09e770eb42dfbb
     name: cromwell
@@ -1364,7 +1381,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.843078022Z"
+    created: "2022-09-27T22:18:03.505160987Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 072eb6464b8ae6f2744adef995b1a7807ff3e9879db80557f0904b703a494144
     name: cromwell
@@ -1374,7 +1391,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-09-27T21:17:35.842762207Z"
+    created: "2022-09-27T22:18:03.50485389Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 56c38a6b51039fe0ffa458db073272a616d3f3ae0fdf7eb8fb9079ee17604122
     name: cromwell
@@ -1385,7 +1402,7 @@ entries:
   pgcromwell:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-09-27T21:17:35.959416001Z"
+    created: "2022-09-27T22:18:03.617364152Z"
     description: Simple Cromwell deployment with Postgres database
     digest: 52c9420bed5f821d2407a67f8f9e74635e72fccdf3e17c5290190c8ed1b55bba
     name: pgcromwell
@@ -1393,4 +1410,4 @@ entries:
     urls:
     - https://broadinstitute.github.io/cromwhelm/charts/pgcromwell-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-27T21:17:35.840823414Z"
+generated: "2022-09-27T22:18:03.502934504Z"
