@@ -14,6 +14,11 @@
 {{ define "cromwell-helm.cbas-api-config" }}
 data:
   {{ .Values.cbas.conf_file }}: |-
+    spring.liquibase:
+      url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
+      user: {{ .Values.postgres.user }}
+      password: {{ include "dbPassword" . | b64enc | quote }}
+      change-log: changelog/changelog.yaml
     cbas:
       cbas-database:
         uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
