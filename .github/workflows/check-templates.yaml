@@ -1,0 +1,27 @@
+name: Check Helm templates
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  run-helm-template:
+    name: Check Helm templates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.BROADBOT_TOKEN }}
+      - name: Update dependencies
+        run: |
+          helm dependency update cromwell-helm/
+          helm dependency update coa-helm/
+      - name: Check templates
+        run: |
+          echo \
+            "The outputs of this step include a placeholder database password that has been B64 encoded."\
+            "This makes it look like a sensitive secret, but it is not."\
+            "The encoded value 'U1VQUExJRUQgQlkgTEVP' decodes to the string 'SUPPLIED BY LEO'."
+          helm template cromwell-helm/
+          helm template coa-helm/
