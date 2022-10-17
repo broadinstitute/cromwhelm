@@ -6,7 +6,7 @@ on:
 
 jobs:
   run-helm-template:
-    name: Create Leonardo PR
+    name: Check Helm templates
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
@@ -17,7 +17,7 @@ jobs:
         run: |
           helm dependency update cromwell-helm/
           helm dependency update coa-helm/
-      - name: Check template values
+      - name: Check templates
         run: |
           helm template cromwell-helm/
           helm template coa-helm/
