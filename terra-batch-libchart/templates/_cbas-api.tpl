@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app.fullname" . }}-cbas-depl
+  name: {{ include "app.BADVALUE" . }}-cbas-depl
   labels:
     {{- include "app.labels" . | nindent 4 }}
 spec:
