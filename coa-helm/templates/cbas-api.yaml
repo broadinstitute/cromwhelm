@@ -18,7 +18,7 @@
 data:
   {{ .Values.cbas.conf_file }}: |-
     spring.liquibase:
-      url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.db.port }}/{{ .Values.db.cbas.dbname }}
+      url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
       user: {{ .Values.postgres.user }}
       password: {{ include "dbPassword" . | b64enc | quote }}
       change-log: changelog/changelog.yaml
