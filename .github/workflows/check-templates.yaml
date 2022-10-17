@@ -21,3 +21,7 @@ jobs:
         run: |
           helm template cromwell-helm/
           helm template coa-helm/
+          echo \
+            "The output above includes a placeholder database password that has been B64 encoded."\
+            "This makes it look like a sensitive secret, but it is not."\
+            "The encoded value 'U1VQUExJRUQgQlkgTEVP' decodes to the string 'SUPPLIED BY LEO'."
