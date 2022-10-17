@@ -26,7 +26,7 @@ spec:
               mountPath: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
               subPath: {{ .Values.wds.conf_file }}
           env:
-            - name: SPRING_CONFIG_LOCATION
+            - name: SPRING_CONFIG_ADDITIONAL-LOCATION
               value: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
             - name: WDS_DB_HOST
               value: {{ include "app.fullname" . }}-postgres
@@ -81,14 +81,7 @@ metadata:
   name: {{ include "app.fullname" . }}-wds-config
 data:
   {{ .Values.wds.conf_file }}: |-
-    spring:
-      datasource:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.wds.dbname }}
-        username: {{ .Values.postgres.user }}
-        password: {{ include "dbPassword" . | b64enc | quote }}
-      liquibase:
-        change-log: classpath:db/changelog.xml
-        enabled: true
+    # Config overrides go here
 
 {{- end -}}
 {{- define "terra-batch-libchart.wds-config" -}}
