@@ -96,16 +96,21 @@ data:
     engine {
       filesystems {
         local {
-          enabled: true
+          enabled: false
         }
         http {
           enabled: true
+        }
+        blob {
+          enabled: true
+          container: "{{ .Values.persistence.blobContainer }}"
+          endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
         }
       }
     }
 
     workflow-options {
-      workflow-log-dir: "/cromwell-workflow-logs"
+      workflow-log-dir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/app-1234/cromwell-workflow-logs"
       workflow-log-temporary: false
     }
 
@@ -116,9 +121,19 @@ data:
           actor-factory = "cromwell.backend.impl.tes.TesBackendLifecycleActorFactory"
           config {
             filesystems {
-              http { }
+              http {
+                enabled: true
+              }
+              local {
+                enabled: false
+              }
+              blob {
+                enabled: true
+                container: "cromwell"
+                endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
+              }
             }
-            root = "/cromwell-executions"
+            root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/app-1234/"
             dockerRoot = "/cromwell-executions"
             endpoint = "http://tes/v1/tasks"
             use_tes_11_preview_backend_parameters = true
