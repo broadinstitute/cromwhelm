@@ -65,7 +65,7 @@ jobs:
           TEMP=$(mktemp)
           git checkout -b "${NEW_BRANCH_NAME}"
 
-          SED_STRING="s/${OLD_CROMWELL_HELM_V}/${NEW_CROMWELL_HELM_V}/g"
+          SED_STRING="s/${versionFromReference}/${NEW_CROMWELL_HELM_V}/g"
           FILES=( "Dockerfile" "http/src/main/resources/reference.conf" )
           for i in "${FILES[@]}"
           do
