@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - 'main'
-  workflow_dispatch:
 
 jobs:
   update-and-publish:
@@ -47,7 +46,6 @@ jobs:
         env:
           BROADBOT_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
         run: |
-          git fetch
           git checkout main
           git diff
           git add .
