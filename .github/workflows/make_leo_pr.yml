@@ -44,9 +44,9 @@ jobs:
           function getVersionFromReference(){
             # A function for extracting the current chart version from Leonardo's reference.conf
             cat $1 | \                              # print the contents of input file (reference.conf).
-            sed \                                   # delete ...
-              -e '/cromwellApp/,/chartVersion/!d' \ #   (1) everything that isn't between these two strings
-              -e 's:^[ ]*::' | \                    #   (2) each line's leading whitespace
+            sed \
+              -e '/cromwellApp/,/chartVersion/!d' \
+              -e 's:^[ ]*::' | \                    # select only the text between "cromwellApp" and "chartVersion"
             tail -1 | \                             # get the last line of the resulting text.
             awk -F'"' '{print $2}'                  # extract the version number from between the quotes.
           }
