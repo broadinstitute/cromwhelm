@@ -16,7 +16,7 @@ jobs:
       - name: Find out latest chart version from cromwhelm repository
         run: |
           function getLatestChartVersion(){
-            # A function for extracting the highest chart version from those in the /charts directory.
+            # A function for extracting the highest chart version from those in the input directory.
             ls $1 | \                         # list the input directory contents.
             grep ^cromwell- | \               # search the contents for files that start with "cromwell-".
             sed 's:cromwell-::; s:.tgz::' | \ # delete "cromwell-" and ".tgz" from each result.
@@ -48,7 +48,7 @@ jobs:
           }
 
           function getVersionFromDocker(){
-            # A function for extracting the current chart version from Leonardo's reference.conf
+            # A function for extracting the current chart version from Leonardo's Dockerfile
             grep "ENV CROMWELL_CHART_VERSION" $1 | \ # search for the line where the chart version is set.
             awk -F'[ ]' '{ print $3 }'               # print the third whitespace-separated word (the version).
           }
