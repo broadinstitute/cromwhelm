@@ -47,7 +47,7 @@ jobs:
         env:
           BROADBOT_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
         run: |
-          git checkout main
+          git checkout origin/main
           git diff
           git add .
           git config --global user.name "broadbot"
