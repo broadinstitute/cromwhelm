@@ -2,22 +2,30 @@ name: Make Leonardo PR
 
 on:
   workflow_dispatch:
-    inputs:
-      old_cromwell_helm_version:
-        description: 'What version of cromwell-helm to update from'
-        required: true
-      new_cromwell_helm_version:
-        description: 'What version of cromwell-helm to update to'
-        required: true
-      jira_ticket:
-        description: 'The JIRA ticket to link the update PR to'
-        required: true
 
 jobs:
   make-leonardo-pr:
     name: Create Leonardo PR
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the cromwhelm repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
+
+      - name: Find out latest chart version from cromwhelm repository
+        run: |
+          function getLatestChartVersion(){
+            # A function for extracting the highest chart version from those in the input directory.
+            ls $1 | \                         # list the input directory contents.
+            grep ^cromwell- | \               # search the contents for files that start with "cromwell-".
+            sed 's:cromwell-::; s:.tgz::' | \ # delete "cromwell-" and ".tgz" from each result.
+            sort -V | \                       # sort the resulting versions with -V, in ascending order.
+            tail -1                           # get the last (highest) version.
+          }
+
+          echo "NEW_CROMWELL_HELM_V=$(getLatestChartVersion charts)" >> $GITHUB_ENV
+
       - name: Clone leonardo
         uses: actions/checkout@v2
         with:
@@ -29,14 +37,41 @@ jobs:
         env:
           BROADBOT_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
         run: |
+          function getVersionFromReference(){
+            # A function for extracting the current chart version from Leonardo's reference.conf
+            cat $1 | \                              # print the contents of input file (reference.conf).
+            sed \                                   # delete ...
+              -e '/cromwellApp/,/chartVersion/!d' \ #   (1) everything that isn't between these two strings
+              -e 's:^[ ]*::' | \                    #   (2) each line's leading whitespace
+            tail -1 | \                             # get the last line of the resulting text.
+            awk -F'"' '{print $2}'                  # extract the version number from between the quotes.
+          }
+
+          function getVersionFromDocker(){
+            # A function for extracting the current chart version from Leonardo's Dockerfile
+            grep "ENV CROMWELL_CHART_VERSION" $1 | \ # search for the line where the chart version is set.
+            awk -F'[ ]' '{ print $3 }'               # print the third whitespace-separated word (the version).
+          }
+
           cd leonardo
-          JIRA_TICKET=${{ github.event.inputs.jira_ticket }}
-          OLD_CROMWELL_HELM_V=${{ github.event.inputs.old_cromwell_helm_version }}
-          NEW_CROMWELL_HELM_V=${{ github.event.inputs.new_cromwell_helm_version }}
-          NEW_BRANCH_NAME="${JIRA_TICKET}_cromwell_helm_${NEW_CROMWELL_HELM_V}"
+
+          versionFromReference=$(getVersionFromReference http/src/main/resources/reference.conf)
+          versionFromDocker=$(getVersionFromDocker Dockerfile)
+
+          if [ $versionFromReference != $versionFromDocker ]; then
+            echo "ERROR: Cromwell versions in reference.conf and Dockerfile do not match." \
+                 "($versionFromReference != $versionFromDocker)" \
+            exit 1
+          fi
+
+          echo "OLD_CROMWELL_HELM_V=$versionFromReference" >> $GITHUB_ENV
+
+
+          NEW_BRANCH_NAME="cromwell_helm_${NEW_CROMWELL_HELM_V}-AUTOMERGE"
           TEMP=$(mktemp)
           git checkout -b "${NEW_BRANCH_NAME}"
-          SED_STRING="s/${OLD_CROMWELL_HELM_V}/${NEW_CROMWELL_HELM_V}/g"
+
+          SED_STRING="s/${versionFromReference}/${NEW_CROMWELL_HELM_V}/g"
           FILES=( "Dockerfile" "http/src/main/resources/reference.conf" )
           for i in "${FILES[@]}"
           do
@@ -45,10 +80,11 @@ jobs:
             mv ${TEMP} ${i}
             git add ${i}
           done
+
           echo "Pushing to leonardo branch ${NEW_BRANCH_NAME}"
           git config --global user.name "broadbot"
           git config --global user.email "broadbot@broadinstitute.org"
-          git commit -m "Updating Cromwell version to ${NEW_CROMWELL_HELM_V}"
+          git commit -m "Auto-update Cromwell version to ${NEW_CROMWELL_HELM_V}"
           git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/leonardo.git ${NEW_BRANCH_NAME}
           echo ::set-output name=NEW_BRANCH_NAME::${NEW_BRANCH_NAME}
       - name: Create leonardo PR
@@ -57,7 +93,7 @@ jobs:
           github-token: ${{ secrets.BROADBOT_TOKEN }}
           script: |
             const result = await github.rest.pulls.create({
-              title: '${{ github.event.inputs.jira_ticket }}: Update Cromwell version to ${{ github.event.inputs.new_cromwell_helm_version }}',
+              title: '[AUTOMERGE] Update Cromwell version to ${NEW_CROMWELL_HELM_V}',
               owner: 'broadinstitute',
               repo: 'leonardo',
               head: '${{ steps.update-and-push.outputs.NEW_BRANCH_NAME }}',
@@ -67,7 +103,7 @@ jobs:
                 '[Cromwhelm actions/make_leo_pr](https://github.com/broadinstitute/cromwhelm/blob/main/.github/workflows/make_leo_pr.yml), using',
                 '[github actions/github-script](https://github.com/actions/github-script).',
                 '',
-                'It updates cromwell-helm from version ${{ github.event.inputs.old_cromwell_helm_version }} to ${{ github.event.inputs.new_cromwell_helm_version }}.'
+                'It updates cromwell-helm from version ${OLD_CROMWELL_HELM_V} to ${NEW_CROMWELL_HELM_V}.'
               ].join('\n')
             });
 
