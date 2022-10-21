@@ -21,11 +21,11 @@ jobs:
         run: |
           function getLatestChartVersion(){
             # A function for extracting the highest chart version from those in the input directory.
-            ls $1 | \                         # list the input directory contents.
-            grep ^cromwell- | \               # search the contents for files that start with "cromwell-".
-            sed 's:cromwell-::; s:.tgz::' | \ # delete "cromwell-" and ".tgz" from each result.
-            sort -V | \                       # sort the resulting versions with -V, in ascending order.
-            tail -1                           # get the last (highest) version.
+            ls $1 |                         # list the input directory contents.
+            grep ^cromwell- |               # search the contents for files that start with "cromwell-".
+            sed 's:cromwell-::; s:.tgz::' | # delete "cromwell-" and ".tgz" from each result.
+            sort -V |                       # sort the resulting versions with -V, in ascending order.
+            tail -1                         # get the last (highest) version.
           }
 
           echo "NEW_CROMWELL_HELM_V=$(getLatestChartVersion charts)" >> $GITHUB_ENV
@@ -43,18 +43,19 @@ jobs:
         run: |
           function getVersionFromReference(){
             # A function for extracting the current chart version from Leonardo's reference.conf
-            cat $1 | \                              # print the contents of input file (reference.conf).
-            sed \                                   # delete ...
-              -e '/cromwellApp/,/chartVersion/!d' \ #   (1) everything that isn't between these two strings
-              -e 's:^[ ]*::' | \                    #   (2) each line's leading whitespace
-            tail -1 | \                             # get the last line of the resulting text.
-            awk -F'"' '{print $2}'                  # extract the version number from between the quotes.
+            cat $1 |                # print the contents of input file (reference.conf).
+            sed -e '/cromwellApp/,/chartVersion/!d' -e 's:^[ ]*::' |
+                                    # delete
+                                    #   (1) everything that isn't between these two strings
+                                    #   (2) each line's leading whitespace
+            tail -1 |               # get the last line of the resulting text.
+            awk -F'"' '{print $2}'  # extract the version number from between the quotes.
           }
 
           function getVersionFromDocker(){
             # A function for extracting the current chart version from Leonardo's Dockerfile
-            grep "ENV CROMWELL_CHART_VERSION" $1 | \ # search for the line where the chart version is set.
-            awk -F'[ ]' '{ print $3 }'               # print the third whitespace-separated word (the version).
+            grep "ENV CROMWELL_CHART_VERSION" $1 | # search for the line where the chart version is set.
+            awk -F'[ ]' '{ print $3 }'             # print the third whitespace-separated word (the version).
           }
 
           cd leonardo
