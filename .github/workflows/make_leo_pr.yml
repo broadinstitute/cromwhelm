@@ -69,11 +69,11 @@ jobs:
             exit 1
           fi
 
-          echo "OLD_CROMWELL_HELM_V=$versionFromReference" >> $GITHUB_ENV
-
+          OLD_CROMWELL_HELM_V=$versionFromReference
 
           NEW_BRANCH_NAME="cromwell_helm_${NEW_CROMWELL_HELM_V}-AUTOMERGE"
           TEMP=$(mktemp)
+          git fetch
           git checkout -b "${NEW_BRANCH_NAME}"
 
           SED_STRING="s/${versionFromReference}/${NEW_CROMWELL_HELM_V}/g"
@@ -92,13 +92,15 @@ jobs:
           git commit -m "Auto-update Cromwell version to ${NEW_CROMWELL_HELM_V}"
           git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/leonardo.git ${NEW_BRANCH_NAME}
           echo ::set-output name=NEW_BRANCH_NAME::${NEW_BRANCH_NAME}
+          echo ::set-output name=OLD_CROMWELL_HELM_V::${OLD_CROMWELL_HELM_V}
+          echo ::set-output name=NEW_CROMWELL_HELM_V::${NEW_CROMWELL_HELM_V}
       - name: Create leonardo PR
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.BROADBOT_TOKEN }}
           script: |
             const result = await github.rest.pulls.create({
-              title: '[AUTOMERGE] Update Cromwell version to ${NEW_CROMWELL_HELM_V}',
+              title: '[AUTOMERGE] Update Cromwell version to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}',
               owner: 'broadinstitute',
               repo: 'leonardo',
               head: '${{ steps.update-and-push.outputs.NEW_BRANCH_NAME }}',
@@ -108,7 +110,7 @@ jobs:
                 '[Cromwhelm actions/make_leo_pr](https://github.com/broadinstitute/cromwhelm/blob/main/.github/workflows/make_leo_pr.yml), using',
                 '[github actions/github-script](https://github.com/actions/github-script).',
                 '',
-                'It updates cromwell-helm from version ${OLD_CROMWELL_HELM_V} to ${NEW_CROMWELL_HELM_V}.'
+                'It updates cromwell-helm from version ${{ steps.update-and-push.outputs.OLD_CROMWELL_HELM_V }} to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}.'
               ].join('\n')
             });
 
