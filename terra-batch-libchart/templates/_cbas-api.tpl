@@ -26,7 +26,7 @@ spec:
               mountPath: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}
               subPath: {{ .Values.cbas.conf_file }}
           env:
-            - name: SPRING_CONFIG_LOCATION
+            - name: SPRING_CONFIG_ADDITIONAL-LOCATION
               value: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}
       volumes:
         - name: {{ include "app.fullname" . }}-cbas-config
