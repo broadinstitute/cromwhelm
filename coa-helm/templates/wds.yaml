@@ -1,5 +1,10 @@
 {{ include "terra-batch-libchart.wds-deploy" (list . "cromwell-helm.wds-deploy") }}
 {{ define "cromwell-helm.wds-deploy" }}
+spec:
+  template:
+    metadata:
+      labels:
+        aadpodidbinding: {{ .Values.identity.name }}
 {{ end }}
 
 ---

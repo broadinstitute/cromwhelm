@@ -2,6 +2,9 @@
 {{ define "coa-helm.cromwell-deploy" }}
 spec:
   template:
+    metadata:
+      labels:
+        aadpodidbinding: {{ .Values.identity.name }}
     spec:
       containers:
         - args:
