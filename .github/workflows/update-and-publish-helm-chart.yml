@@ -40,6 +40,9 @@ jobs:
           helm dependency update cromwell-helm/
           helm package cromwell-helm/
           mv cromwell-${NEXT_VERSION_GCP}.tgz charts/cromwell-${NEXT_VERSION_GCP}.tgz
+          helm dependency update coa-helm/
+          helm package coa-helm/
+          mv cromwell-on-azure-${NEXT_VERSION_COA}.tgz charts/cromwell-on-azure-${NEXT_VERSION_COA}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
       - name: Push changes to GitHub
