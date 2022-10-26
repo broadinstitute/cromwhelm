@@ -21,11 +21,10 @@ jobs:
         run: |
           function getLatestChartVersion(){
             # A function for extracting the highest chart version from those in the input directory.
-            ls $1 |                         # list the input directory contents.
-            grep ^cromwell- |               # search the contents for files that start with "cromwell-".
-            sed 's:cromwell-::; s:.tgz::' | # delete "cromwell-" and ".tgz" from each result.
-            sort -V |                       # sort the resulting versions with -V, in ascending order.
-            tail -1                         # get the last (highest) version.
+            ls $1 |                             # list the input directory contents.
+            grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | # extract semantic versions from filenames.
+            sort -V |                           # sort the resulting versions with -V, in ascending order.
+            tail -1                             # get the last (highest) version.
           }
 
           echo "NEW_CROMWELL_HELM_V=$(getLatestChartVersion charts)" >> $GITHUB_ENV
