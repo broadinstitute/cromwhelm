@@ -1,5 +1,10 @@
 {{ include "terra-batch-libchart.cbas-ui-deploy" (list . "coa-helm.cbas-ui-deploy") }}
 {{ define "coa-helm.cbas-ui-deploy" }}
+spec:
+  template:
+    metadata:
+      labels:
+        aadpodidbinding: {{ .Values.identity.name }}
 {{ end }}
 
 ---
