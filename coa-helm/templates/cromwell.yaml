@@ -91,7 +91,7 @@ data:
     }
 
     workflow-options {
-      workflow-log-dir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/app-1234/cromwell-workflow-logs"
+      workflow-log-dir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/cromwell-workflow-logs"
       workflow-log-temporary: false
     }
 
@@ -114,7 +114,7 @@ data:
                 endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
               }
             }
-            root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/app-1234/"
+            root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/"
             dockerRoot = "/cromwell-executions"
             endpoint = "http://tes/v1/tasks"
             use_tes_11_preview_backend_parameters = true
