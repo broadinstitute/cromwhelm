@@ -48,14 +48,7 @@ spec:
           ports:
             - containerPort: {{ .Values.tes.port }}
           resources: {}
-          volumeMounts:
-            - mountPath: /outputs
-              name: outputs-claim1
       restartPolicy: Always
-      volumes:
-        - name: outputs-claim1
-          persistentVolumeClaim:
-            claimName: outputs-claim1
 status: {}
 
 ---
