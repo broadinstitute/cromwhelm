@@ -17,4 +17,9 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: "automerge,!work in progress"
-          LOG: "DEBUG"
+          MERGE_METHOD: "squash"
+          MERGE_FORKS: "false"
+          MERGE_RETRIES: "12"
+          MERGE_RETRY_SLEEP: "20000"
+          MERGE_REQUIRED_APPROVALS: "0"
+          LOG: "TRACE"
