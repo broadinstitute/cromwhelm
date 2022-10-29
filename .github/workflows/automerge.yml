@@ -3,13 +3,7 @@ on:
   pull_request:
     types:
       - labeled
-      - unlabeled
-      - synchronize
       - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
   check_suite:
     types:
       - completed
@@ -23,3 +17,4 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: "automerge,!work in progress"
+          LOG: "TRACE"
