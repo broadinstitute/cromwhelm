@@ -113,7 +113,7 @@ jobs:
                 'It updates cromwell-helm from version ${{ steps.update-and-push.outputs.OLD_CROMWELL_HELM_V }} to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}.'
               ].join('\n')
             });
-            return result;
+            return JSON.stringify(result);
           result-encoding: string
       - name: Get result
         run: echo "${{ steps.create-leo-pr.outputs.result }}"
