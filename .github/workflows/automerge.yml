@@ -12,6 +12,9 @@ jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github.event) }}'
       - name: automerge
         uses: "broadinstitute/automerge-action@v0.12.0"
         env:
