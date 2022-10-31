@@ -15,7 +15,7 @@ jobs:
       - name: automerge
         uses: "broadinstitute/automerge-action@v0.12.0"
         env:
-          GITHUB_TOKEN: "${{ secrets.BROADBOT_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_METHOD: squash
           MERGE_FORKS: false
           MERGE_RETRIES: 72 # Retry for 6 minutes instead of 30s
