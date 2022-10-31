@@ -94,6 +94,7 @@ jobs:
           echo ::set-output name=OLD_CROMWELL_HELM_V::${OLD_CROMWELL_HELM_V}
           echo ::set-output name=NEW_CROMWELL_HELM_V::${NEW_CROMWELL_HELM_V}
       - name: Create leonardo PR
+        id: create-leo-pr
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.BROADBOT_TOKEN }}
@@ -112,4 +113,6 @@ jobs:
                 'It updates cromwell-helm from version ${{ steps.update-and-push.outputs.OLD_CROMWELL_HELM_V }} to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}.'
               ].join('\n')
             });
+      - name: Get result
+        run: echo "${{steps.create-leo-pr.outputs.result}}"
 
