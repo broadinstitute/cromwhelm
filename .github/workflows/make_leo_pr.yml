@@ -99,7 +99,7 @@ jobs:
         with:
           github-token: ${{ secrets.BROADBOT_TOKEN }}
           script: |
-            const result = await github.rest.pulls.create({
+            const pull_response = await github.rest.pulls.create({
               title: '[AUTOMERGE] Update Cromwell version to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}',
               owner: 'broadinstitute',
               repo: 'leonardo',
@@ -113,7 +113,14 @@ jobs:
                 'It updates cromwell-helm from version ${{ steps.update-and-push.outputs.OLD_CROMWELL_HELM_V }} to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}.'
               ].join('\n')
             });
-            return JSON.stringify(result);
+            const label_response = github.rest.issues.addLabels({
+              owner: 'broadinstitute',
+              repo: 'leonardo',
+              issue_number: pull_response.data.number,
+              labels: ['automerge']
+            });
+
+            return JSON.stringify(label_response);
           result-encoding: string
       - name: Get result
         run: echo "${{ steps.create-leo-pr.outputs.result }}"
