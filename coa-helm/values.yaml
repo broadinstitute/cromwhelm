@@ -13,11 +13,8 @@
   usePreemptibleVmsOnly: false
 
 tes: 
-  image: mcr.microsoft.com/cromwellonazure/tes:2
+  image: mcr.microsoft.com/cromwellonazure/tes:3.1
   port: 80
-
-triggerservice: 
-  image: mcr.microsoft.com/cromwellonazure/triggerservice:2
 
 relaylistener:
   image: terradevacrpublic.azurecr.io/terra-azure-relay-listeners:9eb4762
@@ -31,17 +28,12 @@ relaylistener:
   samUrl: RUNTIME_PARAMETER
 
 persistence:
-  blobPvcSize: 10Gi
+  postgresPvcSize: 10Gi
   cromwellTmpSize: 32Gi
   storageResourceGroup: RUNTIME_PARAMETER
   storageAccount: RUNTIME_PARAMETER
-  blobContainers:
-    - configuration
-    - cromwell-executions
-    - cromwell-workflow-logs
-    - inputs
-    - outputs
-    - workflows
+  blobContainer: RUNTIME_PARAMETER
+  leoAppInstanceName: RUNTIME_PARAMETER
 
 identity:
   name: RUNTIME_PARAMETER
