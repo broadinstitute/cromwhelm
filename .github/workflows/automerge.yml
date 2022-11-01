@@ -3,12 +3,23 @@ on:
   pull_request:
     types:
       - labeled
-      - opened
   check_suite:
     types:
       - completed
   status: {}
 jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: github.event.label.name == 'automerge'
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github.event) }}'
+      - uses: hmarr/auto-approve-action@v3
+        with:
+          review-message: "Auto approved automated PR"
   automerge:
     runs-on: ubuntu-latest
     steps:
