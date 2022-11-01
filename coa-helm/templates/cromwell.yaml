@@ -110,7 +110,7 @@ data:
               }
               blob {
                 enabled: true
-                container: "cromwell"
+                container: "{{ .Values.persistence.blobContainer }}"
                 endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
               }
             }
@@ -118,6 +118,7 @@ data:
             dockerRoot = "/cromwell-executions"
             endpoint = "http://tes/v1/tasks"
             use_tes_11_preview_backend_parameters = true
+            transform-blob-to-local-path = true
             default-runtime-attributes {
               cpu: 1
               failOnStderr: false
