@@ -46,7 +46,7 @@ spec:
                 - name: <TODO>
                   value: <TODO>
               path: {{ .Values.wds.probeEndpoint }}
-              port: {{ .Values.wds.healthCheckPort }}
+              port: {{ .Values.wds.healthcheckPort }}
               scheme: HTTP
               failureThreshold: {{ .Values.probeConstants.failureThreshold }}
               periodSeconds: {{ .Values.probeConstants.periodSeconds }}
@@ -58,7 +58,7 @@ spec:
                  - name: <TODO>
                    value: <TODO>
                path: {{ .Values.wds.probeEndpoint }}
-               port: {{ .Values.wds.healthCheckPort }}
+               port: {{ .Values.wds.healthcheckPort }}
                scheme: HTTP
                failureThreshold: {{ .Values.probeConstants.failureThreshold }}
                initialDelaySeconds: {{ .Values.probeConstants.initialDelaySeconds }}
