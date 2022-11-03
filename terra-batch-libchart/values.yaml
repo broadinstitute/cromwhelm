@@ -1,5 +1,12 @@
 exports:
   common:
+    probeConstants:
+      failureThreshold: 6 # k8s defaults to 8
+      initialDelaySeconds: 5 # k8s defaults to 0
+      successThreshold: 1 # k8s defaults to 1
+      periodSeconds: 10 # k8s defaults to 10
+      timeoutSeconds: 5 # k8s defaults to 1
+
     cromwell:
       name: coa-cromwell-svc
       image: broadinstitute/cromwell:85-f64b2c4
@@ -31,10 +38,12 @@ exports:
       conf_file: cbas.yaml
 
     wds:
-      name: wds
-      image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:c527443
       conf_dir: /etc/conf
       conf_file: wds.yaml
+      image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:c527443
+      name: wds
+      healthCheckEndpoint: /health
+      healthCheckPort: 8080 # TODO
 
     postgres:
       image: postgres

@@ -6,7 +6,6 @@ spec:
       labels:
         aadpodidbinding: {{ .Values.identity.name }}
 {{ end }}
-
 ---
 
 {{ include "terra-batch-libchart.wds-service" (list . "cromwell-helm.wds-service") }}

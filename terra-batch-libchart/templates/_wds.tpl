@@ -40,7 +40,18 @@ spec:
               value: "{{ .Values.postgres.port }}"
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
-
+          livenessProbe:
+            httpGet:
+              httpHeaders:
+                - name: <TODO>
+                  value: <TODO>
+              path: {{ .Values.wds.probeEndpoint }}
+              port: {{ .Values.wds.healthCheckPort }}
+              scheme: HTTP
+              failureThreshold: {{ .Values.probeConstants.failureThreshold }}
+              periodSeconds: {{ .Values.probeConstants.periodSeconds }}
+              successThreshold: {{ .Values.probeConstants.successThreshold }}
+              timeoutSeconds: {{ .Values.probeConstants.timeoutSeconds }}
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
           configMap:
