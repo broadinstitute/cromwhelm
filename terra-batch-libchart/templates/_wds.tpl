@@ -52,6 +52,19 @@ spec:
               periodSeconds: {{ .Values.probeConstants.periodSeconds }}
               successThreshold: {{ .Values.probeConstants.successThreshold }}
               timeoutSeconds: {{ .Values.probeConstants.timeoutSeconds }}
+           readinessProbe:
+             httpGet:
+               httpHeaders:
+                 - name: <TODO>
+                   value: <TODO>
+               path: {{ .Values.wds.probeEndpoint }}
+               port: {{ .Values.wds.healthCheckPort }}
+               scheme: HTTP
+               failureThreshold: {{ .Values.probeConstants.failureThreshold }}
+               initialDelaySeconds: {{ .Values.probeConstants.initialDelaySeconds }}
+               periodSeconds: {{ .Values.probeConstants.periodSeconds }}
+               successThreshold: {{ .Values.probeConstants.successThreshold }}
+               timeoutSeconds: {{ .Values.probeConstants.timeoutSeconds }}
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
           configMap:
