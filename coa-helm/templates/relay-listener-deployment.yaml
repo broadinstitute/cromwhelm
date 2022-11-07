@@ -39,5 +39,7 @@ spec:
               value: {{ .Values.relaylistener.samResourceId }}
             - name: LISTENER_SAMINSPECTORPROPERTIES_SAMRESOURCETYPE
               value: {{ .Values.relaylistener.samResourceType }}
+            - name: LISTENER_SAMINSPECTORPROPERTIES_SAMACTION
+              value: {{ .Values.relaylistener.samAction }}
       imagePullSecrets:
         - name: acr-secret
