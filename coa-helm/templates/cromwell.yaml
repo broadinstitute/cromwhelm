@@ -58,6 +58,20 @@ data:
     }
 
     system {
+      max-concurrent-workflows = 10000
+      new-workflow-poll-rate = 10
+      max-workflow-launch-count = 30
+      max-scatter-width-per-scatter = 35000
+      total-max-jobs-per-root-workflow = 200000
+      job-rate-control {
+        jobs = 20
+        per = 5 seconds
+      }
+      job-restart-check-rate-control {
+        jobs = 30
+        per = 1 seconds
+      }
+
       input-read-limits {
         lines = 1000000
       }
