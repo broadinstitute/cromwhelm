@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event.label.name == 'automerge'
+    if: github.event.label.name == 'automerge' && github.event.sender.login == 'broadbot'
     steps:
       - name: Dump GitHub context
         id: github_context_step
