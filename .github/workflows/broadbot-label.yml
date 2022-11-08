@@ -20,7 +20,7 @@ jobs:
             const label_response = github.rest.issues.addLabels({
               owner: 'broadinstitute',
               repo: 'cromwhelm',
-              issue_number: {{ inputs.pr_number }}
+              issue_number: ${{ inputs.pr_number }}
               labels: ['automerge']
             });
 
