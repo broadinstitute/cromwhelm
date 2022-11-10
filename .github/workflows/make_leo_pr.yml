@@ -76,7 +76,7 @@ jobs:
           git checkout -b "${NEW_BRANCH_NAME}"
 
           SED_STRING="s/${versionFromReference}/${NEW_CROMWELL_HELM_V}/g"
-          FILES=( "Dockerfile" "http/src/main/resources/reference.conf" )
+          FILES=( "Dockerfile" "http/src/main/resources/reference.conf" "http/src/test/scala/org/broadinstitute/dsde/workbench/leonardo/http/ConfigReaderSpec.scala" "http/src/test/scala/org/broadinstitute/dsde/workbench/leonardo/KubernetesTestData.scala" )
           for i in "${FILES[@]}"
           do
             echo "Updating ${i}"
