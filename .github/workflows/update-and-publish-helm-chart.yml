@@ -148,7 +148,7 @@ jobs:
           github-token: ${{ secrets.BROADBOT_TOKEN }}
           script: |
             const pull_response = await github.rest.pulls.create({
-              title: '$JIRA_ID Update Cromwell version to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}',
+              title: '${JIRA_ID}: Update Cromwell version to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}',
               owner: 'broadinstitute',
               repo: 'leonardo',
               head: '${{ steps.update-and-push.outputs.NEW_BRANCH_NAME }}',
