@@ -73,7 +73,8 @@ jobs:
             tail -1                             # get the last (highest) version.
           }
 
-          echo "NEW_CROMWELL_HELM_V=$(getLatestChartVersion charts)" >> $GITHUB_ENV
+          NEW_CROMWELL_HELM_V=$(getLatestChartVersion charts)
+          echo "NEW_CROMWELL_HELM_V=${NEW_CROMWELL_HELM_V}" >> $GITHUB_ENV
 
           if [ "${NEW_CROMWELL_HELM_V}" != "${NEXT_VERSION_COA}" ]; then
             echo "New version ${NEW_CROMWELL_HELM_V} does not match CoA version ${NEXT_VERSION_COA}"
