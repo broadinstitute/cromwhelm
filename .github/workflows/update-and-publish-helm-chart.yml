@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ensure that a Jira ID is present in the commit message
+        id: ensure-jira-id
         run: |
           JIRA_ID=$(echo '${{ github.event.head_commit.message }}' | grep -Eo '\[?[A-Z][A-Z]+-[0-9]+\]?')
           [[ -z "$JIRA_ID" ]] && { echo "No Jira ID found in $1" ; exit 1; }
-          echo "JIRA_ID=$JIRA_ID" >> $GITHUB_ENV
+          echo ::set-output name=JIRA_ID::${JIRA_ID}
 
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -159,7 +160,7 @@ jobs:
           github-token: ${{ secrets.BROADBOT_TOKEN }}
           script: |
             const pull_response = await github.rest.pulls.create({
-              title: '${JIRA_ID}: Update Cromwell version to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}',
+              title: '${{ steps.ensure-jira-id.outputs.JIRA_ID }}: Update Cromwell version to ${{ steps.update-and-push.outputs.NEW_CROMWELL_HELM_V }}',
               owner: 'broadinstitute',
               repo: 'leonardo',
               head: '${{ steps.update-and-push.outputs.NEW_BRANCH_NAME }}',
