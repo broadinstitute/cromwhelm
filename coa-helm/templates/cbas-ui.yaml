@@ -21,6 +21,6 @@ spec:
 data:
   {{ .Values.cbasUI.conf_file }}: |-
     {
-      "cbasUrlRoot" : "{{ .Values.relaylistener.endpoint }}/{{ .Values.relaylistener.connectionName }}/cbas"
+      "cbasUrlRoot" : "{{ .Values.relay.path }}/cbas"
     }
 {{ end }}
