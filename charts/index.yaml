@@ -3,7 +3,7 @@ entries:
   Cromwell with Postgres:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-11-22T13:37:13.98496034Z"
+    created: "2022-11-22T13:57:13.088167008Z"
     description: Simple Cromwell deployment with Postgres database
     digest: dcb4a05c3517b1b8fab34c79444bf57fc876c398e0573f1562352d5ea1ddd823
     name: Cromwell with Postgres
@@ -14,7 +14,7 @@ entries:
   CromwellHsqldbLocalMinikube:
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.985675092Z"
+    created: "2022-11-22T13:57:13.089114316Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 3dd85df71a65c04306a195df27f066dc67f7a46e5b271ead0759c1819323f54a
     name: CromwellHsqldbLocalMinikube
@@ -24,7 +24,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.985396472Z"
+    created: "2022-11-22T13:57:13.088758713Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: a4b97391c01fc03322d82605c47b887b37a1254cfbbf22bf47ab8d31d3114831
     name: CromwellHsqldbLocalMinikube
@@ -34,7 +34,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.985137053Z"
+    created: "2022-11-22T13:57:13.08839521Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 68d53f23cea57a45c49ec37a2b22a54d8ca937ed5271501676f86ddf86f693f2
     name: CromwellHsqldbLocalMinikube
@@ -45,7 +45,24 @@ entries:
   cromwell:
   - apiVersion: v2
     appVersion: 85-95e4449
-    created: "2022-11-22T13:37:14.090502596Z"
+    created: "2022-11-22T13:57:13.244480821Z"
+    dependencies:
+    - import-values:
+      - common
+      name: terra-batch-libchart
+      repository: file://../terra-batch-libchart
+      version: 0.0.2
+    description: Simple Cromwell deployment with Postgres database with Local and
+      PAPIv2 (application-default) backends configured.
+    digest: 93686b6805cc68565e449c447e613ea850931fcbdfdd98539bb5978dead48b4e
+    name: cromwell
+    type: application
+    urls:
+    - https://broadinstitute.github.io/cromwhelm/charts/cromwell-0.2.167.tgz
+    version: 0.2.167
+  - apiVersion: v2
+    appVersion: 85-95e4449
+    created: "2022-11-22T13:57:13.242954808Z"
     dependencies:
     - import-values:
       - common
@@ -62,7 +79,7 @@ entries:
     version: 0.2.166
   - apiVersion: v2
     appVersion: 85-95e4449
-    created: "2022-11-22T13:37:14.089336611Z"
+    created: "2022-11-22T13:57:13.24081949Z"
     dependencies:
     - import-values:
       - common
@@ -79,7 +96,7 @@ entries:
     version: 0.2.165
   - apiVersion: v2
     appVersion: 85-f38bb2c
-    created: "2022-11-22T13:37:14.088183227Z"
+    created: "2022-11-22T13:57:13.239000075Z"
     dependencies:
     - import-values:
       - common
@@ -96,7 +113,7 @@ entries:
     version: 0.2.164
   - apiVersion: v2
     appVersion: 85-4a6ad8e
-    created: "2022-11-22T13:37:14.087014643Z"
+    created: "2022-11-22T13:57:13.237372061Z"
     dependencies:
     - import-values:
       - common
@@ -113,7 +130,7 @@ entries:
     version: 0.2.163
   - apiVersion: v2
     appVersion: 85-4a6ad8e
-    created: "2022-11-22T13:37:14.085863259Z"
+    created: "2022-11-22T13:57:13.235758848Z"
     dependencies:
     - import-values:
       - common
@@ -130,7 +147,7 @@ entries:
     version: 0.2.162
   - apiVersion: v2
     appVersion: 85-4a6ad8e
-    created: "2022-11-22T13:37:14.084705775Z"
+    created: "2022-11-22T13:57:13.233863432Z"
     dependencies:
     - import-values:
       - common
@@ -147,7 +164,7 @@ entries:
     version: 0.2.161
   - apiVersion: v2
     appVersion: 85-4a6ad8e
-    created: "2022-11-22T13:37:14.083493987Z"
+    created: "2022-11-22T13:57:13.23129401Z"
     dependencies:
     - import-values:
       - common
@@ -164,7 +181,7 @@ entries:
     version: 0.2.160
   - apiVersion: v2
     appVersion: 85-4a6ad8e
-    created: "2022-11-22T13:37:14.080567975Z"
+    created: "2022-11-22T13:57:13.227106175Z"
     dependencies:
     - import-values:
       - common
@@ -181,7 +198,7 @@ entries:
     version: 0.2.159
   - apiVersion: v2
     appVersion: 85-269089c
-    created: "2022-11-22T13:37:14.078898954Z"
+    created: "2022-11-22T13:57:13.225675063Z"
     dependencies:
     - import-values:
       - common
@@ -198,7 +215,7 @@ entries:
     version: 0.2.158
   - apiVersion: v2
     appVersion: 85-c775ddd
-    created: "2022-11-22T13:37:14.07774057Z"
+    created: "2022-11-22T13:57:13.224240951Z"
     dependencies:
     - import-values:
       - common
@@ -215,7 +232,7 @@ entries:
     version: 0.2.157
   - apiVersion: v2
     appVersion: 85-c775ddd
-    created: "2022-11-22T13:37:14.076575285Z"
+    created: "2022-11-22T13:57:13.222738738Z"
     dependencies:
     - import-values:
       - common
@@ -232,7 +249,7 @@ entries:
     version: 0.2.156
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.075415501Z"
+    created: "2022-11-22T13:57:13.221113625Z"
     dependencies:
     - import-values:
       - common
@@ -249,7 +266,7 @@ entries:
     version: 0.2.155
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.074265118Z"
+    created: "2022-11-22T13:57:13.219490011Z"
     dependencies:
     - import-values:
       - common
@@ -266,7 +283,7 @@ entries:
     version: 0.2.154
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.073096533Z"
+    created: "2022-11-22T13:57:13.217343893Z"
     dependencies:
     - import-values:
       - common
@@ -283,7 +300,7 @@ entries:
     version: 0.2.153
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.071914547Z"
+    created: "2022-11-22T13:57:13.216099583Z"
     dependencies:
     - import-values:
       - common
@@ -300,7 +317,7 @@ entries:
     version: 0.2.152
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.070528947Z"
+    created: "2022-11-22T13:57:13.214761571Z"
     dependencies:
     - import-values:
       - common
@@ -317,7 +334,7 @@ entries:
     version: 0.2.151
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.068480998Z"
+    created: "2022-11-22T13:57:13.212367751Z"
     dependencies:
     - import-values:
       - common
@@ -334,7 +351,7 @@ entries:
     version: 0.2.150
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.066372345Z"
+    created: "2022-11-22T13:57:13.209675529Z"
     dependencies:
     - import-values:
       - common
@@ -351,7 +368,7 @@ entries:
     version: 0.2.149
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.065223862Z"
+    created: "2022-11-22T13:57:13.207949414Z"
     dependencies:
     - import-values:
       - common
@@ -368,7 +385,7 @@ entries:
     version: 0.2.148
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.064058478Z"
+    created: "2022-11-22T13:57:13.206393201Z"
     dependencies:
     - import-values:
       - common
@@ -385,7 +402,7 @@ entries:
     version: 0.2.147
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.062887393Z"
+    created: "2022-11-22T13:57:13.204791088Z"
     dependencies:
     - import-values:
       - common
@@ -402,7 +419,7 @@ entries:
     version: 0.2.146
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.061708407Z"
+    created: "2022-11-22T13:57:13.203235975Z"
     dependencies:
     - import-values:
       - common
@@ -419,7 +436,7 @@ entries:
     version: 0.2.145
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.060531822Z"
+    created: "2022-11-22T13:57:13.201741962Z"
     dependencies:
     - import-values:
       - common
@@ -436,7 +453,7 @@ entries:
     version: 0.2.144
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.059215126Z"
+    created: "2022-11-22T13:57:13.200145349Z"
     dependencies:
     - import-values:
       - common
@@ -453,7 +470,7 @@ entries:
     version: 0.2.143
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.057432397Z"
+    created: "2022-11-22T13:57:13.196638119Z"
     dependencies:
     - import-values:
       - common
@@ -470,7 +487,7 @@ entries:
     version: 0.2.142
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.055845482Z"
+    created: "2022-11-22T13:57:13.195328508Z"
     dependencies:
     - import-values:
       - common
@@ -487,7 +504,7 @@ entries:
     version: 0.2.141
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.054669597Z"
+    created: "2022-11-22T13:57:13.193915696Z"
     dependencies:
     - import-values:
       - common
@@ -504,7 +521,7 @@ entries:
     version: 0.2.140
   - apiVersion: v2
     appVersion: 85-f64b2c4
-    created: "2022-11-22T13:37:14.052777059Z"
+    created: "2022-11-22T13:57:13.191329175Z"
     dependencies:
     - import-values:
       - common
@@ -521,7 +538,7 @@ entries:
     version: 0.2.139
   - apiVersion: v2
     appVersion: 85-34e3588
-    created: "2022-11-22T13:37:14.051568272Z"
+    created: "2022-11-22T13:57:13.189780761Z"
     dependencies:
     - import-values:
       - common
@@ -538,7 +555,7 @@ entries:
     version: 0.2.138
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.050383086Z"
+    created: "2022-11-22T13:57:13.187601943Z"
     dependencies:
     - import-values:
       - common
@@ -555,7 +572,7 @@ entries:
     version: 0.2.137
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.049215901Z"
+    created: "2022-11-22T13:57:13.185723227Z"
     dependencies:
     - import-values:
       - common
@@ -572,7 +589,7 @@ entries:
     version: 0.2.136
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.047857202Z"
+    created: "2022-11-22T13:57:13.184231015Z"
     dependencies:
     - import-values:
       - common
@@ -589,7 +606,7 @@ entries:
     version: 0.2.135
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.04575675Z"
+    created: "2022-11-22T13:57:13.18132919Z"
     dependencies:
     - import-values:
       - common
@@ -606,7 +623,7 @@ entries:
     version: 0.2.134
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.044364849Z"
+    created: "2022-11-22T13:57:13.179567976Z"
     dependencies:
     - import-values:
       - common
@@ -623,7 +640,7 @@ entries:
     version: 0.2.133
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.043168962Z"
+    created: "2022-11-22T13:57:13.17768346Z"
     dependencies:
     - import-values:
       - common
@@ -640,7 +657,7 @@ entries:
     version: 0.2.132
   - apiVersion: v2
     appVersion: 85-d602cef
-    created: "2022-11-22T13:37:14.042013378Z"
+    created: "2022-11-22T13:57:13.176225548Z"
     dependencies:
     - import-values:
       - common
@@ -657,7 +674,7 @@ entries:
     version: 0.2.131
   - apiVersion: v2
     appVersion: 85-1a38896
-    created: "2022-11-22T13:37:14.040856695Z"
+    created: "2022-11-22T13:57:13.174785535Z"
     dependencies:
     - import-values:
       - common
@@ -674,7 +691,7 @@ entries:
     version: 0.2.130
   - apiVersion: v2
     appVersion: 85-1a38896
-    created: "2022-11-22T13:37:14.038966757Z"
+    created: "2022-11-22T13:57:13.172324015Z"
     dependencies:
     - import-values:
       - common
@@ -691,7 +708,7 @@ entries:
     version: 0.2.129
   - apiVersion: v2
     appVersion: 85-1a38896
-    created: "2022-11-22T13:37:14.037814574Z"
+    created: "2022-11-22T13:57:13.1705752Z"
     dependencies:
     - import-values:
       - common
@@ -708,7 +725,7 @@ entries:
     version: 0.2.128
   - apiVersion: v2
     appVersion: 85-1a38896
-    created: "2022-11-22T13:37:14.036644889Z"
+    created: "2022-11-22T13:57:13.169297089Z"
     dependencies:
     - import-values:
       - common
@@ -725,7 +742,7 @@ entries:
     version: 0.2.127
   - apiVersion: v2
     appVersion: 85-1a38896
-    created: "2022-11-22T13:37:14.034822957Z"
+    created: "2022-11-22T13:57:13.166716468Z"
     dependencies:
     - import-values:
       - common
@@ -742,7 +759,7 @@ entries:
     version: 0.2.126
   - apiVersion: v2
     appVersion: 85-622c8e6
-    created: "2022-11-22T13:37:14.032967422Z"
+    created: "2022-11-22T13:57:13.164530549Z"
     dependencies:
     - import-values:
       - common
@@ -759,7 +776,7 @@ entries:
     version: 0.2.125
   - apiVersion: v2
     appVersion: 85-622c8e6
-    created: "2022-11-22T13:37:14.031782836Z"
+    created: "2022-11-22T13:57:13.163099037Z"
     dependencies:
     - import-values:
       - common
@@ -776,7 +793,7 @@ entries:
     version: 0.2.124
   - apiVersion: v2
     appVersion: 85-622c8e6
-    created: "2022-11-22T13:37:14.030617452Z"
+    created: "2022-11-22T13:57:13.161656225Z"
     dependencies:
     - import-values:
       - common
@@ -793,7 +810,7 @@ entries:
     version: 0.2.123
   - apiVersion: v2
     appVersion: 85-622c8e6
-    created: "2022-11-22T13:37:14.029453067Z"
+    created: "2022-11-22T13:57:13.160153513Z"
     dependencies:
     - import-values:
       - common
@@ -810,7 +827,7 @@ entries:
     version: 0.2.122
   - apiVersion: v2
     appVersion: 85-b0a2541
-    created: "2022-11-22T13:37:14.028288383Z"
+    created: "2022-11-22T13:57:13.1586641Z"
     dependencies:
     - import-values:
       - common
@@ -827,7 +844,7 @@ entries:
     version: 0.2.121
   - apiVersion: v2
     appVersion: 85-c599426
-    created: "2022-11-22T13:37:14.027035192Z"
+    created: "2022-11-22T13:57:13.157007186Z"
     dependencies:
     - import-values:
       - common
@@ -844,7 +861,7 @@ entries:
     version: 0.2.120
   - apiVersion: v2
     appVersion: 85-c599426
-    created: "2022-11-22T13:37:14.025010545Z"
+    created: "2022-11-22T13:57:13.154435064Z"
     dependencies:
     - import-values:
       - common
@@ -861,7 +878,7 @@ entries:
     version: 0.2.119
   - apiVersion: v2
     appVersion: 85-c599426
-    created: "2022-11-22T13:37:14.022395055Z"
+    created: "2022-11-22T13:57:13.152934252Z"
     dependencies:
     - import-values:
       - common
@@ -878,7 +895,7 @@ entries:
     version: 0.2.118
   - apiVersion: v2
     appVersion: 85-c599426
-    created: "2022-11-22T13:37:14.021204269Z"
+    created: "2022-11-22T13:57:13.149802926Z"
     dependencies:
     - import-values:
       - common
@@ -895,7 +912,7 @@ entries:
     version: 0.2.117
   - apiVersion: v2
     appVersion: 85-c599426
-    created: "2022-11-22T13:37:14.020018283Z"
+    created: "2022-11-22T13:57:13.147797209Z"
     dependencies:
     - import-values:
       - common
@@ -912,7 +929,7 @@ entries:
     version: 0.2.116
   - apiVersion: v2
     appVersion: 85-c599426
-    created: "2022-11-22T13:37:14.018814396Z"
+    created: "2022-11-22T13:57:13.146049594Z"
     dependencies:
     - import-values:
       - common
@@ -929,7 +946,7 @@ entries:
     version: 0.2.115
   - apiVersion: v2
     appVersion: 85-18fbb14
-    created: "2022-11-22T13:37:14.017656612Z"
+    created: "2022-11-22T13:57:13.14433058Z"
     dependencies:
     - import-values:
       - common
@@ -946,7 +963,7 @@ entries:
     version: 0.2.114
   - apiVersion: v2
     appVersion: 85-7ad40b1
-    created: "2022-11-22T13:37:14.016504328Z"
+    created: "2022-11-22T13:57:13.142831667Z"
     dependencies:
     - import-values:
       - common
@@ -963,7 +980,7 @@ entries:
     version: 0.2.113
   - apiVersion: v2
     appVersion: 85-980d410
-    created: "2022-11-22T13:37:14.015332043Z"
+    created: "2022-11-22T13:57:13.141278554Z"
     dependencies:
     - import-values:
       - common
@@ -980,7 +997,7 @@ entries:
     version: 0.2.112
   - apiVersion: v2
     appVersion: 85-980d410
-    created: "2022-11-22T13:37:14.014179859Z"
+    created: "2022-11-22T13:57:13.139732741Z"
     dependencies:
     - import-values:
       - common
@@ -997,7 +1014,7 @@ entries:
     version: 0.2.111
   - apiVersion: v2
     appVersion: 85-dd40e08
-    created: "2022-11-22T13:37:14.013007674Z"
+    created: "2022-11-22T13:57:13.138170128Z"
     dependencies:
     - import-values:
       - common
@@ -1014,7 +1031,7 @@ entries:
     version: 0.2.110
   - apiVersion: v2
     appVersion: 85-dd40e08
-    created: "2022-11-22T13:37:14.010309679Z"
+    created: "2022-11-22T13:57:13.133886292Z"
     dependencies:
     - import-values:
       - common
@@ -1031,7 +1048,7 @@ entries:
     version: 0.2.109
   - apiVersion: v2
     appVersion: 85-07d4a74-SNAP
-    created: "2022-11-22T13:37:14.008493447Z"
+    created: "2022-11-22T13:57:13.132198878Z"
     dependencies:
     - import-values:
       - common
@@ -1048,7 +1065,7 @@ entries:
     version: 0.2.108
   - apiVersion: v2
     appVersion: 85-07d4a74-SNAP
-    created: "2022-11-22T13:37:14.007302761Z"
+    created: "2022-11-22T13:57:13.130432763Z"
     dependencies:
     - import-values:
       - common
@@ -1065,7 +1082,7 @@ entries:
     version: 0.2.107
   - apiVersion: v2
     appVersion: 85-21d99d9-SNAP
-    created: "2022-11-22T13:37:14.006101674Z"
+    created: "2022-11-22T13:57:13.128809449Z"
     dependencies:
     - import-values:
       - common
@@ -1082,7 +1099,7 @@ entries:
     version: 0.2.106
   - apiVersion: v2
     appVersion: 85-f4a19ba-SNAP
-    created: "2022-11-22T13:37:14.004913687Z"
+    created: "2022-11-22T13:57:13.127058034Z"
     dependencies:
     - import-values:
       - common
@@ -1099,7 +1116,7 @@ entries:
     version: 0.2.105
   - apiVersion: v2
     appVersion: 85-443a6fc-SNAP
-    created: "2022-11-22T13:37:14.003719301Z"
+    created: "2022-11-22T13:57:13.125450821Z"
     dependencies:
     - import-values:
       - common
@@ -1116,7 +1133,7 @@ entries:
     version: 0.2.104
   - apiVersion: v2
     appVersion: 85-f052c78-SNAP
-    created: "2022-11-22T13:37:14.002510713Z"
+    created: "2022-11-22T13:57:13.123668706Z"
     dependencies:
     - import-values:
       - common
@@ -1133,7 +1150,7 @@ entries:
     version: 0.2.103
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.001326127Z"
+    created: "2022-11-22T13:57:13.121876891Z"
     dependencies:
     - import-values:
       - common
@@ -1150,7 +1167,7 @@ entries:
     version: 0.2.102
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:13.999893523Z"
+    created: "2022-11-22T13:57:13.120241977Z"
     dependencies:
     - import-values:
       - common
@@ -1167,7 +1184,7 @@ entries:
     version: 0.2.101
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:13.990589248Z"
+    created: "2022-11-22T13:57:13.097006682Z"
     dependencies:
     - import-values:
       - common
@@ -1184,7 +1201,7 @@ entries:
     version: 0.2.100
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.192610102Z"
+    created: "2022-11-22T13:57:13.376723832Z"
     dependencies:
     - import-values:
       - common
@@ -1201,7 +1218,7 @@ entries:
     version: 0.2.99
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.189834301Z"
+    created: "2022-11-22T13:57:13.374764416Z"
     dependencies:
     - import-values:
       - common
@@ -1218,7 +1235,7 @@ entries:
     version: 0.2.98
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.188652415Z"
+    created: "2022-11-22T13:57:13.373011501Z"
     dependencies:
     - import-values:
       - common
@@ -1235,7 +1252,7 @@ entries:
     version: 0.2.97
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.187422326Z"
+    created: "2022-11-22T13:57:13.37164549Z"
     dependencies:
     - import-values:
       - common
@@ -1252,7 +1269,7 @@ entries:
     version: 0.2.96
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.186247141Z"
+    created: "2022-11-22T13:57:13.370012376Z"
     dependencies:
     - import-values:
       - common
@@ -1269,7 +1286,7 @@ entries:
     version: 0.2.95
   - apiVersion: v2
     appVersion: 85-6227be9-SNAP
-    created: "2022-11-22T13:37:14.185004651Z"
+    created: "2022-11-22T13:57:13.368583464Z"
     dependencies:
     - import-values:
       - common
@@ -1286,7 +1303,7 @@ entries:
     version: 0.2.94
   - apiVersion: v2
     appVersion: 85-6894936-SNAP
-    created: "2022-11-22T13:37:14.183830765Z"
+    created: "2022-11-22T13:57:13.366998151Z"
     dependencies:
     - import-values:
       - common
@@ -1303,7 +1320,7 @@ entries:
     version: 0.2.93
   - apiVersion: v2
     appVersion: 85-6894936-SNAP
-    created: "2022-11-22T13:37:14.18265508Z"
+    created: "2022-11-22T13:57:13.365523738Z"
     dependencies:
     - import-values:
       - common
@@ -1320,7 +1337,7 @@ entries:
     version: 0.2.92
   - apiVersion: v2
     appVersion: 85-6894936-SNAP
-    created: "2022-11-22T13:37:14.181491296Z"
+    created: "2022-11-22T13:57:13.364282028Z"
     dependencies:
     - import-values:
       - common
@@ -1337,7 +1354,7 @@ entries:
     version: 0.2.91
   - apiVersion: v2
     appVersion: 85-e3f1ad0-SNAP
-    created: "2022-11-22T13:37:14.180324611Z"
+    created: "2022-11-22T13:57:13.361782707Z"
     dependencies:
     - import-values:
       - common
@@ -1354,7 +1371,7 @@ entries:
     version: 0.2.90
   - apiVersion: v2
     appVersion: 85-4884f73-SNAP
-    created: "2022-11-22T13:37:14.17768332Z"
+    created: "2022-11-22T13:57:13.35855088Z"
     dependencies:
     - import-values:
       - common
@@ -1371,7 +1388,7 @@ entries:
     version: 0.2.89
   - apiVersion: v2
     appVersion: 85-01d63af-SNAP
-    created: "2022-11-22T13:37:14.175774681Z"
+    created: "2022-11-22T13:57:13.357122968Z"
     dependencies:
     - import-values:
       - common
@@ -1388,7 +1405,7 @@ entries:
     version: 0.2.88
   - apiVersion: v2
     appVersion: 85-f289382-SNAP
-    created: "2022-11-22T13:37:14.174571094Z"
+    created: "2022-11-22T13:57:13.355670355Z"
     dependencies:
     - import-values:
       - common
@@ -1405,7 +1422,7 @@ entries:
     version: 0.2.87
   - apiVersion: v2
     appVersion: 85-54fed3e-SNAP
-    created: "2022-11-22T13:37:14.173427411Z"
+    created: "2022-11-22T13:57:13.354409345Z"
     dependencies:
     - import-values:
       - common
@@ -1422,7 +1439,7 @@ entries:
     version: 0.2.86
   - apiVersion: v2
     appVersion: 85-54fed3e-SNAP
-    created: "2022-11-22T13:37:14.172282628Z"
+    created: "2022-11-22T13:57:13.353090434Z"
     dependencies:
     - import-values:
       - common
@@ -1439,7 +1456,7 @@ entries:
     version: 0.2.85
   - apiVersion: v2
     appVersion: 84-b5ef39a-SNAP
-    created: "2022-11-22T13:37:14.171104842Z"
+    created: "2022-11-22T13:57:13.351757323Z"
     dependencies:
     - import-values:
       - common
@@ -1456,7 +1473,7 @@ entries:
     version: 0.2.84
   - apiVersion: v2
     appVersion: 84-b5ef39a-SNAP
-    created: "2022-11-22T13:37:14.16996576Z"
+    created: "2022-11-22T13:57:13.350345411Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1471,7 +1488,7 @@ entries:
     version: 0.2.83
   - apiVersion: v2
     appVersion: 84-79afa29-SNAP
-    created: "2022-11-22T13:37:14.168823577Z"
+    created: "2022-11-22T13:57:13.348772298Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1486,7 +1503,7 @@ entries:
     version: 0.2.82
   - apiVersion: v2
     appVersion: 84-79afa29-SNAP
-    created: "2022-11-22T13:37:14.167445077Z"
+    created: "2022-11-22T13:57:13.346043375Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1501,7 +1518,7 @@ entries:
     version: 0.2.81
   - apiVersion: v2
     appVersion: 84-79afa29-SNAP
-    created: "2022-11-22T13:37:14.164430658Z"
+    created: "2022-11-22T13:57:13.344186459Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1516,7 +1533,7 @@ entries:
     version: 0.2.80
   - apiVersion: v2
     appVersion: 84-e802f29-SNAP
-    created: "2022-11-22T13:37:14.162321205Z"
+    created: "2022-11-22T13:57:13.342142642Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1531,7 +1548,7 @@ entries:
     version: 0.2.79
   - apiVersion: v2
     appVersion: 84-e802f29-SNAP
-    created: "2022-11-22T13:37:14.161189523Z"
+    created: "2022-11-22T13:57:13.340822931Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1546,7 +1563,7 @@ entries:
     version: 0.2.78
   - apiVersion: v2
     appVersion: 84-3a19be6-SNAP
-    created: "2022-11-22T13:37:14.160058341Z"
+    created: "2022-11-22T13:57:13.339219817Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1561,7 +1578,7 @@ entries:
     version: 0.2.77
   - apiVersion: v2
     appVersion: 84-3a19be6-SNAP
-    created: "2022-11-22T13:37:14.158899957Z"
+    created: "2022-11-22T13:57:13.337928106Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1576,7 +1593,7 @@ entries:
     version: 0.2.76
   - apiVersion: v2
     appVersion: 84-3a19be6-SNAP
-    created: "2022-11-22T13:37:14.157772275Z"
+    created: "2022-11-22T13:57:13.336560595Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1591,7 +1608,7 @@ entries:
     version: 0.2.75
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-11-22T13:37:14.156657294Z"
+    created: "2022-11-22T13:57:13.335146983Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1606,7 +1623,7 @@ entries:
     version: 0.2.74
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-11-22T13:37:14.155505011Z"
+    created: "2022-11-22T13:57:13.333403768Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1621,7 +1638,7 @@ entries:
     version: 0.2.73
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-11-22T13:37:14.154362728Z"
+    created: "2022-11-22T13:57:13.330856447Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1636,7 +1653,7 @@ entries:
     version: 0.2.72
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-11-22T13:37:14.153229946Z"
+    created: "2022-11-22T13:57:13.32879253Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1651,7 +1668,7 @@ entries:
     version: 0.2.71
   - apiVersion: v2
     appVersion: 84-19d4fdb-SNAP
-    created: "2022-11-22T13:37:14.151508021Z"
+    created: "2022-11-22T13:57:13.327362718Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1666,7 +1683,7 @@ entries:
     version: 0.2.70
   - apiVersion: v2
     appVersion: 84-890fd1d-SNAP
-    created: "2022-11-22T13:37:14.14901714Z"
+    created: "2022-11-22T13:57:13.325026998Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1681,7 +1698,7 @@ entries:
     version: 0.2.69
   - apiVersion: v2
     appVersion: 84-c2d59fb-SNAP
-    created: "2022-11-22T13:37:14.147890658Z"
+    created: "2022-11-22T13:57:13.323478285Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1696,7 +1713,7 @@ entries:
     version: 0.2.68
   - apiVersion: v2
     appVersion: 84-c2d59fb-SNAP
-    created: "2022-11-22T13:37:14.146743975Z"
+    created: "2022-11-22T13:57:13.321799171Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1711,7 +1728,7 @@ entries:
     version: 0.2.67
   - apiVersion: v2
     appVersion: 84-c2d59fb-SNAP
-    created: "2022-11-22T13:37:14.145727802Z"
+    created: "2022-11-22T13:57:13.320353459Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1726,7 +1743,7 @@ entries:
     version: 0.2.66
   - apiVersion: v2
     appVersion: 84-2eb5843-SNAP
-    created: "2022-11-22T13:37:14.144684126Z"
+    created: "2022-11-22T13:57:13.318718545Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1741,7 +1758,7 @@ entries:
     version: 0.2.65
   - apiVersion: v2
     appVersion: 84-df7c09c-SNAP
-    created: "2022-11-22T13:37:14.143659452Z"
+    created: "2022-11-22T13:57:13.315369217Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1756,7 +1773,7 @@ entries:
     version: 0.2.64
   - apiVersion: v2
     appVersion: 84-df7c09c-SNAP
-    created: "2022-11-22T13:37:14.142630677Z"
+    created: "2022-11-22T13:57:13.313973305Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1771,7 +1788,7 @@ entries:
     version: 0.2.63
   - apiVersion: v2
     appVersion: 84-df7c09c-SNAP
-    created: "2022-11-22T13:37:14.141588901Z"
+    created: "2022-11-22T13:57:13.312428792Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1786,7 +1803,7 @@ entries:
     version: 0.2.62
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.1401896Z"
+    created: "2022-11-22T13:57:13.31100288Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1801,7 +1818,7 @@ entries:
     version: 0.2.61
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.13867809Z"
+    created: "2022-11-22T13:57:13.309715969Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1816,7 +1833,7 @@ entries:
     version: 0.2.60
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.136717748Z"
+    created: "2022-11-22T13:57:13.306725444Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1831,7 +1848,7 @@ entries:
     version: 0.2.59
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.135707275Z"
+    created: "2022-11-22T13:57:13.305204831Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1846,7 +1863,7 @@ entries:
     version: 0.2.58
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.1346713Z"
+    created: "2022-11-22T13:57:13.303705419Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1861,7 +1878,7 @@ entries:
     version: 0.2.57
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.133650326Z"
+    created: "2022-11-22T13:57:13.302344407Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1876,7 +1893,7 @@ entries:
     version: 0.2.56
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.132633552Z"
+    created: "2022-11-22T13:57:13.301044896Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1891,7 +1908,7 @@ entries:
     version: 0.2.55
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.131554373Z"
+    created: "2022-11-22T13:57:13.299662685Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1906,7 +1923,7 @@ entries:
     version: 0.2.54
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.130528299Z"
+    created: "2022-11-22T13:57:13.29666516Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1921,7 +1938,7 @@ entries:
     version: 0.2.53
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.129335613Z"
+    created: "2022-11-22T13:57:13.294848244Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1936,7 +1953,7 @@ entries:
     version: 0.2.52
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.127186057Z"
+    created: "2022-11-22T13:57:13.293681835Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1951,7 +1968,7 @@ entries:
     version: 0.2.51
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.126178984Z"
+    created: "2022-11-22T13:57:13.292549625Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1966,7 +1983,7 @@ entries:
     version: 0.2.50
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.12447796Z"
+    created: "2022-11-22T13:57:13.290247806Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1981,7 +1998,7 @@ entries:
     version: 0.2.49
   - apiVersion: v2
     appVersion: 84-9dc972b-SNAP
-    created: "2022-11-22T13:37:14.123453686Z"
+    created: "2022-11-22T13:57:13.288948395Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -1996,7 +2013,7 @@ entries:
     version: 0.2.48
   - apiVersion: v2
     appVersion: 84-7a744d9-SNAP
-    created: "2022-11-22T13:37:14.122451313Z"
+    created: "2022-11-22T13:57:13.287659484Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2011,7 +2028,7 @@ entries:
     version: 0.2.47
   - apiVersion: v2
     appVersion: 84-12f5463-SNAP
-    created: "2022-11-22T13:37:14.12143604Z"
+    created: "2022-11-22T13:57:13.286142171Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2026,7 +2043,7 @@ entries:
     version: 0.2.46
   - apiVersion: v2
     appVersion: 83-5b3b664-SNAP
-    created: "2022-11-22T13:37:14.120416466Z"
+    created: "2022-11-22T13:57:13.284642859Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2041,7 +2058,7 @@ entries:
     version: 0.2.45
   - apiVersion: v2
     appVersion: 83-5b3b664-SNAP
-    created: "2022-11-22T13:37:14.119342288Z"
+    created: "2022-11-22T13:57:13.282068837Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2056,7 +2073,7 @@ entries:
     version: 0.2.44
   - apiVersion: v2
     appVersion: 83-95c550e-SNAP
-    created: "2022-11-22T13:37:14.117406347Z"
+    created: "2022-11-22T13:57:13.279786518Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2071,7 +2088,7 @@ entries:
     version: 0.2.43
   - apiVersion: v2
     appVersion: 83-56d3d1d-SNAP
-    created: "2022-11-22T13:37:14.115867936Z"
+    created: "2022-11-22T13:57:13.278409206Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2086,7 +2103,7 @@ entries:
     version: 0.2.42
   - apiVersion: v2
     appVersion: 82-fd5a6b5-SNAP
-    created: "2022-11-22T13:37:14.114785357Z"
+    created: "2022-11-22T13:57:13.277269997Z"
     dependencies:
     - name: terra-batch-libchart
       repository: file://../terra-batch-libchart
@@ -2101,7 +2118,7 @@ entries:
     version: 0.2.41
   - apiVersion: v2
     appVersion: 82-293f233-SNAP
-    created: "2022-11-22T13:37:14.113747282Z"
+    created: "2022-11-22T13:57:13.276159587Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 014f07b51427194832a261e5738a88bb730dd6c8baf74c514849998729c1c112
@@ -2112,7 +2129,7 @@ entries:
     version: 0.2.40
   - apiVersion: v2
     appVersion: 82-06a7aea-SNAP
-    created: "2022-11-22T13:37:14.112196669Z"
+    created: "2022-11-22T13:57:13.274233171Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 87976d844453c0498a6c0f46b464952d6ad41f2afec98fbd9b3f5a136ffd97f1
@@ -2123,7 +2140,7 @@ entries:
     version: 0.2.39
   - apiVersion: v2
     appVersion: 82-06a7aea-SNAP
-    created: "2022-11-22T13:37:14.111321506Z"
+    created: "2022-11-22T13:57:13.273230063Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: f8fc326c3882c4d694d0613159130cadce9bbf666dc3ae8722f2435da3614109
@@ -2134,7 +2151,7 @@ entries:
     version: 0.2.38
   - apiVersion: v2
     appVersion: 82-d79ac35-SNAP
-    created: "2022-11-22T13:37:14.110480345Z"
+    created: "2022-11-22T13:57:13.272277955Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 082ad1e2759f570f76f70da8c12e69c6bae726d2abd0b375e23e877bb5ddc494
@@ -2145,7 +2162,7 @@ entries:
     version: 0.2.37
   - apiVersion: v2
     appVersion: 82-e28dcb1-SNAP
-    created: "2022-11-22T13:37:14.109631283Z"
+    created: "2022-11-22T13:57:13.271299247Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 6351b992da2bcc0881ad6170bed6881fab1ee8a6db60765923cf4d0990d87a2d
@@ -2156,7 +2173,7 @@ entries:
     version: 0.2.36
   - apiVersion: v2
     appVersion: 82-e28dcb1-SNAP
-    created: "2022-11-22T13:37:14.108776321Z"
+    created: "2022-11-22T13:57:13.270305338Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 312a4bc83d3d0ade1f63b93c679d289dcee2cab501b276549af9da9625643479
@@ -2167,7 +2184,7 @@ entries:
     version: 0.2.35
   - apiVersion: v2
     appVersion: 82-0325524-SNAP
-    created: "2022-11-22T13:37:14.10793236Z"
+    created: "2022-11-22T13:57:13.269132628Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: bf987512611d4273553815a82a810a29e71bb671bb98dbc9bbe2123ef2070ee0
@@ -2178,7 +2195,7 @@ entries:
     version: 0.2.34
   - apiVersion: v2
     appVersion: 82-30874d9-SNAP
-    created: "2022-11-22T13:37:14.107054196Z"
+    created: "2022-11-22T13:57:13.267507415Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 140aab4adad7d3131d52d62195831c60f5981a52792d6723067729f5907ee56a
@@ -2189,7 +2206,7 @@ entries:
     version: 0.2.33
   - apiVersion: v2
     appVersion: 82-30874d9-SNAP
-    created: "2022-11-22T13:37:14.106183033Z"
+    created: "2022-11-22T13:57:13.265305996Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 4bd3a396d9bfd86e35b2c04858224402d8e3eb183601b8ff907f8befa5cad607
@@ -2200,7 +2217,7 @@ entries:
     version: 0.2.32
   - apiVersion: v2
     appVersion: 82-30874d9-SNAP
-    created: "2022-11-22T13:37:14.104845036Z"
+    created: "2022-11-22T13:57:13.263957985Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 2c5a713ae6852ae59893be57a6da555933818e1ff653c4f164e2ac3e824edb06
@@ -2211,7 +2228,7 @@ entries:
     version: 0.2.31
   - apiVersion: v2
     appVersion: 81-3e9aec2-SNAP
-    created: "2022-11-22T13:37:14.103630248Z"
+    created: "2022-11-22T13:57:13.262544973Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: ca132ae31365d43e38d3dea60c785b97a6dfc16ebe7735e25032daef1a7c7515
@@ -2222,7 +2239,7 @@ entries:
     version: 0.2.30
   - apiVersion: v2
     appVersion: 81-3e9aec2-SNAP
-    created: "2022-11-22T13:37:14.102601373Z"
+    created: "2022-11-22T13:57:13.261492564Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: d9f147d78ef35a860c3fa29df8774d81318aec5acdcbdb820580bc14b2c70fbd
@@ -2233,7 +2250,7 @@ entries:
     version: 0.2.29
   - apiVersion: v2
     appVersion: 81-21fc23f-SNAP
-    created: "2022-11-22T13:37:14.101775913Z"
+    created: "2022-11-22T13:57:13.260439455Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 62ad4b19f1776ae88b005420916d7e40735026f1e992921bfb2b1c2483fd19d3
@@ -2244,7 +2261,7 @@ entries:
     version: 0.2.28
   - apiVersion: v2
     appVersion: 81-5f48ded-SNAP
-    created: "2022-11-22T13:37:14.100944353Z"
+    created: "2022-11-22T13:57:13.259365946Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 0e3494e27718b10ade5faed864d8d670608d95f7e95b2c5f25a20a7327df4124
@@ -2255,7 +2272,7 @@ entries:
     version: 0.2.27
   - apiVersion: v2
     appVersion: 81-a35e80e-SNAP
-    created: "2022-11-22T13:37:14.100111593Z"
+    created: "2022-11-22T13:57:13.258152536Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 7c4ed6d362e774c35d9a64ae9cd57bc7bab6d891f62494e9b30ab924df6a1eff
@@ -2266,7 +2283,7 @@ entries:
     version: 0.2.26
   - apiVersion: v2
     appVersion: 81-c106cc4-SNAP
-    created: "2022-11-22T13:37:14.099257231Z"
+    created: "2022-11-22T13:57:13.257074227Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 6331223bddca4a8dbc774c764fea2d45826a92d0c4f524dbcf9fa810d0938deb
@@ -2277,7 +2294,7 @@ entries:
     version: 0.2.25
   - apiVersion: v2
     appVersion: 81-c1cda84-SNAP
-    created: "2022-11-22T13:37:14.09842087Z"
+    created: "2022-11-22T13:57:13.255860217Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 47931fcbb11bccf56abcab0617dd1a8cb6db17233cef98debb9edf36924bca27
@@ -2288,7 +2305,7 @@ entries:
     version: 0.2.24
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-11-22T13:37:14.097583109Z"
+    created: "2022-11-22T13:57:13.254767508Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: e68b2efd2b0a0cf544127db385abd809b831fa01d7273c913ddacb238b0c2cda
@@ -2299,7 +2316,7 @@ entries:
     version: 0.2.23
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-11-22T13:37:14.096718747Z"
+    created: "2022-11-22T13:57:13.253745599Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 3726dff5ff43975b21fdc26a96f9fe917001781d9bee8ae0529b48ba6d72d825
@@ -2310,7 +2327,7 @@ entries:
     version: 0.2.22
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-11-22T13:37:14.095788979Z"
+    created: "2022-11-22T13:57:13.25263979Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: f5f33a454c553189bfb0323f56aa70f92b9ffeb40afdeebb74f01df8fe6012a9
@@ -2321,7 +2338,7 @@ entries:
     version: 0.2.21
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-11-22T13:37:14.094890414Z"
+    created: "2022-11-22T13:57:13.251583581Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: fd4aae1bf094775758815279e7b3cf3ce59df316c4b6bd65f0eb97004c3b499b
@@ -2332,7 +2349,7 @@ entries:
     version: 0.2.20
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-11-22T13:37:14.093647324Z"
+    created: "2022-11-22T13:57:13.25024197Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 9c34fc70a0750b45dc64d4b2b3f61d614ecce989d8d81f3e3177cf896609c5a2
@@ -2343,7 +2360,7 @@ entries:
     version: 0.2.19
   - apiVersion: v2
     appVersion: 81-ded7e71-SNAP
-    created: "2022-11-22T13:37:14.092481139Z"
+    created: "2022-11-22T13:57:13.248445654Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: a5c2e63be43f298c648f8c08251bc64f30aafc34a5722a47380637432816f3a6
@@ -2354,7 +2371,7 @@ entries:
     version: 0.2.18
   - apiVersion: v2
     appVersion: 80-7e067d5-SNAP
-    created: "2022-11-22T13:37:14.091320755Z"
+    created: "2022-11-22T13:57:13.246319637Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 4a5c0cc353760be69a322198489d448ea54f7f0d704070def2c2edfd1eff3dcc
@@ -2365,7 +2382,7 @@ entries:
     version: 0.2.17
   - apiVersion: v2
     appVersion: 80-b78af4e-SNAP
-    created: "2022-11-22T13:37:14.082219495Z"
+    created: "2022-11-22T13:57:13.227987783Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: edf3dc2ca4592aa01452a990c3aa0b330e13d49cc1ac82d90ac81a283b2d65e5
@@ -2376,7 +2393,7 @@ entries:
     version: 0.2.16
   - apiVersion: v2
     appVersion: 80-b78af4e-SNAP
-    created: "2022-11-22T13:37:14.067100598Z"
+    created: "2022-11-22T13:57:13.210513936Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: df44f4ff8d373a0746d01daeb798e8f04366b634eb7a7a60f5690f5591e68bc8
@@ -2387,7 +2404,7 @@ entries:
     version: 0.2.15
   - apiVersion: v2
     appVersion: 80-b78af4e-SNAP
-    created: "2022-11-22T13:37:14.053499112Z"
+    created: "2022-11-22T13:57:13.192258382Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 2ef1a32d284a66331534d34da4d58dadd3711c736f239bb42254e8b10e4a822c
@@ -2398,7 +2415,7 @@ entries:
     version: 0.2.14
   - apiVersion: v2
     appVersion: 80-d0dd831-SNAP
-    created: "2022-11-22T13:37:14.03969661Z"
+    created: "2022-11-22T13:57:13.173148822Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 86c1caa83c7b2b9c5d35493690d5c56df30f07237f2332ccf6082525b45375a6
@@ -2409,7 +2426,7 @@ entries:
     version: 0.2.13
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-11-22T13:37:14.025810603Z"
+    created: "2022-11-22T13:57:13.155423973Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: a59cadb41d7c50e2137e4a33eb8a73439c728b40854f161cee625b75484aac40
@@ -2420,7 +2437,7 @@ entries:
     version: 0.2.12
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-11-22T13:37:14.011830189Z"
+    created: "2022-11-22T13:57:13.135462405Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 5663d3564b940f4bbfdde33e8d455921a99cd4e8b33171cc8b4f479b3b71f4fb
@@ -2431,7 +2448,7 @@ entries:
     version: 0.2.11
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-11-22T13:37:13.989364059Z"
+    created: "2022-11-22T13:57:13.094568961Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: f353535c613b6cb3036cbe15250c8cf34758f14eec899f67ba4d97491a152f30
@@ -2442,7 +2459,7 @@ entries:
     version: 0.2.10
   - apiVersion: v2
     appVersion: 79-20974fd-SNAP
-    created: "2022-11-22T13:37:14.179120324Z"
+    created: "2022-11-22T13:57:13.359713489Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 0b03a2fe499d3f1b3fb9677fb60ccdc4223a2bd833bd36ab8a6a076181c69cce
@@ -2453,7 +2470,7 @@ entries:
     version: 0.2.9
   - apiVersion: v2
     appVersion: 79-49f3ef1-SNAP
-    created: "2022-11-22T13:37:14.163030257Z"
+    created: "2022-11-22T13:57:13.342923448Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 8f58d4383aa4390657bea4e4dca09845d97994f208bcfbb22ce36f99ea36a20c
@@ -2464,7 +2481,7 @@ entries:
     version: 0.2.8
   - apiVersion: v2
     appVersion: 79-841bf43-SNAP
-    created: "2022-11-22T13:37:14.149724592Z"
+    created: "2022-11-22T13:57:13.326029306Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: d324c52841e41cec39659b77a06b24c8df61e5800be06fffa6b63f0bdd92467a
@@ -2475,7 +2492,7 @@ entries:
     version: 0.2.7
   - apiVersion: v2
     appVersion: 79-c57b611-SNAP
-    created: "2022-11-22T13:37:14.137411098Z"
+    created: "2022-11-22T13:57:13.308040055Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 31f26825a77b65382341fa8b977c6e135433b779306a74a725623fe4db422687
@@ -2486,7 +2503,7 @@ entries:
     version: 0.2.6
   - apiVersion: v2
     appVersion: 79-c57b611-SNAP
-    created: "2022-11-22T13:37:14.125172611Z"
+    created: "2022-11-22T13:57:13.291113213Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 8943aaf0feb2e7fa7093f485f633edda1861b05b06fefacf095cb7db37d897b2
@@ -2497,7 +2514,7 @@ entries:
     version: 0.2.5
   - apiVersion: v2
     appVersion: 79-69b85e0-SNAP
-    created: "2022-11-22T13:37:14.11289042Z"
+    created: "2022-11-22T13:57:13.275106479Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: fb496f60543fe77c6c496fe8415d0060846a5b7a811388e93ac38eacc71701d7
@@ -2508,7 +2525,7 @@ entries:
     version: 0.2.4
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-11-22T13:37:13.986134025Z"
+    created: "2022-11-22T13:57:13.089848022Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: c2f977edbf7d89a5bf2fbf4ec73f3bbf2891f89ff0a8702892870559ec7f5eb2
@@ -2519,7 +2536,7 @@ entries:
     version: 0.1.10
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-11-22T13:37:13.988659908Z"
+    created: "2022-11-22T13:57:13.093557753Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 109d47515f35689e3b778780f37574855895e8bca72f3b5dacf24923898119ea
@@ -2530,7 +2547,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-11-22T13:37:13.988223477Z"
+    created: "2022-11-22T13:57:13.092929948Z"
     description: Simple Cromwell deployment with Postgres database with Local and
       PAPIv2 (application-default) backends configured.
     digest: 810251c2557c8fae747ed3c2edec01a42ea9d63eb5ebb9b62cdba81cb067bf97
@@ -2541,7 +2558,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 71-c778c33
-    created: "2022-11-22T13:37:13.987804746Z"
+    created: "2022-11-22T13:57:13.092316142Z"
     description: Simple Cromwell deployment with Postgres database running jobs locally
     digest: e9b28fac462f69f48c89bc28d8d168cd3dcdbdab5b8243d0d09e6129fbfe7fd4
     name: cromwell
@@ -2551,7 +2568,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.987434619Z"
+    created: "2022-11-22T13:57:13.091761938Z"
     description: Simple Cromwell deployment with Postgres database running jobs locally
     digest: ae59ae9fa9765891d8e15f1e477901a55cbd1346621d7b7029298323c5f5fbf5
     name: cromwell
@@ -2561,7 +2578,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.987084794Z"
+    created: "2022-11-22T13:57:13.091220033Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: cf318a0ac13836eb71312058f512e8e9f92e58a4cbb061f41c09e770eb42dfbb
     name: cromwell
@@ -2571,7 +2588,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.986738769Z"
+    created: "2022-11-22T13:57:13.090736029Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 072eb6464b8ae6f2744adef995b1a7807ff3e9879db80557f0904b703a494144
     name: cromwell
@@ -2581,7 +2598,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 68-8e12ab5
-    created: "2022-11-22T13:37:13.986416846Z"
+    created: "2022-11-22T13:57:13.090268725Z"
     description: Simple Cromwell deployment with in-memory database running jobs locally
     digest: 56c38a6b51039fe0ffa458db073272a616d3f3ae0fdf7eb8fb9079ee17604122
     name: cromwell
@@ -2591,7 +2608,21 @@ entries:
     version: 0.1.3
   cromwell-on-azure:
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.212033011Z"
+    created: "2022-11-22T13:57:13.406082179Z"
+    dependencies:
+    - import-values:
+      - common
+      name: terra-batch-libchart
+      repository: file://../terra-batch-libchart
+      version: 0.0.2
+    description: A cromwell deployment designed to run on Azure with Postgres.
+    digest: ee2484501e8efd69649955235907308f5b6b2f912bda130c6147fd9f09ffd752
+    name: cromwell-on-azure
+    urls:
+    - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.167.tgz
+    version: 0.2.167
+  - apiVersion: v2
+    created: "2022-11-22T13:57:13.40375656Z"
     dependencies:
     - import-values:
       - common
@@ -2605,7 +2636,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.166.tgz
     version: 0.2.166
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.211092843Z"
+    created: "2022-11-22T13:57:13.402346048Z"
     dependencies:
     - import-values:
       - common
@@ -2619,7 +2650,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.165.tgz
     version: 0.2.165
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.210174776Z"
+    created: "2022-11-22T13:57:13.400934236Z"
     dependencies:
     - import-values:
       - common
@@ -2633,7 +2664,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.164.tgz
     version: 0.2.164
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.20925831Z"
+    created: "2022-11-22T13:57:13.399652525Z"
     dependencies:
     - import-values:
       - common
@@ -2647,7 +2678,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.163.tgz
     version: 0.2.163
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.208353544Z"
+    created: "2022-11-22T13:57:13.398455715Z"
     dependencies:
     - import-values:
       - common
@@ -2661,7 +2692,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.162.tgz
     version: 0.2.162
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.207422277Z"
+    created: "2022-11-22T13:57:13.397272705Z"
     dependencies:
     - import-values:
       - common
@@ -2675,7 +2706,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.161.tgz
     version: 0.2.161
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.206521711Z"
+    created: "2022-11-22T13:57:13.395888793Z"
     dependencies:
     - import-values:
       - common
@@ -2689,7 +2720,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.160.tgz
     version: 0.2.160
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.205602945Z"
+    created: "2022-11-22T13:57:13.394780884Z"
     dependencies:
     - import-values:
       - common
@@ -2703,7 +2734,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.159.tgz
     version: 0.2.159
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.204657876Z"
+    created: "2022-11-22T13:57:13.393432573Z"
     dependencies:
     - import-values:
       - common
@@ -2717,7 +2748,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.158.tgz
     version: 0.2.158
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.203736709Z"
+    created: "2022-11-22T13:57:13.391094153Z"
     dependencies:
     - import-values:
       - common
@@ -2731,7 +2762,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.157.tgz
     version: 0.2.157
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.201877275Z"
+    created: "2022-11-22T13:57:13.388704133Z"
     dependencies:
     - import-values:
       - common
@@ -2745,7 +2776,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.156.tgz
     version: 0.2.156
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.200262357Z"
+    created: "2022-11-22T13:57:13.387487223Z"
     dependencies:
     - import-values:
       - common
@@ -2759,7 +2790,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.155.tgz
     version: 0.2.155
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.199181879Z"
+    created: "2022-11-22T13:57:13.386196212Z"
     dependencies:
     - import-values:
       - common
@@ -2773,7 +2804,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.154.tgz
     version: 0.2.154
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.198125802Z"
+    created: "2022-11-22T13:57:13.384876801Z"
     dependencies:
     - import-values:
       - common
@@ -2787,7 +2818,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.153.tgz
     version: 0.2.153
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.197074526Z"
+    created: "2022-11-22T13:57:13.383451089Z"
     dependencies:
     - import-values:
       - common
@@ -2801,7 +2832,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.152.tgz
     version: 0.2.152
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.196016049Z"
+    created: "2022-11-22T13:57:13.382268779Z"
     dependencies:
     - import-values:
       - common
@@ -2815,7 +2846,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.151.tgz
     version: 0.2.151
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.194938071Z"
+    created: "2022-11-22T13:57:13.380696266Z"
     dependencies:
     - import-values:
       - common
@@ -2829,7 +2860,7 @@ entries:
     - https://broadinstitute.github.io/cromwhelm/charts/cromwell-on-azure-0.2.150.tgz
     version: 0.2.150
   - apiVersion: v2
-    created: "2022-11-22T13:37:14.193879894Z"
+    created: "2022-11-22T13:57:13.379134853Z"
     dependencies:
     - import-values:
       - common
@@ -2845,7 +2876,7 @@ entries:
   pgcromwell:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-11-22T13:37:14.212391437Z"
+    created: "2022-11-22T13:57:13.406636484Z"
     description: Simple Cromwell deployment with Postgres database
     digest: 52c9420bed5f821d2407a67f8f9e74635e72fccdf3e17c5290190c8ed1b55bba
     name: pgcromwell
@@ -2853,4 +2884,4 @@ entries:
     urls:
     - https://broadinstitute.github.io/cromwhelm/charts/pgcromwell-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-22T13:37:13.984462104Z"
+generated: "2022-11-22T13:57:13.086427993Z"
