@@ -13,8 +13,9 @@ jobs:
     - name: dump-github-context
       run: |
         echo '${{ toJSON(github) }}'
-        echo "Github Event Path"
         echo $GITHUB_EVENT_PATH
+        cat $GITHUB_EVENT_PATH
+        jq $GITHUB_EVENT_PATH
   auto-approve:
     runs-on: ubuntu-latest
     permissions:
