@@ -1,9 +1,7 @@
 name: automerge
 on:
-  pull_request:
-    types:
-      - labeled
-  check_suite:
+  workflow_run:
+    workflows: ["Check Helm templates", "jenkins-simulator"]
     types:
       - completed
   status: {}
@@ -12,11 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event.label.name == 'automerge' && github.event.sender.login == 'broadbot'
+    # if: github.event.label.name == 'automerge' && github.event.sender.login == 'broadbot'
     steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github.event) }}'
+      - name: dump-github-context
+        run: echo '${{ toJSON(github) }}'
       - uses: hmarr/auto-approve-action@v3
         with:
           review-message: "Auto approved automated PR"
