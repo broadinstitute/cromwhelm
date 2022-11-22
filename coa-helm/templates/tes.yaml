@@ -43,6 +43,10 @@ spec:
               value: {{ .Values.config.dockerInDockerImageName }}
             - name: UsePreemptibleVmsOnly
               value: {{ .Values.config.usePreemptibleVmsOnly | quote}}
+            - name: MarthaUrl
+              value: {{ .Values.config.drsUrl }}
+            - name: CromwellDrsLocalizerImageName
+              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
           image: {{ .Values.tes.image }}
           name: tes
           ports:
