@@ -78,6 +78,7 @@ data:
     }
 
     filesystems {
+      drs.global.config.martha.url = "{{ .Values.config.drsUrl }}"
       blob {
         class = "cromwell.filesystems.blob.BlobPathBuilderFactory"
         global {
@@ -100,6 +101,10 @@ data:
           enabled: true
           container: "{{ .Values.persistence.blobContainer }}"
           endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
+        }
+        drs {
+          enabled: true
+          auth: "azure"
         }
       }
     }
