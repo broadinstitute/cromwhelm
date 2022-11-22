@@ -6,14 +6,18 @@ on:
       - completed
   status: {}
 jobs:
+  dump-context:
+    runs-on: ubuntu-latest
+    steps:
+    - name: dump-github-context
+      run: echo '${{ toJSON(github) }}'
   auto-approve:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     # if: github.event.label.name == 'automerge' && github.event.sender.login == 'broadbot'
     steps:
-      - name: dump-github-context
-        run: echo '${{ toJSON(github) }}'
+      - name: auto-approve-step
       - uses: hmarr/auto-approve-action@v3
         with:
           review-message: "Auto approved automated PR"
