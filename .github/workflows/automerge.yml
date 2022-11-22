@@ -1,10 +1,11 @@
 name: automerge
 on:
   workflow_run:
-    workflows: ["Check Helm templates", "jenkins-simulator"]
+    workflows:
+      - Check Helm templates
+      - jenkins-simulator
     types:
       - completed
-  status: {}
 jobs:
   dump-context:
     runs-on: ubuntu-latest
