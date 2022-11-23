@@ -80,6 +80,18 @@ data:
     filesystems {
       blob {
         class = "cromwell.filesystems.blob.BlobPathBuilderFactory"
+        global {
+          class = "cromwell.filesystems.blob.BlobFileSystemConfig"
+          config {
+            workspace-manager: {
+              url: "{{ .Values.persistence.workspaceManager.url }}"
+              workspace-id: "{{ .Values.persistence.workspaceManager.workspaceId }}"
+              container-resource-id: "{{ .Values.persistence.workspaceManager.containerResourceId }}"
+            }
+            container: "{{ .Values.persistence.blobContainer }}"
+            endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
+          }
+        }
       }
     }
 
@@ -93,13 +105,6 @@ data:
         }
         blob {
           enabled: true
-          workspace-manager: {
-            url: "{{ .Values.persistence.workspaceManager.url }}"
-            workspace-id: "{{ .Values.persistence.workspaceManager.workspaceId }}"
-            container-resource-id: "{{ .Values.persistence.workspaceManager.containerResourceId }}"
-          }
-          container: "{{ .Values.persistence.blobContainer }}"
-          endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
         }
       }
     }
@@ -124,13 +129,6 @@ data:
               }
               blob {
                 enabled: true
-                workspace-manager: {
-                  url: "{{ .Values.persistence.workspaceManager.url }}"
-                  workspace-id: "{{ .Values.persistence.workspaceManager.workspaceId }}"
-                  container-resource-id: "{{ .Values.persistence.workspaceManager.containerResourceId }}"
-                }
-                container: "{{ .Values.persistence.blobContainer }}"
-                endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
               }
             }
             root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/"
