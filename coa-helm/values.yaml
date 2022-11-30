@@ -17,17 +17,8 @@ tes:
   image: mcr.microsoft.com/cromwellonazure/tes:3.1
   port: 80
 
-relaylistener:
-  image: terradevacrpublic.azurecr.io/terra-azure-relay-listeners:5548660
-  port: 8080
-  connectionString: RUNTIME_PARAMETER
-  connectionName: RUNTIME_PARAMETER
-  targetHost: "http://coa-reverse-proxy-service:8000/"
-  endpoint: RUNTIME_PARAMETER
-  samResourceId: RUNTIME_PARAMETER
-  samResourceType: "workspace"
-  samUrl: RUNTIME_PARAMETER
-  samAction: "write"
+relay:
+  path: RUNTIME_PARAMETER
 
 persistence:
   postgresPvcSize: 10Gi
