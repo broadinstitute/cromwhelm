@@ -21,6 +21,6 @@ spec:
 data:
   {{ .Values.cbasUI.conf_file }}: |-
     {
-      "cbasUrlRoot" : "{{ .Values.relay.path }}/cbas"
+      "cbasUrlRoot" : "{{ .Values.relay.path }}{{ .Values.persistence.leoAppInstanceName }}}}/cbas"
     }
 {{ end }}
