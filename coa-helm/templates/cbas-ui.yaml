@@ -21,6 +21,8 @@ spec:
 data:
   {{ .Values.cbasUI.conf_file }}: |-
     {
-      "cbasUrlRoot" : "{{ .Values.relay.path }}/cbas"
+      "cbasUrlRoot" : "{{ .Values.relay.path }}/cbas",
+      "cromwellUrlRoot" : "{{ .Values.relay.path }}/cromwell",
+      "wdsUrlRoot" : "{{ .Values.relay.path }}/wds"
     }
 {{ end }}
