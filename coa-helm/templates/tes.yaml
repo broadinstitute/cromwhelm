@@ -16,6 +16,7 @@ spec:
       labels:
         io.kompose.service: tes
         aadpodidbinding: {{ .Values.identity.name }}
+        workspaceId: {{ .Values.persistence.workspaceManager.workspaceId }}
     spec:
       containers:
         - env:
