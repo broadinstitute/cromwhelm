@@ -14,8 +14,8 @@ spec:
   template:
     metadata:
       labels:
-        {{ include "terra-batch-libchart-coa-helm.labels" $ | indent 4 }}
         io.kompose.service: tes
+        aadpodidbinding: {{ .Values.identity.name }}
     spec:
       containers:
         - env:
