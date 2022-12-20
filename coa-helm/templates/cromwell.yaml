@@ -4,7 +4,7 @@ spec:
   template:
     metadata:
       labels:
-        aadpodidbinding: {{ .Values.identity.name }}
+    {{ include "coa-helm.labels" $ | indent 4 }}
     spec:
       containers:
         - args:
