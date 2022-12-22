@@ -36,6 +36,7 @@ data:
       cromwell:
         baseUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000'
         healthUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status'
+        workflowLogDir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/cromwell-workflow-logs"
     wds:
       baseUri: "http://{{ include "app.fullname" . }}-wds-svc:8080"
       healthcheckEndpoint: "/swagger/swagger-ui.html"
