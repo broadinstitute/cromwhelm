@@ -1,0 +1,159 @@
+{{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ define "coa-helm.cromwell-deploy" }}
+spec:
+  template:
+    metadata:
+      labels:
+    {{ include "coa-helm.labels" $ | indent 4 }}
+    spec:
+      containers:
+        - args:
+            - java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
+          command:
+            - /bin/sh
+            - -c
+          image: {{ .Values.cromwell.image }}
+          name: cromwell
+          stdin: true
+          tty: true
+          ports:
+            - containerPort: {{ .Values.cromwell.port }}
+          resources: {}
+          volumeMounts:
+            - mountPath: /cromwell-tmp
+              name: cromwell-tmp-claim
+            - mountPath: /configuration/cromwell
+              name: cromwell-config-volume
+      restartPolicy: Always
+      volumes:
+        - name: cromwell-tmp-claim
+          persistentVolumeClaim:
+            claimName: cromwell-tmp-claim
+        - name: cromwell-config-volume
+          configMap:
+            name: {{ include "app.fullname" . }}-cromwell-config
+status: {}
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
+{{ define "coa-helm.cromwell-service" }}
+status:
+  loadBalancer: {}
+{{ end }}
+
+---
+
+{{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
+{{ define "coa-helm.cromwell-config" }}
+data:
+  cromwell-application.conf: |-
+    include required(classpath("application"))
+
+    akka.http.host-connection-pool.pool-implementation = legacy
+
+    call-caching {
+      enabled = false
+    }
+
+    system {
+      max-concurrent-workflows = 10000
+      new-workflow-poll-rate = 10
+      max-workflow-launch-count = 30
+      max-scatter-width-per-scatter = 35000
+      total-max-jobs-per-root-workflow = 200000
+      job-rate-control {
+        jobs = 20
+        per = 5 seconds
+      }
+      job-restart-check-rate-control {
+        jobs = 30
+        per = 1 seconds
+      }
+
+      input-read-limits {
+        lines = 1000000
+      }
+    }
+
+    filesystems {
+      drs.global.config.martha.url = "{{ .Values.config.drsUrl }}"
+      blob {
+        class = "cromwell.filesystems.blob.BlobPathBuilderFactory"
+        global {
+          class = "cromwell.filesystems.blob.BlobFileSystemConfigWrapper"
+          config {
+            workspace-manager: {
+              url: "{{ .Values.persistence.workspaceManager.url }}"
+              workspace-id: "{{ .Values.persistence.workspaceManager.workspaceId }}"
+              container-resource-id: "{{ .Values.persistence.workspaceManager.containerResourceId }}"
+            }
+            container: "{{ .Values.persistence.blobContainer }}"
+            endpoint: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net"
+          }
+        }
+      }
+    }
+
+    engine {
+      filesystems {
+        local {
+          enabled: false
+        }
+        http {
+          enabled: true
+        }
+        blob {
+          enabled: true
+        }
+        drs {
+          enabled: true
+          auth: "azure"
+        }
+      }
+    }
+
+    workflow-options {
+      workflow-log-dir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/cromwell-workflow-logs"
+      workflow-log-temporary: false
+    }
+
+    backend {
+      default = "TES"
+      providers {
+        TES {
+          actor-factory = "cromwell.backend.impl.tes.TesBackendLifecycleActorFactory"
+          config {
+            filesystems {
+              http {
+                enabled: true
+              }
+              local {
+                enabled: false
+              }
+              blob {
+                enabled: true
+              }
+            }
+            root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/"
+            dockerRoot = "/cromwell-executions"
+            endpoint = "http://tes/v1/tasks"
+            use_tes_11_preview_backend_parameters = true
+            transform-blob-to-local-path = true
+            workflow-execution-identity = "{{ .Values.config.workflowExecutionIdentity }}"
+            default-runtime-attributes {
+              cpu: 1
+              failOnStderr: false
+              continueOnReturnCode: 0
+              memory: "2 GB"
+              disk: "10 GB"
+              preemptible: true
+            }
+          }
+        }
+      }
+    }
+
+{{ include "terra-batch-libchart.cromwell-config.database.conf" . | indent 4 }}
+{{ end }}
