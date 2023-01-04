@@ -6,6 +6,7 @@ on:
 
 jobs:
   update-and-publish:
+    # TODO: Include wds-azure-helm here eventually
     name: Update and publish new cromwell-helm chart
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +23,7 @@ jobs:
           token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
 
       - name: Find out next chart version
+        # TODO: Add wds-azure-helm version here
         run: |
           currentVersionGCP=$(grep '^version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
           currentVersionCOA=$(grep '^version:' coa-helm/Chart.yaml | awk '{print $NF}')
