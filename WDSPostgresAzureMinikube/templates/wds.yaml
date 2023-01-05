@@ -39,7 +39,7 @@ spec:
             - name: WDS_DB_PORT
               value: "{{ .Values.postgres.port }}"
             - name: SWAGGER_BASE_PATH
-              value: "{{ .Values.env.swaggerBasePath }}"
+              value: {{ .Values.env.swaggerBasePath }}
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
