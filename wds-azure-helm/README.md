@@ -1,11 +1,7 @@
-Create a simple deployment template
-
-(continue to add more and more k8s objects)
-
-Within template, hardcode a Docker image tag of WDS
-
-create Helm chart (TGZ)
-
-Find a k8s cluster we won't ruin the day
-
-Apply the Helm chart upon it
+# TODO: Revisit and give credit where is due
+# TODO: Work on making namespace unique
+# TODO: Remove cbas, cromwell DBs from being created in Postgres container
+# TODO: Revisit Github Actions, and releated references to publishing the chart
+# TODO: Look at TODOs in wds-azure-helm/values.yaml
+# TODO: Probably can remove `wds-azure-helm/templates/_heplers.tpl`
+# TODO: Revisit Postgres password wds-azure-helm/templates/secrets.yaml?

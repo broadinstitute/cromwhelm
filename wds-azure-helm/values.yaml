@@ -5,13 +5,13 @@ persistence:
   enabled: true
   storageClass: "manual"
   postgresPvcSize: 10G
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteOnce # TODO - is this the appropriate accessMode
   mountPath: "/data"
   leoAppInstanceName: RUNTIME_PARAMETER
   workspaceManager:
     workspaceId: RUNTIME_PARAMETER
 
-# Values from Minikube
+# TODO: The values below were copied -- do we need this?
 dbname: wds
 
 env:
@@ -44,6 +44,3 @@ ingress:
     - host: chart-example.local
       paths: []
   tls: []
-
-
-# Minikube IP: http://192.168.49.2/

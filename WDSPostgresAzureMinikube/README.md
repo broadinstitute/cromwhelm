@@ -4,23 +4,18 @@ How to run WDS and Postgres within Minikube (Minikube is a local k8s cluster pro
 
 2. `minikube start`
 
-3. `minikube addons enable metallb `
-
-4. First (even though this is not the first step, or maybe it is if you already have `minikube` running locally), run `kubectl config use-context minikube`. Ensure that you are assigned locally to the right k8s context so that
+3. First (even though this is not the first step, or maybe it is if you already have `minikube` running locally), run `kubectl config use-context minikube`. Ensure that you are assigned locally to the right k8s context so that
 you do not push updates to any other k8s cluster.
 
-5. Then, make whatever changes you'd like in `wds-azure-helm` (to also note, make sure `terra-batch-libchart` is nested within
+4. Then, make whatever changes you'd like in `wds-azure-helm` (to also note, make sure `terra-batch-libchart` is nested within
 the `charts/` subdirectory -- `wds-azure-helm` uses it as a dependency)
 
-6. After making your changes, bump the semantic version in the `wds-azure-helm/Chart.yaml` to make sure your new chart is unique.
+5. After making your changes, bump the semantic version in the `wds-azure-helm/Chart.yaml` to make sure your new chart is unique.
 
-7. Run `helm package wds-azure-helm/ -d charts/` -- this will create the packaged .tgz chart with other charts in the `cromwhelm` repository.
+6. Run `helm package wds-azure-helm/ -d charts/` -- this will create the packaged .tgz chart with other charts in the `cromwhelm` repository.
 
-8. Run `helm install charts/wds-azure-helm-<semantic-version>.tgz --generate-name` -- wait until you see a successful `DEPLOYED`
+7. Run `helm install charts/wds-azure-helm-<semantic-version>.tgz --generate-name` -- wait until you see a successful `DEPLOYED`
 
-9. `minikube service --all` will then show you the relevant URLs to invoke WDS endpoints locally
-
-10. Go to ` wds-azure-helm-<some-random-values>-wds-svc` Service and us the URL -- enter the `<url>:<port>/swagger/swagger-ui.html#/` to get Swagger docs!
-
-# TODO: Revisit and give credit where is due
-# TODO: Work on making namespace unique
+8. `minikube service --all` will then show you the relevant URLs to invoke WDS endpoints locally
+ 
+9. Go to ` wds-azure-helm-<some-random-values>-wds-svc` Service and us the URL -- enter the `<url>:<port>/swagger/swagger-ui.html#/` to get Swagger docs!
