@@ -36,6 +36,7 @@ data:
       cromwell:
         baseUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000'
         healthUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status'
+    # TODO: Note changes for this as well
     wds:
       baseUri: "http://{{ include "app.fullname" . }}-wds-svc:8080"
       healthcheckEndpoint: "/swagger/swagger-ui.html"
