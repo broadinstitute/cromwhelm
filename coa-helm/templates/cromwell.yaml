@@ -4,7 +4,7 @@ spec:
   template:
     metadata:
       labels:
-    {{ include "coa-helm.labels" $ | indent 8 }}
+    {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
       containers:
         - args:
