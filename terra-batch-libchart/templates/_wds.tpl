@@ -40,6 +40,8 @@ spec:
               value: "{{ .Values.postgres.port }}"
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
+            - name: WORKSPACE_ID
+              value: "{{ .Values..persistence.workspaceManager.workspaceId }}"
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
