@@ -114,11 +114,6 @@ data:
       }
     }
 
-    workflow-options {
-      workflow-log-dir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/cromwell-workflow-logs"
-      workflow-log-temporary: false
-    }
-
     backend {
       default = "TES"
       providers {
