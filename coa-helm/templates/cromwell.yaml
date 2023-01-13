@@ -4,7 +4,7 @@ spec:
   template:
     metadata:
       labels:
-    {{ include "coa-helm.labels" $ | indent 4 }}
+    {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
       containers:
         - args:
@@ -136,6 +136,7 @@ data:
             endpoint = "http://tes/v1/tasks"
             use_tes_11_preview_backend_parameters = true
             transform-blob-to-local-path = true
+            workflow-execution-identity = "{{ .Values.config.workflowExecutionIdentity }}"
             default-runtime-attributes {
               cpu: 1
               failOnStderr: false
