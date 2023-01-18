@@ -1,74 +1,74 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    io.kompose.service: tes
-  name: tes
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      io.kompose.service: tes
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        io.kompose.service: tes
-        aadpodidbinding: {{ .Values.identity.name }}
-    spec:
-      containers:
-        - env:
-            - name: DefaultStorageAccountName
-              value: {{ .Values.persistence.storageAccount }}
-            - name: AzureServicesAuthConnectionString
-              value: {{ .Values.config.azureServicesAuthConnectionString }}
-            - name: ApplicationInsightsAccountName
-              value: {{ .Values.config.applicationInsightsAccountName }}
-            - name: CosmosDbAccountName
-              value: {{ .Values.config.cosmosDbAccountName }}
-            - name: AzureOfferDurableId
-              value: {{ .Values.config.azureOfferDurableId }}
-            - name: BatchAccountName
-              value: {{ .Values.config.batchAccountName }}
-            - name: BatchNodesSubnetId
-              value: {{ .Values.config.batchNodesSubnetId }}
-            - name: BlobxferImageName
-              value: {{ .Values.config.blobxferImageName }}
-            - name: DisableBatchNodesPublicIpAddress
-              value: {{ .Values.config.disableBatchNodesPublicIpAddress | quote }}
-            - name: DisableBatchScheduling
-              value: {{ .Values.config.disableBatchScheduling | quote }}
-            - name: DockerInDockerImageName
-              value: {{ .Values.config.dockerInDockerImageName }}
-            - name: UsePreemptibleVmsOnly
-              value: {{ .Values.config.usePreemptibleVmsOnly | quote}}
-            - name: MarthaUrl
-              value: {{ .Values.config.drsUrl }}
-            - name: CromwellDrsLocalizerImageName
-              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
-          image: {{ .Values.tes.image }}
-          name: tes
-          ports:
-            - containerPort: {{ .Values.tes.port }}
-          resources: {}
-      restartPolicy: Always
-status: {}
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    io.kompose.service: tes
-  name: tes
-spec:
-  ports:
-    - name: {{ .Values.tes.port | quote }}
-      port: {{ .Values.tes.port }}
-      targetPort: {{ .Values.tes.port }}
-  selector:
-    io.kompose.service: tes
-status:
-  loadBalancer: {}
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  labels:
+#    io.kompose.service: tes
+#  name: tes
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      io.kompose.service: tes
+#  strategy:
+#    type: Recreate
+#  template:
+#    metadata:
+#      labels:
+#        io.kompose.service: tes
+#        aadpodidbinding: {{ .Values.identity.name }}
+#    spec:
+#      containers:
+#        - env:
+#            - name: DefaultStorageAccountName
+#              value: {{ .Values.persistence.storageAccount }}
+#            - name: AzureServicesAuthConnectionString
+#              value: {{ .Values.config.azureServicesAuthConnectionString }}
+#            - name: ApplicationInsightsAccountName
+#              value: {{ .Values.config.applicationInsightsAccountName }}
+#            - name: CosmosDbAccountName
+#              value: {{ .Values.config.cosmosDbAccountName }}
+#            - name: AzureOfferDurableId
+#              value: {{ .Values.config.azureOfferDurableId }}
+#            - name: BatchAccountName
+#              value: {{ .Values.config.batchAccountName }}
+#            - name: BatchNodesSubnetId
+#              value: {{ .Values.config.batchNodesSubnetId }}
+#            - name: BlobxferImageName
+#              value: {{ .Values.config.blobxferImageName }}
+#            - name: DisableBatchNodesPublicIpAddress
+#              value: {{ .Values.config.disableBatchNodesPublicIpAddress | quote }}
+#            - name: DisableBatchScheduling
+#              value: {{ .Values.config.disableBatchScheduling | quote }}
+#            - name: DockerInDockerImageName
+#              value: {{ .Values.config.dockerInDockerImageName }}
+#            - name: UsePreemptibleVmsOnly
+#              value: {{ .Values.config.usePreemptibleVmsOnly | quote}}
+#            - name: MarthaUrl
+#              value: {{ .Values.config.drsUrl }}
+#            - name: CromwellDrsLocalizerImageName
+#              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
+#          image: {{ .Values.tes.image }}
+#          name: tes
+#          ports:
+#            - containerPort: {{ .Values.tes.port }}
+#          resources: {}
+#      restartPolicy: Always
+#status: {}
+#
+#---
+#
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  labels:
+#    io.kompose.service: tes
+#  name: tes
+#spec:
+#  ports:
+#    - name: {{ .Values.tes.port | quote }}
+#      port: {{ .Values.tes.port }}
+#      targetPort: {{ .Values.tes.port }}
+#  selector:
+#    io.kompose.service: tes
+#status:
+#  loadBalancer: {}
