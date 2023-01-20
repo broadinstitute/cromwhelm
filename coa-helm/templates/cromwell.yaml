@@ -75,6 +75,10 @@ data:
       input-read-limits {
         lines = 1000000
       }
+      # Accommodates IO commands that take 10 seconds because they block on refreshing the filesystem token,
+      # plus margin for variability. Backpressure only works as designed when staleness is configured above
+      # the normal range of IO durations. [WX-861]
+      io.command-backpressure-staleness = 20 seconds
     }
 
     filesystems {
