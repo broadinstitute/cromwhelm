@@ -42,8 +42,6 @@ spec:
               value: "{{ .Values.env.swaggerBasePath }}"
             - name: WORKSPACE_ID
               value: "{{ .Values.persistence.workspaceManager.workspaceId }}"
-            - name: RESOURCE_GROUP
-              value: "{{ .Values.config.resourceGroup }}"
             - name: SAM_URL
               value: "{{ .Values.sam.url }}"
             - name: LZ_MRG
