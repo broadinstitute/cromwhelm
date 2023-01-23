@@ -42,6 +42,10 @@ spec:
               value: "{{ .Values.env.swaggerBasePath }}"
             - name: WORKSPACE_ID
               value: "{{ .Values.persistence.workspaceManager.workspaceId }}"
+            - name: SAM_URL
+              value: "{{ .Values.sam.url }}"
+            - name: LZ_MRG
+              value: "{{ .Values.config.resourceGroup }}"
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config

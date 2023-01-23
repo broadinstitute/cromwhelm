@@ -18,7 +18,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.46
+      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.47
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
 
@@ -26,7 +26,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
-      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.69
+      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.71
       conf_dir: /etc/conf
       conf_file: cbas.yaml
 
@@ -36,6 +36,9 @@ exports:
       conf_dir: /etc/conf
       conf_file: wds.yaml
 
+    config:
+      resourceGroup: "UNDEFINED"
+
     persistence:
       storageAccount: "UNDEFINED"
       blobContainer: "UNDEFINED"
@@ -44,6 +47,9 @@ exports:
         url: "UNDEFINED"
         workspaceId: "UNDEFINED"
         containerResourceId: "UNDEFINED"
+
+    sam:
+      url: "UNDEFINED"
 
     postgres:
       image: postgres
@@ -57,10 +63,8 @@ exports:
       cbas:
         dbname: cbas
       startup_dir: /docker-entrypoint-initdb.d
-      helper_dir: /wds-helpers
       startup_scripts: # Numbered because scripts in initdb.d are run in alphabetical order
         create_dbs: 01_create_dbs.sh
-        seed_wds: 02_seed_wds.sql
 
     env:
       swaggerBasePath: "SUPPLIED BY LEO"
