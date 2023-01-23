@@ -23,8 +23,6 @@ spec:
             items:
               - key: {{ .Values.postgres.startup_scripts.create_dbs }}
                 path: {{ .Values.postgres.startup_scripts.create_dbs }}
-              - key: {{ .Values.postgres.startup_scripts.seed_wds }}
-                path: {{ .Values.postgres.startup_scripts.seed_wds }}
       containers:
         - name: postgres-container
           image: {{ .Values.postgres.image }}
@@ -37,9 +35,6 @@ spec:
             - name: {{ include "app.fullname" . }}-postgres-startup
               mountPath: {{ .Values.postgres.startup_dir }}/{{ .Values.postgres.startup_scripts.create_dbs }}
               subPath: {{ .Values.postgres.startup_scripts.create_dbs }}
-            - name: {{ include "app.fullname" . }}-postgres-startup
-              mountPath: {{ .Values.postgres.helper_dir }}/{{ .Values.postgres.startup_scripts.seed_wds }}
-              subPath: {{ .Values.postgres.startup_scripts.seed_wds }}
           env:
             - name: POSTGRES_PASSWORD
               value: {{ include "dbPassword" . | b64enc | quote }}
@@ -101,13 +96,6 @@ data:
       done
       echo "Multiple databases created"
     fi
-
-  # Note: seed_wds can be run manually to create some contents in the entity database, to be accessed later using GET and PATCH
-  {{ .Values.postgres.startup_scripts.seed_wds }}: |-
-    INSERT INTO entity_type (id, name, workspace_id) VALUES (1337, 'FOO', '15f36863-30a5-4cab-91f7-52be439f1175');
-    INSERT INTO entity(entity_type, name, deleted, attributes) VALUES (1337, 'FOO1', false, '{"foo_rating": "1000"}'::jsonb);
-    INSERT INTO entity(entity_type, name, deleted, attributes) VALUES (1337, 'FOO2', false, '{"foo_rating": "21"}'::jsonb);
-    INSERT INTO entity(entity_type, name, deleted, attributes) VALUES (1337, 'FOO3', false, '{"foo_rating": "17"}'::jsonb);
 {{- end -}}
 {{- define "terra-batch-libchart.postgres-config" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-config.tpl") -}}

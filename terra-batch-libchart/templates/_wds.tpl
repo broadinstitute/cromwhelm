@@ -44,6 +44,10 @@ spec:
               value: "{{ .Values.persistence.workspaceManager.workspaceId }}"
             - name: RESOURCE_GROUP
               value: "{{ .Values.config.resourceGroup }}"
+            - name: SAM_URL
+              value: "{{ .Values.sam.url }}"
+            - name: LZ_MRG
+              value: "{{ .Values.config.resourceGroup }}"
             - name: RELEASE_NAME
               value: {{ include "app.fullname" . }}
 
