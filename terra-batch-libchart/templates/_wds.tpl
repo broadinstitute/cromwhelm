@@ -46,6 +46,8 @@ spec:
               value: "{{ .Values.sam.url }}"
             - name: LZ_MRG
               value: "{{ .Values.config.resourceGroup }}"
+            - name: RELEASE_NAME
+              value: {{ include "app.fullname" . }}
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
