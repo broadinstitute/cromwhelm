@@ -42,6 +42,10 @@ spec:
               value: "{{ .Values.env.swaggerBasePath }}"
             - name: WORKSPACE_ID
               value: "{{ .Values.persistence.workspaceManager.workspaceId }}"
+            - name: RESOURCE_GROUP
+              value: "{{ .Values.config.resourceGroup }}"
+            - name: RELEASE_NAME
+              value: {{ include "app.fullname" . }}
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
