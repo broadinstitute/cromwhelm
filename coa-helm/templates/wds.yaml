@@ -1,4 +1,4 @@
-{{- if .Values.wds.coa-enabled }}
+{{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-deploy" (list . "cromwell-helm.wds-deploy") }}
 {{ define "cromwell-helm.wds-deploy" }}
 spec:
@@ -11,7 +11,7 @@ spec:
 
 ---
 
-{{- if .Values.wds.coa-enabled }}
+{{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-service" (list . "cromwell-helm.wds-service") }}
 {{ define "cromwell-helm.wds-service" }}
 {{ end }}
@@ -19,7 +19,7 @@ spec:
 
 ---
 
-{{- if .Values.wds.coa-enabled }}
+{{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-config" (list . "cromwell-helm.wds-config") }}
 {{ define "cromwell-helm.wds-config" }}
 {{ end }}
