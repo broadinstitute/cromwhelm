@@ -1,3 +1,4 @@
+{{- if .Values.cbasUI.coa-enabled }}
 {{ include "terra-batch-libchart.cbas-ui-deploy" (list . "coa-helm.cbas-ui-deploy") }}
 {{ define "coa-helm.cbas-ui-deploy" }}
 spec:
@@ -6,16 +7,20 @@ spec:
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
 {{ end }}
-
----
-
-{{ include "terra-batch-libchart.cbas-ui-service" (list . "coa-helm.cbas-ui-service") }}
-{{ define "coa-helm.cbas-ui-service" }}
-# Overrides go here
 {{ end }}
 
 ---
 
+{{- if .Values.cbasUI.coa-enabled }}
+{{ include "terra-batch-libchart.cbas-ui-service" (list . "coa-helm.cbas-ui-service") }}
+{{ define "coa-helm.cbas-ui-service" }}
+# Overrides go here
+{{ end }}
+{{ end }}
+
+---
+
+{{- if .Values.cbasUI.coa-enabled }}
 {{ include "terra-batch-libchart.cbas-ui-config" (list . "coa-helm.cbas-ui-config") }}
 {{ define "coa-helm.cbas-ui-config" }}
 data:
@@ -25,4 +30,5 @@ data:
       "cromwellUrlRoot" : "{{ .Values.relay.path }}/cromwell",
       "wdsUrlRoot" : "{{ .Values.relay.path }}/wds"
     }
+{{ end }}
 {{ end }}
