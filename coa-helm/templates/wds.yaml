@@ -1,6 +1,6 @@
+{{ define "cromwell-helm.wds-deploy" }}
 {{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-deploy" (list . "cromwell-helm.wds-deploy") }}
-{{ define "cromwell-helm.wds-deploy" }}
 spec:
   template:
     metadata:
@@ -11,16 +11,16 @@ spec:
 
 ---
 
+{{ define "cromwell-helm.wds-service" }}
 {{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-service" (list . "cromwell-helm.wds-service") }}
-{{ define "cromwell-helm.wds-service" }}
 {{ end }}
 {{ end }}
 
 ---
 
+{{ define "cromwell-helm.wds-config" }}
 {{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-config" (list . "cromwell-helm.wds-config") }}
-{{ define "cromwell-helm.wds-config" }}
 {{ end }}
 {{ end }}
