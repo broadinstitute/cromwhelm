@@ -1,6 +1,7 @@
-{{ define "coa-helm.cromwell-deploy" }}
 {{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ end }}
+{{ define "coa-helm.cromwell-deploy" }}
 spec:
   template:
     metadata:
@@ -34,7 +35,6 @@ spec:
           configMap:
             name: {{ include "app.fullname" . }}-cromwell-config
 status: {}
-{{ end }}
 {{ end }}
 
 ---

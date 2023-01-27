@@ -1,12 +1,12 @@
-{{ define "cromwell-helm.wds-deploy" }}
 {{- if .Values.wds.coaEnabled }}
 {{ include "terra-batch-libchart.wds-deploy" (list . "cromwell-helm.wds-deploy") }}
+{{ end }}
+{{ define "cromwell-helm.wds-deploy" }}
 spec:
   template:
     metadata:
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
-{{ end }}
 {{ end }}
 
 ---

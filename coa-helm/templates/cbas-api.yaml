@@ -1,13 +1,13 @@
-{{ define "coa-helm.cbas-api-deploy" }}
 {{- if .Values.cbas.coaEnabled }}
 {{ include "terra-batch-libchart.cbas-api-deploy" (list . "coa-helm.cbas-api-deploy") }}
+{{ end }}
+{{ define "coa-helm.cbas-api-deploy" }}
 # Overrides go here
 spec:
-  template:
-    metadata:
-      labels:
-    {{ include "coa-helm.labels" $ | nindent 8 }}
-{{ end }}
+template:
+  metadata:
+    labels:
+  {{ include "coa-helm.labels" $ | nindent 8 }}
 {{ end }}
 
 ---

@@ -1,4 +1,6 @@
-{{ include "terra-batch-libchart.reverse-proxy-deploy" (list . "coa-helm.reverse-proxy-deploy") }}
+{{- if .Values.cromwell.coaEnabled }}
+{{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ end }}
 {{ define "coa-helm.reverse-proxy-deploy" }}
 {{ end }}
 
