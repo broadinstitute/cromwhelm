@@ -38,20 +38,19 @@ status: {}
 {{ end }}
 
 ---
-
-{{ define "coa-helm.cromwell-service" }}
 {{- if .Values.cromwell.coaEnabled }}
-{{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
+{{ include "terra-batch-libchart.cromwell-config" (list . "cromwell-helm.cromwell-config") }}
+{{ end }}
+{{ define "coa-helm.cromwell-service" }}
 status:
   loadBalancer: {}
 {{ end }}
-{{ end }}
 
 ---
-
-{{ define "coa-helm.cromwell-config" }}
 {{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
+{{ end }}
+{{ define "coa-helm.cromwell-config" }}
 data:
   cromwell-application.conf: |-
     include required(classpath("application"))
@@ -160,5 +159,4 @@ data:
     }
 
 {{ include "terra-batch-libchart.cromwell-config.database.conf" . | indent 4 }}
-{{ end }}
 {{ end }}

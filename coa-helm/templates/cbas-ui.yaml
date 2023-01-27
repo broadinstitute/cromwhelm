@@ -10,19 +10,18 @@ spec:
 {{ end }}
 
 ---
-
-{{ define "coa-helm.cbas-ui-service" }}
 {{- if .Values.cbasUI.coaEnabled }}
 {{ include "terra-batch-libchart.cbas-ui-service" (list . "coa-helm.cbas-ui-service") }}
-# Overrides go here
 {{ end }}
+{{ define "coa-helm.cbas-ui-service" }}
+# Overrides go here
 {{ end }}
 
 ---
-
-{{ define "coa-helm.cbas-ui-config" }}
 {{- if .Values.cbasUI.coaEnabled }}
 {{ include "terra-batch-libchart.cbas-ui-config" (list . "coa-helm.cbas-ui-config") }}
+{{ end }}
+{{ define "coa-helm.cbas-ui-config" }}
 data:
   {{ .Values.cbasUI.conf_file }}: |-
     {
@@ -30,5 +29,4 @@ data:
       "cromwellUrlRoot" : "{{ .Values.relay.path }}/cromwell",
       "wdsUrlRoot" : "{{ .Values.relay.path }}/wds"
     }
-{{ end }}
 {{ end }}

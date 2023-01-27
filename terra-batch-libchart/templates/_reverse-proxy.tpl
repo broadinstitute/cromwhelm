@@ -94,22 +94,32 @@ data:
             location /api/ {
               proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
             }
-            location /engine/ {
-              proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
-            }
-            location /cbas/ {
-              proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
-            }
             location /cromwell/ {
               proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
             }
+            location /engine/ {
+              proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
+            }
+        }
+
+        if ({ .Values.cbas.coaEnabled } = 'true') {
+            location /cbas/ {
+              proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
+            }
+        }
+
+        if ({ .Values.cbasUI.coaEnabled } = 'true') {
             location / {
               proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
             }
         }
-        location /wds/ {
-          proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
+
+        if ({ .Values.wds.coaEnabled } = 'true') {
+            location /wds/ {
+              proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
+            }
         }
+
       }
     }
   {{ .Values.proxy.www_file }}: |-
