@@ -39,7 +39,7 @@ status: {}
 
 ---
 {{- if .Values.cromwell.coaEnabled }}
-{{ include "terra-batch-libchart.cromwell-config" (list . "cromwell-helm.cromwell-config") }}
+{{ include "terra-batch-libchart.cromwell-service" (list . "cromwell-helm.cromwell-service") }}
 {{ end }}
 {{ define "coa-helm.cromwell-service" }}
 status:
