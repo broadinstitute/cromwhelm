@@ -23,10 +23,10 @@ spec:
             - containerPort: 8080
           resources:
             requests:
-                memory: "768Mi"
+                memory: "256Mi"
                 cpu: "50m"
             limits:
-                memory: "1536Mi"
+                memory: "1024Mi"
                 cpu: "200m"
           volumeMounts:
             - name: {{ include "app.fullname" . }}-wds-config
