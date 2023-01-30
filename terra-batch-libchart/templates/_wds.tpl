@@ -21,6 +21,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+                memory: "768Mi"
+                cpu: "50m"
+            limits:
+                memory: "1536Mi"
+                cpu: "200m"
           volumeMounts:
             - name: {{ include "app.fullname" . }}-wds-config
               mountPath: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
