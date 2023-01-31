@@ -88,39 +88,38 @@ data:
         }
 
         # Proxying to other hosts by subpath:
-        if ({ .Values.cromwell.coaEnabled } = 'true') {
-            # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
-            # update clients to use `/cromwell/` when talking to the Cromwell APIs.
-            location /api/ {
-              proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
-            }
-            location /cromwell/ {
-              proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
-            }
-            location /engine/ {
-              proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
-            }
+        {{- if .Values.cromwell.coaEnabled }}
+        # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
+        # update clients to use `/cromwell/` when talking to the Cromwell APIs.
+        location /api/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
         }
-
-        if ({ .Values.cbas.coaEnabled } = 'true') {
-            location /cbas/ {
-              proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
-            }
+        location /cromwell/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
         }
-
-        if ({ .Values.cbasUI.coaEnabled } = 'true') {
-            location / {
-              proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
-            }
+        location /engine/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
         }
+        {{ end }}
 
-        if ({ .Values.wds.coaEnabled } = 'true') {
-            location /wds/ {
-              client_max_body_size 50M;
-              proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
-            }
+        {{- if .Values.cbas.coaEnabled }}
+        location /cbas/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
         }
+        {{ end }}
 
+        {{- if .Values.cbasUI.coaEnabled }}
+        location / {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
+        }
+        {{ end }}
+
+        {{- if .Values.wds.coaEnabled }}
+        location /wds/ {
+          client_max_body_size 50M;
+          proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
+        }
+        {{ end }}
       }
     }
   {{ .Values.proxy.www_file }}: |-
