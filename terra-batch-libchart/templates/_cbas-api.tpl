@@ -21,6 +21,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "50m"
+            limits:
+              memory: "1024Mi"
+              cpu: "200m"
           volumeMounts:
             - name: {{ include "app.fullname" . }}-cbas-config
               mountPath: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}

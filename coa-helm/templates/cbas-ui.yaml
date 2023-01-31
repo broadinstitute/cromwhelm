@@ -1,4 +1,6 @@
+{{- if .Values.cbasUI.coaEnabled }}
 {{ include "terra-batch-libchart.cbas-ui-deploy" (list . "coa-helm.cbas-ui-deploy") }}
+{{ end }}
 {{ define "coa-helm.cbas-ui-deploy" }}
 spec:
   template:
@@ -8,15 +10,17 @@ spec:
 {{ end }}
 
 ---
-
+{{- if .Values.cbasUI.coaEnabled }}
 {{ include "terra-batch-libchart.cbas-ui-service" (list . "coa-helm.cbas-ui-service") }}
+{{ end }}
 {{ define "coa-helm.cbas-ui-service" }}
 # Overrides go here
 {{ end }}
 
 ---
-
+{{- if .Values.cbasUI.coaEnabled }}
 {{ include "terra-batch-libchart.cbas-ui-config" (list . "coa-helm.cbas-ui-config") }}
+{{ end }}
 {{ define "coa-helm.cbas-ui-config" }}
 data:
   {{ .Values.cbasUI.conf_file }}: |-

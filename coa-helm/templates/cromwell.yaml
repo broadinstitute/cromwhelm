@@ -1,4 +1,6 @@
+{{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ end }}
 {{ define "coa-helm.cromwell-deploy" }}
 spec:
   template:
@@ -18,7 +20,13 @@ spec:
           tty: true
           ports:
             - containerPort: {{ .Values.cromwell.port }}
-          resources: {}
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "50m"
+            limits:
+              memory: "1024Mi"
+              cpu: "200m"
           volumeMounts:
             - mountPath: /cromwell-tmp
               name: cromwell-tmp-claim
@@ -36,16 +44,18 @@ status: {}
 {{ end }}
 
 ---
-
+{{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
+{{ end }}
 {{ define "coa-helm.cromwell-service" }}
 status:
   loadBalancer: {}
 {{ end }}
 
 ---
-
+{{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
+{{ end }}
 {{ define "coa-helm.cromwell-config" }}
 data:
   cromwell-application.conf: |-
