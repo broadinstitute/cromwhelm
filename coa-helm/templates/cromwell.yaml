@@ -1,4 +1,6 @@
+{{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ end }}
 {{ define "coa-helm.cromwell-deploy" }}
 spec:
   template:
@@ -42,16 +44,18 @@ status: {}
 {{ end }}
 
 ---
-
+{{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
+{{ end }}
 {{ define "coa-helm.cromwell-service" }}
 status:
   loadBalancer: {}
 {{ end }}
 
 ---
-
+{{- if .Values.cromwell.coaEnabled }}
 {{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
+{{ end }}
 {{ define "coa-helm.cromwell-config" }}
 data:
   cromwell-application.conf: |-

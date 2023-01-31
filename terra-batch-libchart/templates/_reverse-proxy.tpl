@@ -82,35 +82,44 @@ data:
       server {
         listen 8000;
 
-        # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
-        # update clients to use `/cromwell/` when talking to the Cromwell APIs.
-        location /api/ {
-          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
-        }
-        location /engine/ {
-          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
-        }
-
         # Reference to ngingx's local content
         location /index.html {
           alias /www/data/index.html;
         }
 
         # Proxying to other hosts by subpath:
-        location /cbas/ {
-          proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
+        {{- if .Values.cromwell.coaEnabled }}
+        # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
+        # update clients to use `/cromwell/` when talking to the Cromwell APIs.
+        location /api/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/api/;
         }
         location /cromwell/ {
           proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/;
         }
+        location /engine/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/;
+        }
+        {{ end }}
+
+        {{- if .Values.cbas.coaEnabled }}
+        location /cbas/ {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
+        }
+        {{ end }}
+
+        {{- if .Values.cbasUI.coaEnabled }}
+        location / {
+          proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
+        }
+        {{ end }}
+
+        {{- if .Values.wds.coaEnabled }}
         location /wds/ {
           client_max_body_size 50M;
           proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
         }
-
-        location / {
-          proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
-        }
+        {{ end }}
       }
     }
   {{ .Values.proxy.www_file }}: |-

@@ -4,6 +4,7 @@ exports:
       name: coa-cromwell-svc
       image: broadinstitute/cromwell:85-46a7918
       port: 8000
+      coaEnabled: true
 
     proxy:
       image: nginx:latest
@@ -21,6 +22,7 @@ exports:
       image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.56
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
+      coaEnabled: true
 
     # Note: If you change the location of cbas image config, please also update publish.yml in cbas
     #       repo as the GitHub workflow looks in this file to automatically update the image version
@@ -29,12 +31,14 @@ exports:
       image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.81
       conf_dir: /etc/conf
       conf_file: cbas.yaml
+      coaEnabled: true
 
     wds:
       name: wds
       image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:85c304e
       conf_dir: /etc/conf
       conf_file: wds.yaml
+      coaEnabled: true
 
     config:
       resourceGroup: "UNDEFINED"
