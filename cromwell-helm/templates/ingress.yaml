@@ -28,9 +28,12 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ . }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $fullName }}-reverse-proxy-service
-              servicePort: {{ $.Values.proxy.port }}
+              service:
+                name: {{ $fullName }}-reverse-proxy-service
+                port:
+                  number: {{ $.Values.proxy.port }}
           {{- end }}
     {{- end }}
 {{- end }}
