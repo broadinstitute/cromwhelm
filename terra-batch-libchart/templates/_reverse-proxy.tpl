@@ -116,7 +116,7 @@ data:
 
         {{- if .Values.wds.coaEnabled }}
         location /wds/ {
-          client_max_body_size 50M;
+          client_max_body_size 500m;
           proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
         }
         {{ end }}
