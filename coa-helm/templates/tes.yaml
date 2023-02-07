@@ -1,4 +1,3 @@
-=======
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,29 +42,29 @@ spec:
               value: {{ .Values.config.region }}
             - name: BatchAccount__SubscriptionId
               value: {{ .Values.config.subscriptionId }}
-              - name: BatchAccount__ResourceGroup
+            - name: BatchAccount__ResourceGroup
               value: {{ .Values.config.resourceGroup }}
             - name: BatchNodesSubnetId
               value: {{ .Values.config.batchNodesSubnetId }}
             - name: RetryPolicyOptions__MaxRetryCount
-              value: 5
+              value: "5"
             - name: RetryPolicyOptions__ExponentialBackOffExponent
-              value: 2
+              value: "2"
             - name: ContainerRegistry__AutoDiscoveryEnabled
-              value: false
+              value: "false"
             - name: ContainerRegistry__RegistryInfoCacheExpirationInHour
-              value: 1
-            - name: Terra__LandingZoneId:
+              value: "1"
+            - name: Terra__LandingZoneId
               value: {{ .Values.config.landingZoneId }}
-            - name: Terra__LandingZoneApiHost:
+            - name: Terra__LandingZoneApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
-            - name: Terra__WsmApiHost:
+            - name: Terra__WsmApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
-            - name: Terra__WorkspaceStoragecontainerResourceId:  # lower-case c?
+            - name: Terra__WorkspaceStoragecontainerResourceId  # lower-case c?
               value: {{ .Values.persistence.workspaceManager.containerResourceId }}
-            - name: Terra__WorkspaceStorageContainerName:
+            - name: Terra__WorkspaceStorageContainerName
               value: {{ .Values.persistence.blobContainer }}
-            - name: Terra__WorkspaceStorageAccountName:
+            - name: Terra__WorkspaceStorageAccountName
               value: {{ .Values.persistence.storageAccount }}
             - name: BlobxferImageName
               value: {{ .Values.config.blobxferImageName }}
