@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: tes
-  name: tes
+    {{- include "app.labels" . | nindent 4 }}
+  name: {{ include "app.fullname" . }}-tes-depl
 spec:
   replicas: 1
   selector:
@@ -22,14 +22,18 @@ spec:
           # TODO remove unused
             - name: DefaultStorageAccountName
               value: {{ .Values.persistence.storageAccount }}
-            - name: AzureServicesAuthConnectionString
-              value: {{ .Values.config.azureServicesAuthConnectionString }}
-            - name: ApplicationInsightsAccountName
-              value: {{ .Values.config.applicationInsightsAccountName }}
-            - name: ApplicationInsightsAccountKey
-              value: {{ .Values.config.applicationInsightsAccountKey }}
-            - name: CosmosDbAccountName
+        #    - name: AzureServicesAuthConnectionString
+        #      value: {{ .Values.config.azureServicesAuthConnectionString }}
+        #    - name: ApplicationInsightsAccountName
+        #      value: {{ .Values.config.applicationInsightsAccountName }}
+        #    - name: ApplicationInsightsAccountKey
+        #      value: {{ .Values.config.applicationInsightsAccountKey }}
+            - name: CosmosDb__AccountName
               value: {{ .Values.config.cosmosDbAccountName }}
+            - name: CosmosDb__Key
+              value: {{ .Values.config.cosmosDbKey }}
+            - name: CosmosDb__Endpoint
+              value: {{ .Values.config.cosmosDbEndpoint }}
             - name: AzureOfferDurableId
               value: {{ .Values.config.azureOfferDurableId }}
             - name: BatchAccount__AccountName
@@ -60,12 +64,14 @@ spec:
               value: {{ .Values.persistence.workspaceManager.url }}
             - name: Terra__WsmApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
-            - name: Terra__WorkspaceStoragecontainerResourceId  # lower-case c?
+            - name: Terra__WorkspaceStorageContainerResourceId  # lower-case c?
               value: {{ .Values.persistence.workspaceManager.containerResourceId }}
             - name: Terra__WorkspaceStorageContainerName
               value: {{ .Values.persistence.blobContainer }}
             - name: Terra__WorkspaceStorageAccountName
               value: {{ .Values.persistence.storageAccount }}
+            - name: Terra__WorkspaceId
+              value: {{ .Values.persistence.workspaceManager.workspaceId }}
             - name: BlobxferImageName
               value: {{ .Values.config.blobxferImageName }}
             - name: DisableBatchNodesPublicIpAddress
@@ -80,6 +86,8 @@ spec:
               value: {{ .Values.config.drsUrl }}
             - name: CromwellDrsLocalizerImageName
               value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
+            - name: UseLegacyBatchImplementationWithAutopools
+              value: "false"
           image: {{ .Values.tes.image }}
           name: tes
           ports:
@@ -94,8 +102,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    io.kompose.service: tes
-  name: tes
+    {{- include "app.labels" . | nindent 4 }}
+  name: {{ include "app.fullname" . }}-tes-svc
 spec:
   ports:
     - name: {{ .Values.tes.port | quote }}
