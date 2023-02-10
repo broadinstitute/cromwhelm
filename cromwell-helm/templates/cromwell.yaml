@@ -1,4 +1,6 @@
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "cromwell-helm.cromwell-deploy") }}
+{{ end }}
 {{ define "cromwell-helm.cromwell-deploy" }}
 spec:
   template:
@@ -42,13 +44,17 @@ spec:
 
 ---
 
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-service" (list . "cromwell-helm.cromwell-service") }}
+{{ end }}
 {{ define "cromwell-helm.cromwell-service" }}
 {{ end }}
 
 ---
 
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-config" (list . "cromwell-helm.cromwell-config") }}
+{{ end }}
 {{ define "cromwell-helm.cromwell-config" }}
 data:
   {{ .Values.cromwell.config.file }}: |-
