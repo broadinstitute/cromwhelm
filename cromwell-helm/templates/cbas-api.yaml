@@ -1,16 +1,22 @@
+{{- if .Values.cbas.enabled }}
 {{ include "terra-batch-libchart.cbas-api-deploy" (list . "cromwell-helm.cbas-api-deploy") }}
+{{ end }}
 {{ define "cromwell-helm.cbas-api-deploy" }}
 {{ end }}
 
 ---
 
+{{- if .Values.cbas.enabled }}
 {{ include "terra-batch-libchart.cbas-api-service" (list . "cromwell-helm.cbas-api-service") }}
+{{ end }}
 {{ define "cromwell-helm.cbas-api-service" }}
 {{ end }}
 
 ---
 
+{{- if .Values.cbas.enabled }}
 {{ include "terra-batch-libchart.cbas-api-config" (list . "cromwell-helm.cbas-api-config") }}
+{{ end }}
 {{ define "cromwell-helm.cbas-api-config" }}
 data:
   {{ .Values.cbas.conf_file }}: |-

@@ -88,7 +88,7 @@ data:
         }
 
         # Proxying to other hosts by subpath:
-        {{- if .Values.cromwell.coaEnabled }}
+        {{- if .Values.cromwell.enabled }}
         # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
         # update clients to use `/cromwell/` when talking to the Cromwell APIs.
         location /api/ {
@@ -102,19 +102,19 @@ data:
         }
         {{ end }}
 
-        {{- if .Values.cbas.coaEnabled }}
+        {{- if .Values.cbas.enabled }}
         location /cbas/ {
           proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
         }
         {{ end }}
 
-        {{- if .Values.cbasUI.coaEnabled }}
+        {{- if .Values.cbasUI.enabled }}
         location / {
           proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
         }
         {{ end }}
 
-        {{- if .Values.wds.coaEnabled }}
+        {{- if .Values.wds.enabled }}
         location /wds/ {
           client_max_body_size 500m;
           proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;

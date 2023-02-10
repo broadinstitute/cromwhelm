@@ -1,4 +1,4 @@
-{{- if .Values.cromwell.coaEnabled }}
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
 {{ end }}
 {{ define "coa-helm.cromwell-deploy" }}
@@ -44,7 +44,7 @@ status: {}
 {{ end }}
 
 ---
-{{- if .Values.cromwell.coaEnabled }}
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
 {{ end }}
 {{ define "coa-helm.cromwell-service" }}
@@ -53,7 +53,7 @@ status:
 {{ end }}
 
 ---
-{{- if .Values.cromwell.coaEnabled }}
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
 {{ end }}
 {{ define "coa-helm.cromwell-config" }}

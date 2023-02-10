@@ -1,4 +1,4 @@
-{{- if .Values.cbasUI.coaEnabled }}
+{{- if .Values.cbasUI.enabled }}
 {{ include "terra-batch-libchart.cbas-ui-deploy" (list . "coa-helm.cbas-ui-deploy") }}
 {{ end }}
 {{ define "coa-helm.cbas-ui-deploy" }}
@@ -10,7 +10,7 @@ spec:
 {{ end }}
 
 ---
-{{- if .Values.cbasUI.coaEnabled }}
+{{- if .Values.cbasUI.enabled }}
 {{ include "terra-batch-libchart.cbas-ui-service" (list . "coa-helm.cbas-ui-service") }}
 {{ end }}
 {{ define "coa-helm.cbas-ui-service" }}
@@ -18,7 +18,7 @@ spec:
 {{ end }}
 
 ---
-{{- if .Values.cbasUI.coaEnabled }}
+{{- if .Values.cbasUI.enabled }}
 {{ include "terra-batch-libchart.cbas-ui-config" (list . "coa-helm.cbas-ui-config") }}
 {{ end }}
 {{ define "coa-helm.cbas-ui-config" }}

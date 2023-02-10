@@ -1,4 +1,4 @@
-{{- if .Values.cbas.coaEnabled }}
+{{- if .Values.cbas.enabled }}
 {{ include "terra-batch-libchart.cbas-api-deploy" (list . "coa-helm.cbas-api-deploy") }}
 {{ end }}
 {{ define "coa-helm.cbas-api-deploy" }}
@@ -11,7 +11,7 @@ spec:
 {{ end }}
 
 ---
-{{- if .Values.cbas.coaEnabled }}
+{{- if .Values.cbas.enabled }}
 {{ include "terra-batch-libchart.cbas-api-service" (list . "coa-helm.cbas-api-service") }}
 {{ end }}
 {{ define "coa-helm.cbas-api-service" }}
@@ -19,7 +19,7 @@ spec:
 {{ end }}
 
 ---
-{{- if .Values.cbas.coaEnabled }}
+{{- if .Values.cbas.enabled }}
 {{ include "terra-batch-libchart.cbas-api-config" (list . "coa-helm.cbas-api-config") }}
 {{ end }}
 {{ define "coa-helm.cbas-api-config" }}
