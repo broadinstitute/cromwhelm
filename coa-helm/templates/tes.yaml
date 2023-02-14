@@ -22,18 +22,14 @@ spec:
           # TODO remove unused
             - name: DefaultStorageAccountName
               value: {{ .Values.persistence.storageAccount }}
-        #    - name: AzureServicesAuthConnectionString
-        #      value: {{ .Values.config.azureServicesAuthConnectionString }}
-        #    - name: ApplicationInsightsAccountName
-        #      value: {{ .Values.config.applicationInsightsAccountName }}
-        #    - name: ApplicationInsightsAccountKey
-        #      value: {{ .Values.config.applicationInsightsAccountKey }}
-            # - name: CosmosDb__AccountName
-            #   value: {{ .Values.config.cosmosDbAccountName }}
-            # - name: CosmosDb__Key
-            #   value: {{ .Values.config.cosmosDbKey }}
-            # - name: CosmosDb__Endpoint
-            #   value: {{ .Values.config.cosmosDbEndpoint }}
+            - name: ApplicationInsights_Connection_String
+              value: {{ .Values.config.applicationInsightsAccountKey }}
+            - name: CosmosDb__AccountName
+              value: {{ .Values.config.cosmosDbAccountName }}
+            - name: CosmosDb__Key
+              value: {{ .Values.config.cosmosDbKey }}
+            - name: CosmosDb__Endpoint
+              value: {{ .Values.config.cosmosDbEndpoint }}
             - name: AzureOfferDurableId
               value: {{ .Values.config.azureOfferDurableId }}
             - name: BatchAccount__AccountName
@@ -48,8 +44,8 @@ spec:
               value: {{ .Values.config.subscriptionId }}
             - name: BatchAccount__ResourceGroup
               value: {{ .Values.config.resourceGroup }}
-            - name: BatchNodesSubnetId
-              value: {{ .Values.config.batchNodesSubnetId }}
+            # - name: BatchNodesSubnetId
+            #   value: {{ .Values.config.batchNodesSubnetId }}
             - name: RetryPolicyOptions__MaxRetryCount
               value: "5"
             - name: RetryPolicyOptions__ExponentialBackOffExponent
@@ -88,20 +84,55 @@ spec:
               value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
             - name: UseLegacyBatchImplementationWithAutopools
               value: "false"
-            - name: TesPostgreSql__PostgreSqlServerName
-              value: {{ include "app.fullname" . }}
-            - name: TesPostgreSql__PostgreSqlServerNameSuffix
-              value: "-postgres"
-            - name: TesPostgreSql__PostgreSqlServerSslMode
-              value: Disable
-            - name: TesPostgreSql__PostgreSqlServerPort
-              value: "{{ .Values.postgres.port }}"
-            - name: TesPostgreSql__PostgreSqlDatabaseName
-              value: {{ .Values.postgres.tes.dbname }}
-            - name: TesPostgreSql__PostgreSqlDatabaseUserLogin
-              value: {{ .Values.postgres.user | quote }}
-            - name: TesPostgreSql__PostgreSqlDatabaseUserPassword
-              value: {{ include "dbPassword" . | b64enc | quote }}
+            # Awaiting PostgreSQL support
+            # - name: TesPostgreSql__PostgreSqlServerName
+            #   value: {{ include "app.fullname" . }}
+            # - name: TesPostgreSql__PostgreSqlServerNameSuffix
+            #   value: "-postgres"
+            # - name: TesPostgreSql__PostgreSqlServerSslMode
+            #   value: Disable
+            # - name: TesPostgreSql__PostgreSqlServerPort
+            #   value: "{{ .Values.postgres.port }}"
+            # - name: TesPostgreSql__PostgreSqlDatabaseName
+            #   value: {{ .Values.postgres.tes.dbname }}
+            # - name: TesPostgreSql__PostgreSqlDatabaseUserLogin
+            #   value: {{ .Values.postgres.user | quote }}
+            # - name: TesPostgreSql__PostgreSqlDatabaseUserPassword
+            #   value: {{ include "dbPassword" . | b64enc | quote }}
+            - name: Logging__LogLevel__Default
+              value: Warning
+            - name: AllowedHosts
+              value: "*"
+            - name: BatchImagePublisher
+              value: "microsoft-dsvm"
+            - name: BatchImageOffer
+              value: "ubuntu-hpc"
+            - name: BatchImageSku
+              value: "2004"
+            - name: BatchImageVersion
+              value: "latest"
+            - name: BatchNodeAgentSkuId
+              value: "batch.node.ubuntu 20.04"
+            - name: Gen2BatchNodeAgentSkuId
+              value: "batch.node.ubuntu 20.04"
+            - name: Gen2BatchImageOffer
+              value: "ubuntu-hpc"
+            - name: Gen2BatchImagePublisher
+              value: "microsoft-dsvm"
+            - name: Gen2BatchImageSku
+              value: "2004"
+            - name: Gen2BatchImageVersion
+              value: "latest"
+            - name: Gen1BatchImageOffer
+              value: "ubuntu-server-container"
+            - name: Gen1BatchImagePublisher
+              value: "microsoft-azure-batch"
+            - name: Gen1BatchImageSku
+              value: "microsoft-azure-batch"
+            - name: Gen1BatchImageVersion
+              value: "latest"
+            - name: BatchPoolRotationForcedDays
+              value: "7"
           image: {{ .Values.tes.image }}
           name: tes
           ports:
