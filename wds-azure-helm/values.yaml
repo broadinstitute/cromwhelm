@@ -1,3 +1,22 @@
+# TODO: The values below were copied -- do we need this?
+dbname: wds
+
+env:
+  swaggerBasePath: "SUPPLIED BY LEO"
+
+identity:
+  name: RUNTIME_PARAMETER
+  resourceId: RUNTIME_PARAMETER
+  clientId: RUNTIME_PARAMETER
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+
 persistence:
   enabled: true
   storageClass: "manual"
@@ -8,12 +27,19 @@ persistence:
   workspaceManager:
     workspaceId: RUNTIME_PARAMETER
 
-# TODO: The values below were copied -- do we need this?
-dbname: wds
+postgres:
+  image: postgres
+  port: 5432
+  user: postgres_user
+  password: "RUNTIME_PARAMETER"
+  wds:
+    dbname: wds
+  startup_dir: /docker-entrypoint-initdb.d
+  startup_scripts: # Numbered because the scripts in initdb.d are run in alphabetical order
+    create_dbs: 01_create_dbs.sh
 
-env:
-  # Where to find Swagger UI docs in WDS deployment
-  swaggerBasePath: placeholder-for-now
+sam:
+  url: "UNDEFINED"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -34,10 +60,9 @@ service:
   type: LoadBalancer
   port: 8000
 
-ingress:
-  enabled: false
-  annotations: {}
-  hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
+wds:
+  name: wds
+  image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:fde7e29
+  conf_dir: /etc/conf
+  conf_file: wds.yaml
+  enabled: true
