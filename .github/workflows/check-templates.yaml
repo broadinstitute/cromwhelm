@@ -17,7 +17,7 @@ jobs:
         run: |
           helm dependency update cromwell-helm/
           helm dependency update coa-helm/
-          helm template wds-azure-helm/
+          helm dependency update wds-azure-helm/
       - name: Check templates
         run: |
           echo \
