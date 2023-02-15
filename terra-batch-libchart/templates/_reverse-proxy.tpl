@@ -114,12 +114,10 @@ data:
         }
         {{ end }}
 
-        {{- if .Values.wds.enabled }}
         location /wds/ {
           client_max_body_size 500m;
           proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
         }
-        {{ end }}
       }
     }
   {{ .Values.proxy.www_file }}: |-
