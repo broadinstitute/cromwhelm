@@ -1,21 +1,24 @@
-{{ include "terra-batch-libchart.wds-deploy" (list . "wds-azure-helm.wds-deploy") }} # what is this
-{{ define "wds-azure-helm.wds-deploy" }}
+{{- if .Values.wds.enabled }}
+{{ include "terra-batch-libchart.wds-deploy" (list . "cromwell-helm.wds-deploy") }}
+{{ end }}
+{{ define "cromwell-helm.wds-deploy" }}
 spec:
   template:
     metadata:
       labels:
-    {{ include "wds-azure-helm.labels" $ | indent 8 }}
+    {{ include "coa-helm.labels" $ | nindent 8 }}
+  {{ end }}
+
+---
+{{- if .Values.wds.enabled }}
+{{ include "terra-batch-libchart.wds-service" (list . "cromwell-helm.wds-service") }}
+{{ end }}
+{{ define "cromwell-helm.wds-service" }}
 {{ end }}
 
 ---
-
-{{ include "terra-batch-libchart.wds-service" (list . "wds-azure-helm.wds-service") }}
-{{ define "wds-azure-helm.wds-service" }}
+{{- if .Values.wds.enabled }}
+{{ include "terra-batch-libchart.wds-config" (list . "cromwell-helm.wds-config") }}
 {{ end }}
-
----
-
-{{ include "terra-batch-libchart.wds-config" (list . "wds-azure-helm.wds-config") }}
-{{ define "wds-azure-helm.wds-config" }}
+{{ define "cromwell-helm.wds-config" }}
 {{ end }}
-
