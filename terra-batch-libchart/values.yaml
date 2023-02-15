@@ -4,6 +4,7 @@ exports:
       name: coa-cromwell-svc
       image: broadinstitute/cromwell:85-46a7918
       port: 8000
+      enabled: true
 
     proxy:
       image: nginx:latest
@@ -18,23 +19,41 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.42
+      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.68
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
+      enabled: true
 
     # Note: If you change the location of cbas image config, please also update publish.yml in cbas
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
-      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.65
+      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.89
       conf_dir: /etc/conf
       conf_file: cbas.yaml
+      enabled: true
 
     wds:
       name: wds
-      image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:903c284
+      image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:fde7e29
       conf_dir: /etc/conf
       conf_file: wds.yaml
+      enabled: true
+
+    config:
+      resourceGroup: "UNDEFINED"
+
+    persistence:
+      storageAccount: "UNDEFINED"
+      blobContainer: "UNDEFINED"
+      leoAppInstanceName: "UNDEFINED"
+      workspaceManager:
+        url: "UNDEFINED"
+        workspaceId: "UNDEFINED"
+        containerResourceId: "UNDEFINED"
+
+    sam:
+      url: "UNDEFINED"
 
     postgres:
       image: postgres
@@ -48,10 +67,8 @@ exports:
       cbas:
         dbname: cbas
       startup_dir: /docker-entrypoint-initdb.d
-      helper_dir: /wds-helpers
-      startup_scripts: # Numbered because scripts in initdb.d are run in alphabetical order
+      startup_scripts: # Numbered because the scripts in initdb.d are run in alphabetical order
         create_dbs: 01_create_dbs.sh
-        seed_wds: 02_seed_wds.sql
 
     env:
       swaggerBasePath: "SUPPLIED BY LEO"

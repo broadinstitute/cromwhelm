@@ -1,10 +1,12 @@
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "coa-helm.cromwell-deploy") }}
+{{ end }}
 {{ define "coa-helm.cromwell-deploy" }}
 spec:
   template:
     metadata:
       labels:
-    {{ include "coa-helm.labels" $ | indent 8 }}
+    {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
       containers:
         - args:
@@ -18,7 +20,13 @@ spec:
           tty: true
           ports:
             - containerPort: {{ .Values.cromwell.port }}
-          resources: {}
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "50m"
+            limits:
+              memory: "1024Mi"
+              cpu: "200m"
           volumeMounts:
             - mountPath: /cromwell-tmp
               name: cromwell-tmp-claim
@@ -36,16 +44,18 @@ status: {}
 {{ end }}
 
 ---
-
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-service" (list . "coa-helm.cromwell-service") }}
+{{ end }}
 {{ define "coa-helm.cromwell-service" }}
 status:
   loadBalancer: {}
 {{ end }}
 
 ---
-
+{{- if .Values.cromwell.enabled }}
 {{ include "terra-batch-libchart.cromwell-config" (list . "coa-helm.cromwell-config") }}
+{{ end }}
 {{ define "coa-helm.cromwell-config" }}
 data:
   cromwell-application.conf: |-
@@ -75,6 +85,10 @@ data:
       input-read-limits {
         lines = 1000000
       }
+      # Accommodates IO commands that take 10 seconds because they block on refreshing the filesystem token,
+      # plus margin for variability. Backpressure only works as designed when staleness is configured above
+      # the normal range of IO durations. [WX-861]
+      io.command-backpressure-staleness = 20 seconds
     }
 
     filesystems {
@@ -112,11 +126,6 @@ data:
           auth: "azure"
         }
       }
-    }
-
-    workflow-options {
-      workflow-log-dir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/cromwell-workflow-logs"
-      workflow-log-temporary: false
     }
 
     backend {

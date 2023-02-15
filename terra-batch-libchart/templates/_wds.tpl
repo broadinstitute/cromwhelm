@@ -21,6 +21,13 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+                memory: "256Mi"
+                cpu: "50m"
+            limits:
+                memory: "1024Mi"
+                cpu: "200m"
           volumeMounts:
             - name: {{ include "app.fullname" . }}-wds-config
               mountPath: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
@@ -40,6 +47,14 @@ spec:
               value: "{{ .Values.postgres.port }}"
             - name: SWAGGER_BASE_PATH
               value: "{{ .Values.env.swaggerBasePath }}"
+            - name: WORKSPACE_ID
+              value: "{{ .Values.persistence.workspaceManager.workspaceId }}"
+            - name: SAM_URL
+              value: "{{ .Values.sam.url }}"
+            - name: LZ_MRG
+              value: "{{ .Values.config.resourceGroup }}"
+            - name: RELEASE_NAME
+              value: {{ include "app.fullname" . }}
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config

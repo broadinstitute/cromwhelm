@@ -1,22 +1,29 @@
+{{- if .Values.cbasUI.enabled }}
 {{ include "terra-batch-libchart.cbas-ui-deploy" (list . "cromwell-helm.cbas-ui-deploy") }}
+{{ end }}
 {{ define "cromwell-helm.cbas-ui-deploy" }}
 {{ end }}
 
 ---
 
+{{- if .Values.cbasUI.enabled }}
 {{ include "terra-batch-libchart.cbas-ui-service" (list . "cromwell-helm.cbas-ui-service") }}
+{{ end }}
 {{ define "cromwell-helm.cbas-ui-service" }}
 {{ end }}
 
 ---
 
+{{- if .Values.cbasUI.enabled }}
 {{ include "terra-batch-libchart.cbas-ui-config" (list . "cromwell-helm.cbas-ui-config") }}
+{{ end }}
 {{ define "cromwell-helm.cbas-ui-config" }}
 data:
   {{ .Values.cbasUI.conf_file }}: |-
     {
       "cbasUrlRoot" : "{{ .Values.ingress.path }}/cbas",
       "cromwellUrlRoot" : "{{ .Values.ingress.path }}/cromwell",
-      "wdsUrlRoot" : "{{ .Values.ingress.path }}/wds"
+      "wdsUrlRoot" : "{{ .Values.ingress.path }}/wds",
+      "wdsInstanceId" : "{{ .Values.persistence.workspaceManager.workspaceId }}"
     }
 {{ end }}

@@ -1,3 +1,4 @@
+{{- if .Values.jobmanager.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -82,18 +83,22 @@ spec:
           livenessProbe:
             {{- toYaml .Values.jobmanager.ui.probes.liveness.spec | nindent 12 }}
           {{- end }}
+{{ end }}
 
 ---
 
+{{- if .Values.jobmanager.enabled -}}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .Values.jobmanager.name }}-sa
   labels:
     {{- include "app.jobmanager.selectorLabels" . | nindent 4 }}
+{{ end }}
 
 ---
 
+{{- if .Values.jobmanager.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -134,3 +139,4 @@ data:
         }
       }
     }
+{{ end }}
