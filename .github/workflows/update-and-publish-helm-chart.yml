@@ -72,7 +72,6 @@ jobs:
           git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION_GCP, coa-helm chart version to $NEXT_VERSION_COA, and wds-azure-helm chart version to $NEXT_VERSION_WDS"
           git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/cromwhelm.git main
 
-#      TODO: Continue here
       - name: Find out latest chart version from cromwhelm repository
         run: |
           function getLatestChartVersion(){
