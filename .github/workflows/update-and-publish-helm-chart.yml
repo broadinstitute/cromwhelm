@@ -6,7 +6,6 @@ on:
 
 jobs:
   update-and-publish:
-    # TODO: Include wds-azure-helm here eventually
     name: Update and publish new cromwell-helm chart
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +22,6 @@ jobs:
           token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
 
       - name: Find out next chart version
-        # TODO: Add wds-azure-helm version here
         run: |
           currentVersionGCP=$(grep '^version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
           currentVersionCOA=$(grep '^version:' coa-helm/Chart.yaml | awk '{print $NF}')
@@ -59,7 +57,7 @@ jobs:
           mv cromwell-on-azure-${NEXT_VERSION_COA}.tgz charts/cromwell-on-azure-${NEXT_VERSION_COA}.tgz
           helm dependency update wds-azure-helm/
           helm package wds-azure-helm/
-          mv wds-azure-helm-${NEXT_VERSION_WDS}.tgz charts/wds-azure-helm-${NEXT_VERSION_COA}.tgz
+          mv wds-azure-helm-${NEXT_VERSION_WDS}.tgz charts/wds-azure-helm-${NEXT_VERSION_WDS}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
       - name: Push changes to GitHub
@@ -95,6 +93,11 @@ jobs:
 
           if [ "${NEW_CROMWELL_HELM_V}" != "${NEXT_VERSION_GCP}" ]; then
             echo "New version ${NEW_CROMWELL_HELM_V} does not match GCP version ${NEXT_VERSION_GCP}"
+            exit 1
+          fi
+          
+          if [ "${NEW_CROMWELL_HELM_V}" != "${NEXT_VERSION_WDS}" ]; then
+            echo "New version ${NEW_CROMWELL_HELM_V} does not match GCP version ${NEXT_VERSION_WDS}"
             exit 1
           fi
 
