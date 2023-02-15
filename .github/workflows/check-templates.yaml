@@ -18,7 +18,6 @@ jobs:
           helm dependency update cromwell-helm/
           helm dependency update coa-helm/
       - name: Check templates
-        # TODO: Include wds-azure-helm here eventually
         run: |
           echo \
             "The outputs of this step include a placeholder database password that has been B64 encoded."\
@@ -26,3 +25,4 @@ jobs:
             "The encoded value 'U1VQUExJRUQgQlkgTEVP' decodes to the string 'SUPPLIED BY LEO'."
           helm template cromwell-helm/
           helm template coa-helm/
+          helm template wds-azure-helm/

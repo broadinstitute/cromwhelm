@@ -27,21 +27,27 @@ jobs:
         run: |
           currentVersionGCP=$(grep '^version:' cromwell-helm/Chart.yaml | awk '{print $NF}')
           currentVersionCOA=$(grep '^version:' coa-helm/Chart.yaml | awk '{print $NF}')
+          currentVersionWDS=$(grep '^version:' wds-azure-helm/Chart.yaml | awk '{print $NF}')
 
           # this will increment only the patch version digit. For example, it will update 0.1.10 => 0.1.11
           nextVersionGCP=$(echo ${currentVersionGCP} | awk -F. -v OFS=. '{$NF += 1 ; print}')
           nextVersionCOA=$(echo ${currentVersionGCP} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          nextVersionWDS=$(echo ${currentVersionWDS} | awk -F. -v OFS=. '{$NF += 1 ; print}')
 
           echo "CURRENT_VERSION_GCP=$currentVersionGCP" >> $GITHUB_ENV
           echo "NEXT_VERSION_GCP=$nextVersionGCP" >> $GITHUB_ENV
 
           echo "CURRENT_VERSION_COA=$currentVersionCOA" >> $GITHUB_ENV
           echo "NEXT_VERSION_COA=$nextVersionCOA" >> $GITHUB_ENV
+          
+          echo "CURRENT_VERSION_WDS=currentVersionWDS" >> $GITHUB_ENV
+          echo "NEXT_VERSION_WDS=nextVersionWDS" >> $GITHUB_ENV
 
       - name: Bump chart version
         run: |
           sed -i "s/$CURRENT_VERSION_GCP/$NEXT_VERSION_GCP/" cromwell-helm/Chart.yaml
           sed -i "s/$CURRENT_VERSION_COA/$NEXT_VERSION_COA/" coa-helm/Chart.yaml
+          sed -i "s/CURRENT_VERSION_WDS/$NEXT_VERSION_WDS/" wds-azure-helm/Chart.yaml
 
       - name: Publish the new helm chart and update index.yaml
         run: |
@@ -51,6 +57,9 @@ jobs:
           helm dependency update coa-helm/
           helm package coa-helm/
           mv cromwell-on-azure-${NEXT_VERSION_COA}.tgz charts/cromwell-on-azure-${NEXT_VERSION_COA}.tgz
+          helm dependency update wds-azure-helm/
+          helm package wds-azure-helm/
+          mv wds-azure-helm-${NEXT_VERSION_WDS}.tgz charts/wds-azure-helm-${NEXT_VERSION_COA}.tgz
           helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts
 
       - name: Push changes to GitHub
@@ -62,9 +71,10 @@ jobs:
           git add .
           git config --global user.name "broadbot"
           git config --global user.email "broadbot@broadinstitute.org"
-          git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION_GCP and coa-helm chart version to $NEXT_VERSION_COA"
+          git commit -am "Auto update cromwell-helm chart version to $NEXT_VERSION_GCP, coa-helm chart version to $NEXT_VERSION_COA, and wds-azure-helm chart version to $NEXT_VERSION_WDS"
           git push https://broadbot:$BROADBOT_TOKEN@github.com/broadinstitute/cromwhelm.git main
-      
+
+#      TODO: Continue here
       - name: Find out latest chart version from cromwhelm repository
         run: |
           function getLatestChartVersion(){
