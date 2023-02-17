@@ -130,7 +130,13 @@ spec:
           name: tes
           ports:
             - containerPort: {{ .Values.tes.port }}
-          resources: {}
+          resources:
+            requests:
+              cpu: "1.5"
+              memory: "3072Mi"
+            limits:
+              cpu: "8.0"
+              memory: "8192Mi"
       restartPolicy: Always
 status: {}
 
