@@ -22,8 +22,6 @@ spec:
             # Name needs to be unique per LZ
             - name: Name
               value: {{ .Values.fullnameOverride }}
-            - name: DefaultStorageAccountName
-              value: {{ .Values.persistence.storageAccount }}
             - name: ApplicationInsights_Connection_String
               value: {{ .Values.config.applicationInsightsAccountKey }}
             - name: AzureOfferDurableId
@@ -59,7 +57,7 @@ spec:
               value: "{{ .Values.tes.sasTokenExpirationInSeconds }}"
             - name: Terra__WsmApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
-            - name: Terra__WorkspaceStorageContainerResourceId  # lower-case c?
+            - name: Terra__WorkspaceStorageContainerResourceId
               value: {{ .Values.persistence.workspaceManager.containerResourceId }}
             - name: Terra__WorkspaceStorageContainerName
               value: {{ .Values.persistence.blobContainer }}
