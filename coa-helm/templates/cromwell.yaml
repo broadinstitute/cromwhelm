@@ -149,8 +149,6 @@ data:
             dockerRoot = "/cromwell-executions"
             endpoint = "http://{{ include "app.fullname" . }}-tes-svc:{{ .Values.tes.port }}/v1/tasks"
             use_tes_11_preview_backend_parameters = true
-
-            # Temporarily disabling for testing
             workflow-execution-identity = "{{ .Values.identity.name }}"
             transform-blob-to-local-path = false
             default-runtime-attributes {
