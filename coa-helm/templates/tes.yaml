@@ -25,7 +25,7 @@ spec:
             - name: ApplicationInsights_Connection_String
               value: {{ .Values.config.applicationInsightsAccountKey }}
             - name: AzureOfferDurableId
-              value: {{ .Values.config.azureOfferDurableId }}
+              value: {{ .Values.tes.azureOfferDurableId }}
             - name: BatchAccount__AccountName
               value: {{ .Values.config.batchAccountName }}
             - name: BatchAccount__BaseUrl
@@ -68,13 +68,13 @@ spec:
             - name: BlobxferImageName
               value: {{ .Values.config.blobxferImageName }}
             - name: DisableBatchNodesPublicIpAddress
-              value: {{ .Values.config.disableBatchNodesPublicIpAddress | quote }}
+              value: {{ .Values.tes.disableBatchNodesPublicIpAddress | quote }}
             - name: DisableBatchScheduling
-              value: {{ .Values.config.disableBatchScheduling | quote }}
+              value: {{ .Values.tes.disableBatchScheduling | quote }}
             - name: DockerInDockerImageName
-              value: {{ .Values.config.dockerInDockerImageName }}
+              value: {{ .Values.tes.dockerInDockerImageName }}
             - name: UsePreemptibleVmsOnly
-              value: {{ .Values.config.usePreemptibleVmsOnly | quote}}
+              value: {{ .Values.tes.usePreemptibleVmsOnly | quote}}
             - name: MarthaUrl
               value: {{ .Values.config.drsUrl }}
             - name: CromwellDrsLocalizerImageName
