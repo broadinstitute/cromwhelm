@@ -65,8 +65,6 @@ spec:
               value: {{ .Values.persistence.storageAccount }}
             - name: Terra__WorkspaceId
               value: {{ .Values.persistence.workspaceManager.workspaceId }}
-            - name: BlobxferImageName
-              value: {{ .Values.config.blobxferImageName }}
             - name: DisableBatchNodesPublicIpAddress
               value: {{ .Values.tes.disableBatchNodesPublicIpAddress | quote }}
             - name: DisableBatchScheduling
@@ -96,37 +94,37 @@ spec:
             - name: Logging__LogLevel__Default
               value: {{ .Values.tes.logLevel }}
             - name: AllowedHosts
-              value: {{ .Values.allowedHosts }}
+              value: {{ .Values.tes.allowedHosts | quote }}
             - name: BatchImagePublisher
-              value: {{ .Values.batchImagePublisher }}
+              value: {{ .Values.tes.batchImagePublisher }}
             - name: BatchImageOffer
-              value: {{ .Values.batchImageOffer }}
+              value: {{ .Values.tes.batchImageOffer }}
             - name: BatchImageSku
-              value: {{ .Values.batchImageSku }}
+              value: {{ .Values.tes.batchImageSku | quote }}
             - name: BatchImageVersion
-              value: {{ .Values.batchImageVersion }}
+              value: {{ .Values.tes.batchImageVersion }}
             - name: BatchNodeAgentSkuId
-              value: {{ .Values.batchNodeAgentSkuId }}
+              value: {{ .Values.tes.batchNodeAgentSkuId }}
             - name: Gen2BatchNodeAgentSkuId
-              value: {{ .Values.gen2BatchNodeAgentSkuId }}
+              value: {{ .Values.tes.gen2BatchNodeAgentSkuId }}
             - name: Gen2BatchImageOffer
-              value: {{ .Values.gen2BatchImageOffer }}
+              value: {{ .Values.tes.gen2BatchImageOffer }}
             - name: Gen2BatchImagePublisher
-              value: {{ .Values.gen2BatchImagePublisher }}
+              value: {{ .Values.tes.gen2BatchImagePublisher }}
             - name: Gen2BatchImageSku
-              value: {{ .Values.gen2BatchImageSku }}
+              value: {{ .Values.tes.gen2BatchImageSku | quote }}
             - name: Gen2BatchImageVersion
-              value: {{ .Values.gen2BatchImageVersion }}
+              value: {{ .Values.tes.gen2BatchImageVersion }}
             - name: Gen1BatchImageOffer
-              value: {{ .Values.gen1BatchImageOffer }}
+              value: {{ .Values.tes.gen1BatchImageOffer }}
             - name: Gen1BatchImagePublisher
-              value: {{ .Values.gen1BatchImagePublisher }}
+              value: {{ .Values.tes.gen1BatchImagePublisher }}
             - name: Gen1BatchImageSku
-              value: {{ .Values.gen1BatchImageSku }}
+              value: {{ .Values.tes.gen1BatchImageSku }}
             - name: Gen1BatchImageVersion
-              value: {{ .Values.gen1BatchImageVersion }}
+              value: {{ .Values.tes.gen1BatchImageVersion }}
             - name: BatchPoolRotationForcedDays
-              value: {{ .Values.batchPoolRotationForcedDays | quote }}
+              value: {{ .Values.tes.batchPoolRotationForcedDays | quote }}
           image: {{ .Values.tes.image }}
           name: tes
           ports:
