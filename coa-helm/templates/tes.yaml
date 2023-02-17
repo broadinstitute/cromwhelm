@@ -19,9 +19,10 @@ spec:
     spec:
       containers:
         - env:
-            # Name needs to be unique per LZ
+            # Name needs to be unique per LZ with max length 9. coa-ABCDEF-coa-rls -> ABCDEF
+            # Caution!! Consider hardening this to ensure uniqueness.
             - name: Name
-              value: {{ .Values.fullnameOverride | replace "coa-" "" | replace "-rls" "" }}
+              value: {{ .Values.fullnameOverride | substr 4 10 }}
             - name: ApplicationInsights_Connection_String
               value: {{ .Values.config.applicationInsightsAccountKey }}
             - name: AzureOfferDurableId
