@@ -56,6 +56,8 @@ spec:
               value: {{ .Values.config.landingZoneId }}
             - name: Terra__LandingZoneApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
+            - name: Terra__SasTokenExpirationInSeconds
+              value: "{{ .Values.tes.sasTokenExpirationInSeconds }}"
             - name: Terra__WsmApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
             - name: Terra__WorkspaceStorageContainerResourceId  # lower-case c?
