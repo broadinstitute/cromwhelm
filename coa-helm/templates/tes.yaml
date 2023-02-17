@@ -19,10 +19,9 @@ spec:
     spec:
       containers:
         - env:
-          # TODO remove unused
             # Name needs to be unique per LZ
             - name: Name
-              value: "TES1"
+              value: {{ .Values.fullnameOverride }}
             - name: DefaultStorageAccountName
               value: {{ .Values.persistence.storageAccount }}
             - name: ApplicationInsights_Connection_String
