@@ -42,19 +42,19 @@ spec:
             # - name: BatchNodesSubnetId
             #   value: {{ .Values.config.batchNodesSubnetId }}
             - name: RetryPolicyOptions__MaxRetryCount
-              value: "5"
+              value: {{ .Values.tes.retryPolicyOptions.maxRetryCount | quote }}
             - name: RetryPolicyOptions__ExponentialBackOffExponent
-              value: "2"
+              value: {{ .Values.tes.retryPolicyOptions.exponentialBackOffExponent | quote }}
             - name: ContainerRegistry__AutoDiscoveryEnabled
-              value: "false"
+              value: {{ .Values.tes.containerRegistry.autoDiscoveryEnabled | quote }}
             - name: ContainerRegistry__RegistryInfoCacheExpirationInHour
-              value: "1"
+              value: {{ .Values.tes.containerRegistry.registryInfoCacheExpirationInHour | quote }}
             - name: Terra__LandingZoneId
               value: {{ .Values.config.landingZoneId }}
             - name: Terra__LandingZoneApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
             - name: Terra__SasTokenExpirationInSeconds
-              value: "{{ .Values.tes.sasTokenExpirationInSeconds }}"
+              value: {{ .Values.tes.sasTokenExpirationInSeconds | quote }}
             - name: Terra__WsmApiHost
               value: {{ .Values.persistence.workspaceManager.url }}
             - name: Terra__WorkspaceStorageContainerResourceId
@@ -79,8 +79,6 @@ spec:
               value: {{ .Values.config.drsUrl }}
             - name: CromwellDrsLocalizerImageName
               value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
-            - name: UseLegacyBatchImplementationWithAutopools
-              value: "false"
             - name: TesPostgreSql__PostgreSqlServerName
               value: {{ include "app.fullname" . }}
             - name: TesPostgreSql__PostgreSqlServerNameSuffix
@@ -88,7 +86,7 @@ spec:
             - name: TesPostgreSql__PostgreSqlServerSslMode
               value: Disable
             - name: TesPostgreSql__PostgreSqlServerPort
-              value: "{{ .Values.postgres.port }}"
+              value: {{ .Values.postgres.port | quote }}
             - name: TesPostgreSql__PostgreSqlDatabaseName
               value: {{ .Values.postgres.tes.dbname }}
             - name: TesPostgreSql__PostgreSqlDatabaseUserLogin
@@ -98,37 +96,37 @@ spec:
             - name: Logging__LogLevel__Default
               value: {{ .Values.tes.logLevel }}
             - name: AllowedHosts
-              value: "*"
+              value: {{ .Values.allowedHosts }}
             - name: BatchImagePublisher
-              value: "microsoft-dsvm"
+              value: {{ .Values.batchImagePublisher }}
             - name: BatchImageOffer
-              value: "ubuntu-hpc"
+              value: {{ .Values.batchImageOffer }}
             - name: BatchImageSku
-              value: "2004"
+              value: {{ .Values.batchImageSku }}
             - name: BatchImageVersion
-              value: "latest"
+              value: {{ .Values.batchImageVersion }}
             - name: BatchNodeAgentSkuId
-              value: "batch.node.ubuntu 20.04"
+              value: {{ .Values.batchNodeAgentSkuId }}
             - name: Gen2BatchNodeAgentSkuId
-              value: "batch.node.ubuntu 20.04"
+              value: {{ .Values.gen2BatchNodeAgentSkuId }}
             - name: Gen2BatchImageOffer
-              value: "ubuntu-hpc"
+              value: {{ .Values.gen2BatchImageOffer }}
             - name: Gen2BatchImagePublisher
-              value: "microsoft-dsvm"
+              value: {{ .Values.gen2BatchImagePublisher }}
             - name: Gen2BatchImageSku
-              value: "2004"
+              value: {{ .Values.gen2BatchImageSku }}
             - name: Gen2BatchImageVersion
-              value: "latest"
+              value: {{ .Values.gen2BatchImageVersion }}
             - name: Gen1BatchImageOffer
-              value: "ubuntu-server-container"
+              value: {{ .Values.gen1BatchImageOffer }}
             - name: Gen1BatchImagePublisher
-              value: "microsoft-azure-batch"
+              value: {{ .Values.gen1BatchImagePublisher }}
             - name: Gen1BatchImageSku
-              value: "20-04-lts"
+              value: {{ .Values.gen1BatchImageSku }}
             - name: Gen1BatchImageVersion
-              value: "latest"
+              value: {{ .Values.gen1BatchImageVersion }}
             - name: BatchPoolRotationForcedDays
-              value: "7"
+              value: {{ .Values.batchPoolRotationForcedDays | quote }}
           image: {{ .Values.tes.image }}
           name: tes
           ports:

@@ -20,11 +20,34 @@
   workflowExecutionIdentity: RUNTIME_PARAMETER
 
 tes: 
-  image: mcr.microsoft.com/cromwellonazure/tes:3.1
+  # Test image, should be replaced with an official release when available
+  image: mcr.microsoft.com/cromwellonazure/tes:int-4.0.23039.6675
   port: 80
   # One of Trace, Debug, Information, Warning, Error, Critical, None
   logLevel: Warning
   sasTokenExpirationInSeconds: 86400
+  retryPolicyOptions:
+    maxRetryCount: 5
+    exponentialBackOffExponent: 2
+  containerRegistry:
+    autoDiscoveryEnabled: false
+    registryInfoCacheExpirationInHour: 1
+  allowedHosts: "*"
+  batchImagePublisher: "microsoft-dsvm"
+  batchImageOffer: "ubuntu-hpc"
+  batchImageSku: "2004"
+  batchImageVersion: "latest"
+  batchNodeAgentSkuId: "batch.node.ubuntu 20.04"
+  gen2BatchNodeAgentSkuId: "batch.node.ubuntu 20.04"
+  gen2BatchImageOffer: "ubuntu-hpc"
+  gen2BatchImagePublisher: "microsoft-dsvm"
+  gen2BatchImageSku: "2004"
+  gen2BatchImageVersion: "latest"
+  gen1BatchImageOffer: "ubuntu-server-container"
+  gen1BatchImagePublisher: "microsoft-azure-batch"
+  gen1BatchImageSku: "20-04-lts"
+  gen1BatchImageVersion: "latest"
+  batchPoolRotationForcedDays: 7
 
 relay:
   path: RUNTIME_PARAMETER
