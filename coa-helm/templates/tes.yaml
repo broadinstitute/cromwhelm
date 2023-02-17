@@ -21,7 +21,7 @@ spec:
         - env:
             # Name needs to be unique per LZ
             - name: Name
-              value: {{ .Values.fullnameOverride }}
+              value: {{ .Values.fullnameOverride | replace "coa-" "" | replace "-rls" "" }}
             - name: ApplicationInsights_Connection_String
               value: {{ .Values.config.applicationInsightsAccountKey }}
             - name: AzureOfferDurableId
