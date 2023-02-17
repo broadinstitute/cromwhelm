@@ -27,12 +27,6 @@ spec:
               value: {{ .Values.persistence.storageAccount }}
             - name: ApplicationInsights_Connection_String
               value: {{ .Values.config.applicationInsightsAccountKey }}
-            - name: CosmosDb__AccountName
-              value: {{ .Values.config.cosmosDbAccountName }}
-            - name: CosmosDb__Key
-              value: {{ .Values.config.cosmosDbKey }}
-            - name: CosmosDb__Endpoint
-              value: {{ .Values.config.cosmosDbEndpoint }}
             - name: AzureOfferDurableId
               value: {{ .Values.config.azureOfferDurableId }}
             - name: BatchAccount__AccountName
@@ -47,6 +41,7 @@ spec:
               value: {{ .Values.config.subscriptionId }}
             - name: BatchAccount__ResourceGroup
               value: {{ .Values.config.resourceGroup }}
+            # Not currently working
             # - name: BatchNodesSubnetId
             #   value: {{ .Values.config.batchNodesSubnetId }}
             - name: RetryPolicyOptions__MaxRetryCount
@@ -87,23 +82,22 @@ spec:
               value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
             - name: UseLegacyBatchImplementationWithAutopools
               value: "false"
-            # Awaiting PostgreSQL support
-            # - name: TesPostgreSql__PostgreSqlServerName
-            #   value: {{ include "app.fullname" . }}
-            # - name: TesPostgreSql__PostgreSqlServerNameSuffix
-            #   value: "-postgres"
-            # - name: TesPostgreSql__PostgreSqlServerSslMode
-            #   value: Disable
-            # - name: TesPostgreSql__PostgreSqlServerPort
-            #   value: "{{ .Values.postgres.port }}"
-            # - name: TesPostgreSql__PostgreSqlDatabaseName
-            #   value: {{ .Values.postgres.tes.dbname }}
-            # - name: TesPostgreSql__PostgreSqlDatabaseUserLogin
-            #   value: {{ .Values.postgres.user | quote }}
-            # - name: TesPostgreSql__PostgreSqlDatabaseUserPassword
-            #   value: {{ include "dbPassword" . | b64enc | quote }}
+            - name: TesPostgreSql__PostgreSqlServerName
+              value: {{ include "app.fullname" . }}
+            - name: TesPostgreSql__PostgreSqlServerNameSuffix
+              value: "-postgres"
+            - name: TesPostgreSql__PostgreSqlServerSslMode
+              value: Disable
+            - name: TesPostgreSql__PostgreSqlServerPort
+              value: "{{ .Values.postgres.port }}"
+            - name: TesPostgreSql__PostgreSqlDatabaseName
+              value: {{ .Values.postgres.tes.dbname }}
+            - name: TesPostgreSql__PostgreSqlDatabaseUserLogin
+              value: {{ .Values.postgres.user | quote }}
+            - name: TesPostgreSql__PostgreSqlDatabaseUserPassword
+              value: {{ include "dbPassword" . | b64enc | quote }}
             - name: Logging__LogLevel__Default
-              value: Warning
+              value: {{ .Values.tes.logLevel }}
             - name: AllowedHosts
               value: "*"
             - name: BatchImagePublisher
