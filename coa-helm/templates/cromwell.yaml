@@ -22,11 +22,11 @@ spec:
             - containerPort: {{ .Values.cromwell.port }}
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "50m"
-            limits:
               memory: "1024Mi"
-              cpu: "200m"
+              cpu: "1.0"
+            limits:
+              memory: "4096Mi"
+              cpu: "8.0"
           volumeMounts:
             - mountPath: /cromwell-tmp
               name: cromwell-tmp-claim
@@ -147,11 +147,11 @@ data:
             }
             root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/"
             dockerRoot = "/cromwell-executions"
-            endpoint = "http://{{ include "app.fullname" . }}-tes-svc:80/v1/tasks"
+            endpoint = "http://{{ include "app.fullname" . }}-tes-svc:{{ .Values.tes.port }}/v1/tasks"
             use_tes_11_preview_backend_parameters = true
 
             # Temporarily disabling for testing
-            #workflow-execution-identity = "{{ .Values.config.workflowExecutionIdentity }}"
+            workflow-execution-identity = "{{ .Values.identity.name }}"
             transform-blob-to-local-path = false
             default-runtime-attributes {
               cpu: 1
