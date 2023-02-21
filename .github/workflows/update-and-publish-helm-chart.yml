@@ -45,7 +45,7 @@ jobs:
         run: |
           sed -i "s/$CURRENT_VERSION_GCP/$NEXT_VERSION_GCP/" cromwell-helm/Chart.yaml
           sed -i "s/$CURRENT_VERSION_COA/$NEXT_VERSION_COA/" coa-helm/Chart.yaml
-          sed -i "s/CURRENT_VERSION_WDS/$NEXT_VERSION_WDS/" wds-azure-helm/Chart.yaml
+          sed -i "s/$CURRENT_VERSION_WDS/$NEXT_VERSION_WDS/" wds-azure-helm/Chart.yaml
 
       - name: Publish the new helm chart and update index.yaml
         run: |
@@ -96,7 +96,7 @@ jobs:
           fi
           
           if [ "${NEW_CROMWELL_HELM_V}" != "${NEXT_VERSION_WDS}" ]; then
-            echo "New version ${NEW_CROMWELL_HELM_V} does not match GCP version ${NEXT_VERSION_WDS}"
+            echo "New version ${NEW_CROMWELL_HELM_V} does not match WDS version ${NEXT_VERSION_WDS}"
             exit 1
           fi
 
