@@ -80,6 +80,7 @@ data:
     }
     http {
       server {
+        access_log /dev/stdout combined;
         listen 8000;
 
         # Reference to ngingx's local content
