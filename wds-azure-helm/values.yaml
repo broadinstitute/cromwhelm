@@ -32,8 +32,7 @@ postgres:
   port: 5432
   user: postgres_user
   password: "RUNTIME_PARAMETER"
-  wds:
-    dbname: wds
+  dbname: wds
   startup_dir: /docker-entrypoint-initdb.d
   startup_scripts: # Numbered because the scripts in initdb.d are run in alphabetical order
     create_dbs: 01_create_dbs.sh
