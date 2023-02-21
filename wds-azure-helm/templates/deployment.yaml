@@ -35,9 +35,9 @@ spec:
             - name: SPRING_CONFIG_ADDITIONAL-LOCATION
               value: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
             - name: WDS_DB_HOST
-            value: {{ include "app.fullname" . }}-postgres
+              value: {{ include "app.fullname" . }}-postgres
             - name: WDS_DB_PASSWORD
-            value: {{ include "dbPassword" . | b64enc | quote }}
+              value: {{ include "dbPassword" . | b64enc | quote }}
             - name: WDS_DB_USER
               value: {{ .Values.postgres.user }}
             - name: WDS_DB_NAME
