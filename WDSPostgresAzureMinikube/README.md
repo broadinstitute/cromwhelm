@@ -7,8 +7,7 @@ How to run WDS and Postgres within Minikube (Minikube is a local k8s cluster pro
 3. First (even though this is not the first step, or maybe it is if you already have `minikube` running locally), run `kubectl config use-context minikube`. Ensure that you are assigned locally to the right k8s context so that
 you do not push updates to any other k8s cluster.
 
-4. Then, make whatever changes you'd like in `wds-azure-helm` (to also note, make sure `terra-batch-libchart` is nested within
-the `charts/` subdirectory -- `wds-azure-helm` uses it as a dependency)
+4. Then, make whatever changes you'd like in `wds-azure-helm`
 
 5. After making your changes, bump the semantic version in the `wds-azure-helm/Chart.yaml` to make sure your new chart is unique.
 

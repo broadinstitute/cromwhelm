@@ -58,7 +58,7 @@ spec:
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
           configMap:
-            name: {{ include "app.fullname" . }}-wds-config
+            name: {{ include "app.fullname" . }}-wds-configmap
             items:
                 - key: {{ .Values.wds.conf_file }}
                   path: {{ .Values.wds.conf_file }}
