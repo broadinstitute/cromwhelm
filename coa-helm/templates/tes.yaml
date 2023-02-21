@@ -1,3 +1,4 @@
+{{- if .Values.cromwell.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -139,9 +140,9 @@ spec:
               memory: "8192Mi"
       restartPolicy: Always
 status: {}
-
+{{ end }}
 ---
-
+{{- if .Values.cromwell.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -157,3 +158,4 @@ spec:
     io.kompose.service: tes
 status:
   loadBalancer: {}
+{{ end }}
