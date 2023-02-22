@@ -19,17 +19,13 @@ tes:
   logLevel: Warning
   # Currently this represents the max task processing time
   sasTokenExpirationInSeconds: 86400
-  retryPolicyOptions:
+  retryPolicy:
     maxRetryCount: 5
     exponentialBackOffExponent: 2
   containerRegistry:
     autoDiscoveryEnabled: false
     registryInfoCacheExpirationInHour: 1
   allowedHosts: "*"
-  batchImagePublisher: "microsoft-dsvm"
-  batchImageOffer: "ubuntu-hpc"
-  batchImageSku: "2004"
-  batchImageVersion: "latest"
   batchNodeAgentSkuId: "batch.node.ubuntu 20.04"
   gen2BatchNodeAgentSkuId: "batch.node.ubuntu 20.04"
   gen2BatchImageOffer: "ubuntu-hpc"

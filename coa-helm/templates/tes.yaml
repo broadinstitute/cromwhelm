@@ -22,7 +22,7 @@ spec:
         - env:
             # Name needs to be unique per LZ with max length 9. coa-ABCDEF-coa-rls -> ABCDEF
             # Caution!! Consider hardening this to ensure uniqueness.
-            - name: Name
+            - BatchPrefix: Name
               value: {{ .Values.fullnameOverride | substr 4 10 }}
             - name: ApplicationInsights_Connection_String
               value: {{ .Values.config.applicationInsightsAccountKey }}
@@ -43,10 +43,10 @@ spec:
             # Not currently working
             # - name: BatchNodesSubnetId
             #   value: {{ .Values.config.batchNodesSubnetId }}
-            - name: RetryPolicyOptions__MaxRetryCount
-              value: {{ .Values.tes.retryPolicyOptions.maxRetryCount | quote }}
-            - name: RetryPolicyOptions__ExponentialBackOffExponent
-              value: {{ .Values.tes.retryPolicyOptions.exponentialBackOffExponent | quote }}
+            - name: RetryPolicy__MaxRetryCount
+              value: {{ .Values.tes.retryPolicy.maxRetryCount | quote }}
+            - name: RetryPolicy__ExponentialBackOffExponent
+              value: {{ .Values.tes.retryPolicy.exponentialBackOffExponent | quote }}
             - name: ContainerRegistry__AutoDiscoveryEnabled
               value: {{ .Values.tes.containerRegistry.autoDiscoveryEnabled | quote }}
             - name: ContainerRegistry__RegistryInfoCacheExpirationInHour
@@ -97,14 +97,6 @@ spec:
               value: {{ .Values.tes.logLevel }}
             - name: AllowedHosts
               value: {{ .Values.tes.allowedHosts | quote }}
-            - name: BatchImagePublisher
-              value: {{ .Values.tes.batchImagePublisher }}
-            - name: BatchImageOffer
-              value: {{ .Values.tes.batchImageOffer }}
-            - name: BatchImageSku
-              value: {{ .Values.tes.batchImageSku | quote }}
-            - name: BatchImageVersion
-              value: {{ .Values.tes.batchImageVersion }}
             - name: BatchNodeAgentSkuId
               value: {{ .Values.tes.batchNodeAgentSkuId }}
             - name: Gen2BatchNodeAgentSkuId
