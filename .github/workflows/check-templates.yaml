@@ -17,7 +17,6 @@ jobs:
         run: |
           helm dependency update cromwell-helm/
           helm dependency update coa-helm/
-          helm dependency update wds-azure-helm/
       - name: Check templates
         run: |
           echo \
@@ -27,5 +26,4 @@ jobs:
           helm template cromwell-helm/
           helm template coa-helm/
           helm template wds-azure-helm/
-          helm plugin install https://github.com/chartmuseum/helm-push
-          helm cm-push ./wds-azure-helm cromwell-helm
+          
