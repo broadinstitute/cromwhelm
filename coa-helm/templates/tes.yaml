@@ -20,10 +20,8 @@ spec:
     spec:
       containers:
         - env:
-            # Name needs to be unique per LZ with max length 9. coa-ABCDEF-coa-rls -> ABCDEF
-            # Caution!! Consider hardening this to ensure uniqueness.
-            - name: BatchScheduling__Prefix
-              value: {{ .Values.fullnameOverride | substr 4 10 }}
+            - name: AllowedHosts
+              value: {{ .Values.tes.allowedHosts | quote }}
             - name: ApplicationInsights_ConnectionString
               value: {{ .Values.config.applicationInsightsAccountKey }}
             - name: AzureOfferDurableId
@@ -36,18 +34,59 @@ spec:
               value: {{ .Values.config.batchAccountKey }}
             - name: BatchAccount__Region
               value: {{ .Values.config.region }}
-            - name: BatchAccount__SubscriptionId
-              value: {{ .Values.config.subscriptionId }}
             - name: BatchAccount__ResourceGroup
               value: {{ .Values.config.resourceGroup }}
-            - name: RetryPolicy__MaxRetryCount
-              value: {{ .Values.tes.retryPolicy.maxRetryCount | quote }}
-            - name: RetryPolicy__ExponentialBackOffExponent
-              value: {{ .Values.tes.retryPolicy.exponentialBackOffExponent | quote }}
+            - name: BatchAccount__SubscriptionId
+              value: {{ .Values.config.subscriptionId }}
+            - name: BatchImageGen1__NodeAgentSkuId
+              value: {{ .Values.tes.gen1BatchNodeAgentSkuId }}
+            - name: BatchImageGen1__Offer
+              value: {{ .Values.tes.batchImageGen1.offer }}
+            - name: BatchImageGen1__Publisher
+              value: {{ .Values.tes.batchImageGen1.publisher }}
+            - name: BatchImageGen1__Sku
+              value: {{ .Values.tes.batchImageGen1.sku }}
+            - name: BatchImageGen1__Version
+              value: {{ .Values.tes.batchImageGen1.version }}
+            - name: BatchImageGen2__NodeAgentSkuId
+              value: {{ .Values.tes.batchImageGen2.nodeAgentSkuId }}
+            - name: BatchImageGen2__Offer
+              value: {{ .Values.tes.batchImageGen2.offer }}
+            - name: BatchImageGen2__Publisher
+              value: {{ .Values.tes.batchImageGen2.publisher }}
+            - name: BatchImageGen2__Sku
+              value: {{ .Values.tes.batchImageGen2.sku | quote }}
+            - name: BatchImageGen2__Version
+              value: {{ .Values.tes.batchImageGen2.version }}
+            - name: BatchNodes__DisablePublicIpAddress
+              value: {{ .Values.tes.batchNodes.disablePublicIpAddress | quote }}
+            # Not currently working
+            # - name: BatchNodes__SubnetId
+            #   value: {{ .Values.config.batchNodesSubnetId }}
+            - name: BatchScheduling__Disable
+              value: {{ .Values.tes.batchScheduling.disable | quote }}
+            - name: BatchScheduling__PoolRotationForcedDays
+              value: {{ .Values.tes.batchScheduling.poolRotationForcedDays | quote }}
+            # Name needs to be unique per LZ with max length 9. coa-ABCDEF-coa-rls -> ABCDEF
+            # Caution!! Consider hardening this to ensure uniqueness.
+            - name: BatchScheduling__Prefix
+              value: {{ .Values.fullnameOverride | substr 4 10 }}
+            - name: BatchScheduling__UsePreemptibleVmsOnly
+              value: {{ .Values.tes.batchScheduling.usePreemptibleVmsOnly | quote}}
             - name: ContainerRegistry__AutoDiscoveryEnabled
               value: {{ .Values.tes.containerRegistry.autoDiscoveryEnabled | quote }}
             - name: ContainerRegistry__RegistryInfoCacheExpirationInHour
               value: {{ .Values.tes.containerRegistry.registryInfoCacheExpirationInHour | quote }}
+            - name: Logging__LogLevel__Default
+              value: {{ .Values.tes.logLevel }}
+            - name: Martha__Url
+              value: {{ .Values.config.drsUrl }}
+            - name: Martha__CromwellDrsLocalizer
+              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
+            - name: RetryPolicy__MaxRetryCount
+              value: {{ .Values.tes.retryPolicy.maxRetryCount | quote }}
+            - name: RetryPolicy__ExponentialBackOffExponent
+              value: {{ .Values.tes.retryPolicy.exponentialBackOffExponent | quote }}
             - name: Terra__LandingZoneId
               value: {{ .Values.config.landingZoneId }}
             - name: Terra__LandingZoneApiHost
@@ -64,19 +103,6 @@ spec:
               value: {{ .Values.persistence.storageAccount }}
             - name: Terra__WorkspaceId
               value: {{ .Values.persistence.workspaceManager.workspaceId }}
-            - name: BatchNodes__DisablePublicIpAddress
-              value: {{ .Values.tes.disableBatchNodesPublicIpAddress | quote }}
-            # Not currently working
-            # - name: BatchNodes__SubnetId
-            #   value: {{ .Values.config.batchNodesSubnetId }}
-            - name: BatchScheduling__Disable
-              value: {{ .Values.tes.disableBatchScheduling | quote }}
-            - name: BatchScheduling__UsePreemptibleVmsOnly
-              value: {{ .Values.tes.usePreemptibleVmsOnly | quote}}
-            - name: Martha__Url
-              value: {{ .Values.config.drsUrl }}
-            - name: Martha__CromwellDrsLocalizer
-              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
             - name: TesPostgreSql__ServerName
               value: {{ include "app.fullname" . }}
             - name: TesPostgreSql__ServerNameSuffix
@@ -91,32 +117,6 @@ spec:
               value: {{ .Values.postgres.user | quote }}
             - name: TesPostgreSql__DatabaseUserPassword
               value: {{ include "dbPassword" . | b64enc | quote }}
-            - name: Logging__LogLevel__Default
-              value: {{ .Values.tes.logLevel }}
-            - name: AllowedHosts
-              value: {{ .Values.tes.allowedHosts | quote }}
-            - name: BatchImageGen2__NodeAgentSkuId
-              value: {{ .Values.tes.gen2BatchNodeAgentSkuId }}
-            - name: BatchImageGen2__Offer
-              value: {{ .Values.tes.gen2BatchImageOffer }}
-            - name: BatchImageGen2__Publisher
-              value: {{ .Values.tes.gen2BatchImagePublisher }}
-            - name: BatchImageGen2__Sku
-              value: {{ .Values.tes.gen2BatchImageSku | quote }}
-            - name: BatchImageGen2__Version
-              value: {{ .Values.tes.gen2BatchImageVersion }}
-            - name: BatchImageGen1__NodeAgentSkuId
-              value: {{ .Values.tes.gen1BatchNodeAgentSkuId }}
-            - name: BatchImageGen1__Offer
-              value: {{ .Values.tes.gen1BatchImageOffer }}
-            - name: BatchImageGen1__Publisher
-              value: {{ .Values.tes.gen1BatchImagePublisher }}
-            - name: BatchImageGen1__Sku
-              value: {{ .Values.tes.gen1BatchImageSku }}
-            - name: BatchImageGen1__Version
-              value: {{ .Values.tes.gen1BatchImageVersion }}
-            - name: BatchScheduling__PoolRotationForcedDays
-              value: {{ .Values.tes.batchPoolRotationForcedDays | quote }}
           image: {{ .Values.tes.image }}
           name: tes
           ports:

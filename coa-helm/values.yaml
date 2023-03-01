@@ -19,29 +19,33 @@ tes:
   logLevel: Warning
   # Currently this represents the max task processing time
   sasTokenExpirationInSeconds: 86400
+  allowedHosts: "*"
+  azureOfferDurableId: MS-AZR-0003p
   retryPolicy:
     maxRetryCount: 5
     exponentialBackOffExponent: 2
   containerRegistry:
     autoDiscoveryEnabled: false
     registryInfoCacheExpirationInHour: 1
-  allowedHosts: "*"
-  gen2BatchNodeAgentSkuId: "batch.node.ubuntu 20.04"
-  gen2BatchImageOffer: "ubuntu-hpc"
-  gen2BatchImagePublisher: "microsoft-dsvm"
-  gen2BatchImageSku: "2004"
-  gen2BatchImageVersion: "latest"
-  gen1BatchNodeAgentSkuId: "batch.node.ubuntu 20.04"
-  gen1BatchImageOffer: "ubuntu-server-container"
-  gen1BatchImagePublisher: "microsoft-azure-batch"
-  gen1BatchImageSku: "20-04-lts"
-  gen1BatchImageVersion: "latest"
-  batchPoolRotationForcedDays: 7
-  azureOfferDurableId: MS-AZR-0003p
-  disableBatchNodesPublicIpAddress: false
-  disableBatchScheduling: false
-  usePreemptibleVmsOnly: false
-
+  batchImageGen1:
+    nodeAgentSkuId: "batch.node.ubuntu 20.04"
+    offer: "ubuntu-server-container"
+    publisher: "microsoft-azure-batch"
+    sku: "20-04-lts"
+    version: "latest"  
+  batchImageGen2:
+    nodeAgentSkuId: "batch.node.ubuntu 20.04"
+    offer: "ubuntu-hpc"
+    publisher: "microsoft-dsvm"
+    sku: "2004"
+    version: "latest"
+  batchNodes:
+    disablePublicIpAddress: false
+  batchScheduling:
+    disable: false
+    poolRotationForcedDays: 7
+    usePreemptibleVmsOnly: false
+  
 relay:
   path: RUNTIME_PARAMETER
 
