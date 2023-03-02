@@ -83,7 +83,7 @@ data:
         access_log /dev/stdout combined;
         listen 8000;
 
-        # Reference to ngingx's local content
+        # Reference to nginx's local content
         location /index.html {
           alias /www/data/index.html;
         }
