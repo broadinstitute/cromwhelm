@@ -33,7 +33,7 @@ spec:
               mountPath: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
               subPath: {{ .Values.wds.conf_file }}
           env:
-            - name: AZURE_APPLICATION_INSIGHTS_CONNECTION_STRING
+            - name: APPLICATIONINSIGHTS_CONNECTION_STRING
               value: {{ .Values.config.applicationInsightsConnectionString }}
             - name: SPRING_CONFIG_ADDITIONAL-LOCATION
               value: {{ .Values.wds.conf_dir }}/{{ .Values.wds.conf_file }}
