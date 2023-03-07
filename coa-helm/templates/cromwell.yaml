@@ -22,11 +22,11 @@ spec:
             - containerPort: {{ .Values.cromwell.port }}
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "50m"
-            limits:
               memory: "1024Mi"
-              cpu: "200m"
+              cpu: "1.0"
+            limits:
+              memory: "4096Mi"
+              cpu: "8.0"
           volumeMounts:
             - mountPath: /cromwell-tmp
               name: cromwell-tmp-claim
@@ -68,9 +68,9 @@ data:
     }
 
     system {
-      max-concurrent-workflows = 10000
+      max-concurrent-workflows = 100
       new-workflow-poll-rate = 10
-      max-workflow-launch-count = 30
+      max-workflow-launch-count = 10
       max-scatter-width-per-scatter = 35000
       total-max-jobs-per-root-workflow = 200000
       job-rate-control {
@@ -96,7 +96,7 @@ data:
       blob {
         class = "cromwell.filesystems.blob.BlobPathBuilderFactory"
         global {
-          class = "cromwell.filesystems.blob.BlobFileSystemConfigWrapper"
+          class = "cromwell.filesystems.blob.BlobFileSystemManager"
           config {
             workspace-manager: {
               url: "{{ .Values.persistence.workspaceManager.url }}"
@@ -147,10 +147,10 @@ data:
             }
             root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/"
             dockerRoot = "/cromwell-executions"
-            endpoint = "http://tes/v1/tasks"
+            endpoint = "http://{{ include "app.fullname" . }}-tes-svc:{{ .Values.tes.port }}/v1/tasks"
             use_tes_11_preview_backend_parameters = true
-            transform-blob-to-local-path = true
-            workflow-execution-identity = "{{ .Values.config.workflowExecutionIdentity }}"
+            workflow-execution-identity = "{{ .Values.identity.name }}"
+            transform-blob-to-local-path = false
             default-runtime-attributes {
               cpu: 1
               failOnStderr: false

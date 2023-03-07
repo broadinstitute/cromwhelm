@@ -1,24 +1,51 @@
 ﻿config:
   resourceGroup: RUNTIME_PARAMETER
-  azureServicesAuthConnectionString: RUNTIME_PARAMETER
+  landingZoneId: RUNTIME_PARAMETER
+  subscriptionId: RUNTIME_PARAMETER
+  region: RUNTIME_PARAMETER
   applicationInsightsConnectionString: RUNTIME_PARAMETER
-  applicationInsightsAccountName: RUNTIME_PARAMETER
-  cosmosDbAccountName: RUNTIME_PARAMETER
   batchAccountName: RUNTIME_PARAMETER
+  batchAccountKey: RUNTIME_PARAMETER
   batchNodesSubnetId: RUNTIME_PARAMETER
-  azureOfferDurableId: MS-AZR-0003p
-  blobxferImageName: ""
-  disableBatchNodesPublicIpAddress: false
-  disableBatchScheduling: false
-  dockerInDockerImageName: ""
-  usePreemptibleVmsOnly: false
   drsUrl: RUNTIME_PARAMETER
-  workflowExecutionIdentity: RUNTIME_PARAMETER
+
+fullnameOverride: RUNTIME_PARAMETER
 
 tes: 
-  image: mcr.microsoft.com/cromwellonazure/tes:3.1
+  # Test image, should be replaced with an official release when available
+  image: mcr.microsoft.com/ga4gh/tes:int-4.0.23005.6784
   port: 80
-
+  # One of Trace, Debug, Information, Warning, Error, Critical, None
+  logLevel: Warning
+  # Currently this represents the max task processing time
+  sasTokenExpirationInSeconds: 86400
+  allowedHosts: "*"
+  azureOfferDurableId: MS-AZR-0003p
+  retryPolicy:
+    maxRetryCount: 5
+    exponentialBackOffExponent: 2
+  containerRegistry:
+    autoDiscoveryEnabled: false
+    registryInfoCacheExpirationInHour: 1
+  batchImageGen1:
+    nodeAgentSkuId: "batch.node.ubuntu 20.04"
+    offer: "ubuntu-server-container"
+    publisher: "microsoft-azure-batch"
+    sku: "20-04-lts"
+    version: "latest"  
+  batchImageGen2:
+    nodeAgentSkuId: "batch.node.ubuntu 20.04"
+    offer: "ubuntu-hpc"
+    publisher: "microsoft-dsvm"
+    sku: "2004"
+    version: "latest"
+  batchNodes:
+    disablePublicIpAddress: false
+  batchScheduling:
+    disable: false
+    poolRotationForcedDays: 7
+    usePreemptibleVmsOnly: false
+  
 relay:
   path: RUNTIME_PARAMETER
 

@@ -1,75 +1,151 @@
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  labels:
-#    io.kompose.service: tes
-#  name: tes
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      io.kompose.service: tes
-#  strategy:
-#    type: Recreate
-#  template:
-#    metadata:
-#      labels:
-#        io.kompose.service: tes
-#        aadpodidbinding: {{ .Values.identity.name }}
-#    spec:
-#      containers:
-#        - env:
-#            - name: DefaultStorageAccountName
-#              value: {{ .Values.persistence.storageAccount }}
-#            - name: AzureServicesAuthConnectionString
-#              value: {{ .Values.config.azureServicesAuthConnectionString }}
-#            - name: ApplicationInsightsAccountName
-#              value: {{ .Values.config.applicationInsightsAccountName }}
-#            - name: CosmosDbAccountName
-#              value: {{ .Values.config.cosmosDbAccountName }}
-#            - name: AzureOfferDurableId
-#              value: {{ .Values.config.azureOfferDurableId }}
-#            - name: BatchAccountName
-#              value: {{ .Values.config.batchAccountName }}
-#            - name: BatchNodesSubnetId
-#              value: {{ .Values.config.batchNodesSubnetId }}
-#            - name: BlobxferImageName
-#              value: {{ .Values.config.blobxferImageName }}
-#            - name: DisableBatchNodesPublicIpAddress
-#              value: {{ .Values.config.disableBatchNodesPublicIpAddress | quote }}
-#            - name: DisableBatchScheduling
-#              value: {{ .Values.config.disableBatchScheduling | quote }}
-#            - name: DockerInDockerImageName
-#              value: {{ .Values.config.dockerInDockerImageName }}
-#            - name: UsePreemptibleVmsOnly
-#              value: {{ .Values.config.usePreemptibleVmsOnly | quote}}
-#            - name: MarthaUrl
-#              value: {{ .Values.config.drsUrl }}
-#            - name: CromwellDrsLocalizerImageName
-#              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
-#          image: {{ .Values.tes.image }}
-#          name: tes
-#          ports:
-#            - containerPort: {{ .Values.tes.port }}
-#          resources: {}
-#      restartPolicy: Always
-#status: {}
-#
-#---
-#
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  labels:
-#    io.kompose.service: tes
-#  name: tes
-#spec:
-#  ports:
-#    - name: {{ .Values.tes.port | quote }}
-#      port: {{ .Values.tes.port }}
-#      targetPort: {{ .Values.tes.port }}
-#  selector:
-#    io.kompose.service: tes
-#status:
-#  loadBalancer: {}
-#
+{{- if .Values.cromwell.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+  name: {{ include "app.fullname" . }}-tes-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tes
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: tes
+        aadpodidbinding: {{ .Values.identity.name }}
+    spec:
+      containers:
+        - env:
+            - name: AllowedHosts
+              value: {{ .Values.tes.allowedHosts | quote }}
+            - name: ApplicationInsights_Connection_String
+              value: {{ .Values.config.applicationInsightsConnectionString }}
+            - name: AzureOfferDurableId
+              value: {{ .Values.tes.azureOfferDurableId }}
+            - name: BatchAccount__AccountName
+              value: {{ .Values.config.batchAccountName }}
+            - name: BatchAccount__BaseUrl
+              value: "https://{{ .Values.config.batchAccountName }}.{{ .Values.config.region }}.batch.azure.com"
+            - name: BatchAccount__AppKey
+              value: {{ .Values.config.batchAccountKey }}
+            - name: BatchAccount__Region
+              value: {{ .Values.config.region }}
+            - name: BatchAccount__ResourceGroup
+              value: {{ .Values.config.resourceGroup }}
+            - name: BatchAccount__SubscriptionId
+              value: {{ .Values.config.subscriptionId }}
+            - name: BatchImageGen1__NodeAgentSkuId
+              value: {{ .Values.tes.batchImageGen1.nodeAgentSkuId }}
+            - name: BatchImageGen1__Offer
+              value: {{ .Values.tes.batchImageGen1.offer }}
+            - name: BatchImageGen1__Publisher
+              value: {{ .Values.tes.batchImageGen1.publisher }}
+            - name: BatchImageGen1__Sku
+              value: {{ .Values.tes.batchImageGen1.sku }}
+            - name: BatchImageGen1__Version
+              value: {{ .Values.tes.batchImageGen1.version }}
+            - name: BatchImageGen2__NodeAgentSkuId
+              value: {{ .Values.tes.batchImageGen2.nodeAgentSkuId }}
+            - name: BatchImageGen2__Offer
+              value: {{ .Values.tes.batchImageGen2.offer }}
+            - name: BatchImageGen2__Publisher
+              value: {{ .Values.tes.batchImageGen2.publisher }}
+            - name: BatchImageGen2__Sku
+              value: {{ .Values.tes.batchImageGen2.sku | quote }}
+            - name: BatchImageGen2__Version
+              value: {{ .Values.tes.batchImageGen2.version }}
+            - name: BatchNodes__DisablePublicIpAddress
+              value: {{ .Values.tes.batchNodes.disablePublicIpAddress | quote }}
+            # Not currently working
+            # - name: BatchNodes__SubnetId
+            #   value: {{ .Values.config.batchNodesSubnetId }}
+            - name: BatchScheduling__Disable
+              value: {{ .Values.tes.batchScheduling.disable | quote }}
+            - name: BatchScheduling__PoolRotationForcedDays
+              value: {{ .Values.tes.batchScheduling.poolRotationForcedDays | quote }}
+            # Name needs to be unique per LZ with max length 9. coa-ABCDEF-coa-rls -> ABCDEF
+            # Caution!! Consider hardening this to ensure uniqueness.
+            - name: BatchScheduling__Prefix
+              value: {{ .Values.fullnameOverride | substr 4 10 }}
+            - name: BatchScheduling__UsePreemptibleVmsOnly
+              value: {{ .Values.tes.batchScheduling.usePreemptibleVmsOnly | quote}}
+            - name: ContainerRegistry__AutoDiscoveryEnabled
+              value: {{ .Values.tes.containerRegistry.autoDiscoveryEnabled | quote }}
+            - name: ContainerRegistry__RegistryInfoCacheExpirationInHour
+              value: {{ .Values.tes.containerRegistry.registryInfoCacheExpirationInHour | quote }}
+            - name: Logging__LogLevel__Default
+              value: {{ .Values.tes.logLevel }}
+            - name: Martha__Url
+              value: {{ .Values.config.drsUrl }}
+            - name: Martha__CromwellDrsLocalizer
+              value: {{ .Values.cromwell.image | replace "cromwell" "cromwell-drs-localizer" }}
+            - name: RetryPolicy__MaxRetryCount
+              value: {{ .Values.tes.retryPolicy.maxRetryCount | quote }}
+            - name: RetryPolicy__ExponentialBackOffExponent
+              value: {{ .Values.tes.retryPolicy.exponentialBackOffExponent | quote }}
+            - name: Terra__LandingZoneId
+              value: {{ .Values.config.landingZoneId }}
+            - name: Terra__LandingZoneApiHost
+              value: {{ .Values.persistence.workspaceManager.url }}
+            - name: Terra__SasTokenExpirationInSeconds
+              value: {{ .Values.tes.sasTokenExpirationInSeconds | quote }}
+            - name: Terra__WsmApiHost
+              value: {{ .Values.persistence.workspaceManager.url }}
+            - name: Terra__WorkspaceStorageContainerResourceId
+              value: {{ .Values.persistence.workspaceManager.containerResourceId }}
+            - name: Terra__WorkspaceStorageContainerName
+              value: {{ .Values.persistence.blobContainer }}
+            - name: Terra__WorkspaceStorageAccountName
+              value: {{ .Values.persistence.storageAccount }}
+            - name: Terra__WorkspaceId
+              value: {{ .Values.persistence.workspaceManager.workspaceId }}
+            - name: TesPostgreSql__ServerName
+              value: {{ include "app.fullname" . }}
+            - name: TesPostgreSql__ServerNameSuffix
+              value: "-postgres"
+            - name: TesPostgreSql__ServerSslMode
+              value: Disable
+            - name: TesPostgreSql__ServerPort
+              value: {{ .Values.postgres.port | quote }}
+            - name: TesPostgreSql__DatabaseName
+              value: {{ .Values.postgres.tes.dbname }}
+            - name: TesPostgreSql__DatabaseUserLogin
+              value: {{ .Values.postgres.user | quote }}
+            - name: TesPostgreSql__DatabaseUserPassword
+              value: {{ include "dbPassword" . | b64enc | quote }}
+          image: {{ .Values.tes.image }}
+          name: tes
+          ports:
+            - containerPort: {{ .Values.tes.port }}
+          resources:
+            requests:
+              cpu: "1.5"
+              memory: "3072Mi"
+            limits:
+              cpu: "8.0"
+              memory: "8192Mi"
+      restartPolicy: Always
+status: {}
+{{ end }}
+---
+{{- if .Values.cromwell.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+  name: {{ include "app.fullname" . }}-tes-svc
+spec:
+  ports:
+    - name: {{ .Values.tes.port | quote }}
+      port: {{ .Values.tes.port }}
+      targetPort: {{ .Values.tes.port }}
+  selector:
+    io.kompose.service: tes
+status:
+  loadBalancer: {}
+{{ end }}
