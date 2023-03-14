@@ -57,12 +57,22 @@ metadata:
 {{- define "terra-batch-libchart.cromwell-config.database.conf" -}}
 
 database {
-  db.url = "jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
-  db.user = {{ .Values.postgres.user | quote }}
-  db.password = {{ include "dbPassword" . | b64enc | quote }}
-  db.driver = "org.postgresql.Driver"
-  profile = "slick.jdbc.PostgresProfile$"
-  db.connectionTimeout = 15000
+  profile = "slick.jdbc.HsqldbProfile$"
+  db {
+    driver = "org.hsqldb.jdbcDriver"
+    url = """
+    jdbc:hsqldb:file:cromwell-executions/cromwell-db/cromwell-db;
+    shutdown=false;
+    hsqldb.default_table_type=cached;hsqldb.tx=mvcc;
+    hsqldb.result_max_memory_rows=10000;
+    hsqldb.large_data=true;
+    hsqldb.applog=1;
+    hsqldb.lob_compressed=true;
+    hsqldb.script_format=3
+    """
+    connectionTimeout = 120000
+    numThreads = 1
+   }
 }
 
 {{- end }}
