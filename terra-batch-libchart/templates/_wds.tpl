@@ -57,6 +57,8 @@ spec:
               value: "{{ .Values.config.resourceGroup }}"
             - name: RELEASE_NAME
               value: {{ include "app.fullname" . }}
+            - name: CLIENT_ID
+              value: "{{ .Values.identity.clientId }}"
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
