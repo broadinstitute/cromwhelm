@@ -2,7 +2,7 @@ exports:
   common:
     cromwell:
       name: coa-cromwell-svc
-      image: broadinstitute/cromwell:86-b04d895
+      image: broadinstitute/cromwell:86-209f67d
       port: 8000
       enabled: true
 
@@ -19,7 +19,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.98
+      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.99
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
       enabled: true
@@ -28,7 +28,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
-      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.105
+      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.108
       conf_dir: /etc/conf
       conf_file: cbas.yaml
       enabled: true
