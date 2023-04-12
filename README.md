@@ -9,6 +9,12 @@ while we're iterating on the early helm charts.
 
 ## Charts
 
+### coa-helm:
+Chart for deploying Cromwell as an App on Azure and uses the Composite Batch Analysis Service (C-BAS) as web interface.
+
+### cromwell-helm:
+Chart for deploying Cromwell as an App on GCP and uses the Composite Batch Analysis Service (C-BAS) as web interface.
+
 ### CromwellPostgresMinikube:
 Contains Cromwell, Postgres pods. Runs a local backend. Works on minikube. 
 
