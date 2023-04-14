@@ -2,7 +2,7 @@ exports:
   common:
     cromwell:
       name: coa-cromwell-svc
-      image: broadinstitute/cromwell:86-528bb6f
+      image: broadinstitute/cromwell:86-037f1d0
       port: 8000
       enabled: true
 
@@ -19,7 +19,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.106
+      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.110
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
       enabled: true
@@ -28,14 +28,14 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
-      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.111
+      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.112
       conf_dir: /etc/conf
       conf_file: cbas.yaml
       enabled: true
 
     wds:
       name: wds
-      image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:eaf0cfd
+      image: us.gcr.io/broad-dsp-gcr-public/terra-workspace-data-service:2de39ee
       conf_dir: /etc/conf
       conf_file: wds.yaml
       enabled: true
