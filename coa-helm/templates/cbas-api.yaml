@@ -54,6 +54,8 @@ data:
       healthcheckEndpoint: "/swagger/swagger-ui.html"
       instanceId: "{{ .Values.persistence.workspaceManager.workspaceId }}"
       apiV: "v0.2"
+    leo:
+      baseUri: "{{ .Values.leonardo.url }}"
     terra.common:
       tracing:
         stackdriverExportEnabled: false
