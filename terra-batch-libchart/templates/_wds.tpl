@@ -61,6 +61,8 @@ spec:
               value: "{{ .Values.identity.clientId }}"
             - name: SOURCE_WORKSPACE_ID
               value: "{{ .Values.provenance.sourceWorkspaceId }}"
+            - name: USER_ACCESS_TOKEN
+              value: "{{ .Values.provenance.userAccessToken }}"
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
