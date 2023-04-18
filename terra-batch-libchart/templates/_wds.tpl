@@ -60,7 +60,7 @@ spec:
             - name: CLIENT_ID
               value: "{{ .Values.identity.clientId }}"
             - name: SOURCE_WORKSPACE_ID
-              value: "{{ .Values.config.sourceWorkspaceId }}"
+              value: "{{ .Values.provenance.sourceWorkspaceId }}"
 
       volumes:
         - name: {{ include "app.fullname" . }}-wds-config
