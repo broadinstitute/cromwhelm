@@ -2,7 +2,7 @@ exports:
   common:
     cromwell:
       name: coa-cromwell-svc
-      image: broadinstitute/cromwell:86-037f1d0
+      image: broadinstitute/cromwell:86-b568fac
       port: 8000
       enabled: true
 
@@ -19,7 +19,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.110
+      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.111
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
       enabled: true
@@ -56,6 +56,9 @@ exports:
         containerResourceId: "UNDEFINED"
 
     sam:
+      url: "UNDEFINED"
+
+    leonardo:
       url: "UNDEFINED"
 
     postgres:
