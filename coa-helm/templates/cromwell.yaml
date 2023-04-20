@@ -158,6 +158,18 @@ data:
               disk: "10 GB"
               preemptible: true
             }
+            poll-backoff {
+              min: "1 minutes"
+              max: "5 minutes"
+              multiplier: 1.1
+              randomization-factor: 0.5
+            }
+            execute-or-recover-backoff {
+              min: "3 seconds"
+              max: "30 seconds"
+              multiplier: 1.1
+              randomization-factor: 0.5
+            }
           }
         }
       }
