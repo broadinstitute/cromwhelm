@@ -22,8 +22,6 @@ data:
   {{ .Values.cbasUI.conf_file }}: |-
     {
       "cbasUrlRoot" : "{{ .Values.ingress.path }}/cbas",
-      "cromwellUrlRoot" : "{{ .Values.ingress.path }}/cromwell",
-      "wdsUrlRoot" : "{{ .Values.ingress.path }}/wds",
-      "wdsInstanceId" : "{{ .Values.persistence.workspaceManager.workspaceId }}"
+      "cromwellUrlRoot" : "{{ .Values.ingress.path }}/cromwell"
     }
 {{ end }}

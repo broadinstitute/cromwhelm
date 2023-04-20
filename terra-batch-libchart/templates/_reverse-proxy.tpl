@@ -114,13 +114,6 @@ data:
           proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
         }
         {{ end }}
-
-        {{- if .Values.wds.enabled }}
-        location /wds/ {
-          client_max_body_size 500m;
-          proxy_pass http://{{ include "app.fullname" . }}-wds-svc:8080/;
-        }
-        {{ end }}
       }
     }
   {{ .Values.proxy.www_file }}: |-
@@ -146,10 +139,6 @@ data:
           <li> Cromwell: <a href="./cromwell/"> cromwell/ </a> </li>
           <ul>
             <li> eg: <a href="./cromwell/engine/v1/version"> cromwell/engine/v1/version </a> </li>
-          </ul>
-          <li> WDS: <a href="./wds/"> wds/ </a> </li>
-          <ul>
-            <li> eg: <a href="./wds/swagger/swagger-ui.html"> WDS Swagger </a> </li>
           </ul>
         </ul>
       </body>
