@@ -84,6 +84,14 @@ data:
 
       input-read-limits {
         lines = 1000000
+        json = 10000000
+        tsv = 10000000
+        object = 10000000
+        bool = 7
+        int = 19
+        float = 50
+        string = 128000
+        map = 128000
       }
       # Accommodates IO commands that take 10 seconds because they block on refreshing the filesystem token,
       # plus margin for variability. Backpressure only works as designed when staleness is configured above
@@ -157,6 +165,18 @@ data:
               memory: "2 GB"
               disk: "10 GB"
               preemptible: true
+            }
+            poll-backoff {
+              min: "1 minutes"
+              max: "5 minutes"
+              multiplier: 1.1
+              randomization-factor: 0.5
+            }
+            execute-or-recover-backoff {
+              min: "3 seconds"
+              max: "30 seconds"
+              multiplier: 1.1
+              randomization-factor: 0.5
             }
           }
         }
