@@ -51,15 +51,14 @@ data:
     wds:
       instanceId: "{{ .Values.persistence.workspaceManager.workspaceId }}"
       apiV: "v0.2"
-
     leonardo:
-      baseUri: "https://leonardo.dsde-dev.broadinstitute.org/"
+      baseUri: "{{ .Values.leonardo.url }}"
       wdsAppTypeNames: ['WDS', 'CROMWELL']
-
+      dependencyUrlCacheTtlSeconds: 300
     credentials:
       azure:
-        tokenAcquisitionTimeoutMillis: 5 seconds
-        tokenCacheTtl: 300 seconds
+        tokenAcquisitionTimeoutSeconds: 5
+        tokenCacheTtlSeconds: 300
     terra.common:
       tracing:
         stackdriverExportEnabled: false
