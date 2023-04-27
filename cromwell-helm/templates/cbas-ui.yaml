@@ -23,7 +23,7 @@ data:
     {
       "cbasUrlRoot" : "{{ .Values.ingress.path }}/cbas",
       "cromwellUrlRoot" : "{{ .Values.ingress.path }}/cromwell",
-      "wdsUrlRoot" : "{{ .Values.ingress.path }}/wds",
+      "wdsAppTypeNames": ["WDS", "CROMWELL"],
       "wdsInstanceId" : "{{ .Values.persistence.workspaceManager.workspaceId }}"
     }
 {{ end }}
