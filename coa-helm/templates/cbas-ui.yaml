@@ -28,7 +28,10 @@ data:
       "leoUrlRoot" : "{{ .Values.leonardo.url }}",
       "cbasUrlRoot" : "{{ .Values.relay.path }}/cbas",
       "cromwellUrlRoot" : "{{ .Values.relay.path }}/cromwell",
-      "wdsUrlRoot" : "{{ .Values.relay.path }}/wds",
-      "wdsInstanceId" : "{{ .Values.persistence.workspaceManager.workspaceId }}"
+      "wdsAppTypeNames": ["WDS", "CROMWELL"],
+      "wdsInstanceId" : "{{ .Values.persistence.workspaceManager.workspaceId }}", #Same as workspaceID, for now.
+      "workspaceManagerRoot" : "{{ .Values.persistence.workspaceManager.url }}",
+      "workspaceId" : "{{ .Values.persistence.workspaceManager.workspaceId }}",
+      "containerResourceId" : "{{ .Values.persistence.workspaceManager.containerResourceId }}"
     }
 {{ end }}
