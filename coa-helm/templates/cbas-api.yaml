@@ -47,15 +47,18 @@ data:
     workflow-engines:
       cromwell:
         baseUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000'
-        healthUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000/engine/v1/status'
         finalWorkflowLogDir: "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/cromwell-workflow-logs"
     wds:
-      baseUri: "http://{{ include "app.fullname" . }}-wds-svc:8080"
-      healthcheckEndpoint: "/swagger/swagger-ui.html"
       instanceId: "{{ .Values.persistence.workspaceManager.workspaceId }}"
       apiV: "v0.2"
-    leo:
+    leonardo:
       baseUri: "{{ .Values.leonardo.url }}"
+      wdsAppTypeNames: ['WDS', 'CROMWELL']
+      dependencyUrlCacheTtlSeconds: 300
+    credentials:
+      azure:
+        tokenAcquisitionTimeoutSeconds: 5
+        tokenCacheTtlSeconds: 300
     terra.common:
       tracing:
         stackdriverExportEnabled: false
