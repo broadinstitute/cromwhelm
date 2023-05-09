@@ -79,13 +79,6 @@ app.kubernetes.io/component: {{ .Values.cbas.name }}
 {{- end}}
 
 {{/*
-WDS Service labels
-*/}}
-{{- define "app.wds.selectorLabels" -}}
-app.kubernetes.io/component: {{ .Values.wds.name }}
-{{- end}}
-
-{{/*
 Return postgres database user password.
 Lookup the existing secret values if they exist, or generate a random value
 */}}
