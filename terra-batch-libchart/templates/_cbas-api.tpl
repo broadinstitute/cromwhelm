@@ -35,6 +35,12 @@ spec:
           env:
             - name: SPRING_CONFIG_ADDITIONAL-LOCATION
               value: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 60
       volumes:
         - name: {{ include "app.fullname" . }}-cbas-config
           configMap:
