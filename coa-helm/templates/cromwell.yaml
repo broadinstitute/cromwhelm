@@ -9,7 +9,10 @@ spec:
     {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
       containers:
-        - args:
+        - env:
+            - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+              value: {{ .Values.config.applicationInsightsConnectionString | quote }}
+          args:
             - java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
           command:
             - /bin/sh
