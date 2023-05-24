@@ -4,6 +4,21 @@
 {{ define "coa-helm.cbas-ui-deploy" }}
 spec:
   template:
+    spec:
+      tolerations:
+        - key: "kubernetes.azure.com/scalesetpriority"
+          operator: "Equal"
+          value: "spot"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "kubernetes.azure.com/scalesetpriority"
+                operator: In
+                values:
+                - "spot"
     metadata:
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
