@@ -130,8 +130,8 @@ spec:
               memory: "8192Mi"
           livenessProbe:
             httpGet:
-              path: /service-info
-              port: 80
+              path: {{ .Values.tes.apiVersion }}/service-info
+              port: {{ .Values.tes.port }}
             initialDelaySeconds: 120
             periodSeconds: 60
       restartPolicy: Always
