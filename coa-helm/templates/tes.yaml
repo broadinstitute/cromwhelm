@@ -128,6 +128,12 @@ spec:
             limits:
               cpu: "8.0"
               memory: "8192Mi"
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.tes.apiVersion }}/service-info
+              port: {{ .Values.tes.port }}
+            initialDelaySeconds: 120
+            periodSeconds: 60
       restartPolicy: Always
 status: {}
 {{ end }}
