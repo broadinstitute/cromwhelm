@@ -13,7 +13,12 @@ spec:
             - name: APPLICATIONINSIGHTS_CONNECTION_STRING
               value: {{ .Values.config.applicationInsightsConnectionString | quote }}
           args:
-            - java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
+            - java 
+              -Djava.io.tmpdir=/cromwell-tmp/ 
+              -Dconfig.file=/configuration/cromwell/cromwell-application.conf 
+              -Dlogback.configurationFile=/configuration/cromwell/logback.xml 
+              -jar /app/cromwell.jar 
+              server
           command:
             - /bin/sh
             - -c
@@ -61,6 +66,39 @@ status:
 {{ end }}
 {{ define "coa-helm.cromwell-config" }}
 data:
+  logback.xml: |-
+    <configuration>
+      <!-- Enhanced thread and date reporting. -->
+      <conversionRule
+              conversionWord="et"
+              converterClass="cromwell.core.logging.EnhancedThreadConverter"
+      />
+      <conversionRule
+              conversionWord="ed"
+              converterClass="cromwell.core.logging.EnhancedDateConverter"
+      />
+      
+      <!-- We are sending logs to ApplicationInsights, no need to print them to console as well.  -->
+      <appender name="NOP_APPENDER" class="ch.qos.logback.core.helpers.NOPAppender">
+          <encoder>
+              <pattern>%ed{yyyy-MM-dd HH:mm:ss,SSS} %et %-5level - %msg%n</pattern>
+          </encoder>
+      </appender>
+
+      <root level="INFO">
+          <appender-ref ref="NOP_APPENDER" />
+      </root>
+
+      <logger name="liquibase" level="WARN"/>
+      <logger name="com.zaxxer.hikari" level="ERROR"/>
+      <logger name="HikariPool" level="ERROR"/>
+      <logger name="com.google.cloud.hadoop.gcsio.GoogleCloudStorageReadChannel" level="ERROR"/>
+      <logger name="org.semanticweb.owlapi.utilities.Injector" level="ERROR"/>
+
+      <!-- Guilty of logging ERROR under non-erroneous conditions -->
+      <logger name="com.azure.storage.blob.nio" level="OFF"/>
+    </configuration>
+
   cromwell-application.conf: |-
     include required(classpath("application"))
 
