@@ -10,8 +10,9 @@ spec:
     spec:
       containers:
         - env:
-            - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-              value: {{ .Values.config.applicationInsightsConnectionString | quote }}
+            # Parse application insights instrumentation key (uuid) out of connection string
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY
+              value: {{ mustRegexReplaceAll ".*InstrumentationKey=([-0-9a-f]*).*" .Values.config.applicationInsightsConnectionString  "${1}" | quote }}
           args:
             - java 
               -Djava.io.tmpdir=/cromwell-tmp/ 
@@ -83,16 +84,11 @@ data:
               conversionWord="ed"
               converterClass="cromwell.core.logging.EnhancedDateConverter"
       />
-      
-      <!-- We are sending logs to ApplicationInsights, no need to print them to console as well.  -->
-      <appender name="NOP_APPENDER" class="ch.qos.logback.core.helpers.NOPAppender">
-          <encoder>
-              <pattern>%ed{yyyy-MM-dd HH:mm:ss,SSS} %et %-5level - %msg%n</pattern>
-          </encoder>
-      </appender>
+
+      <appender name="AppInsightsAppender" class="com.microsoft.applicationinsights.logback.ApplicationInsightsAppender" />
 
       <root level="INFO">
-          <appender-ref ref="NOP_APPENDER" />
+          <appender-ref ref="AppInsightsAppender" />
       </root>
 
       <logger name="liquibase" level="WARN"/>
