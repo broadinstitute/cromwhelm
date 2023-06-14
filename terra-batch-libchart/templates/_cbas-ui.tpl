@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         {{- include "app.cbasUI.selectorLabels" . | nindent 8 }}
+        leoServiceName: cbas-ui
     spec:
       hostname: {{ .Values.cbasUI.name }}
       volumes:

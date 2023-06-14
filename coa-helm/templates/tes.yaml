@@ -17,6 +17,8 @@ spec:
       labels:
         io.kompose.service: tes
         aadpodidbinding: {{ .Values.identity.name }}
+        leoServiceName: tes
+        {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
       containers:
         - env:

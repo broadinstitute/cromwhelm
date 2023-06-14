@@ -16,6 +16,7 @@ spec:
     metadata:
       labels:
         {{- include "app.cromwell.selectorLabels" . | nindent 8 }}
+        leoServiceName: cromwell
 {{- end -}}
 {{- define "terra-batch-libchart.cromwell-deploy" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.cromwell-deploy.tpl") -}}

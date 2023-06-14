@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         {{- include "app.cbas.selectorLabels" . | nindent 8 }}
+        leoServiceName: cbas
     spec:
       containers:
         - name: {{ .Values.cbas.name }}-container
