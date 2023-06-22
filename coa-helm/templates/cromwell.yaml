@@ -9,8 +9,17 @@ spec:
     {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
       containers:
-        - args:
-            - java -Djava.io.tmpdir=/cromwell-tmp/ -Dconfig.file=/configuration/cromwell/cromwell-application.conf -jar /app/cromwell.jar server
+        - env:
+            # Parse application insights instrumentation key (uuid) out of connection string
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY
+              value: {{ mustRegexReplaceAll ".*InstrumentationKey=([-0-9a-f]*).*" .Values.config.applicationInsightsConnectionString  "${1}" | quote }}
+          args:
+            - java 
+              -Djava.io.tmpdir=/cromwell-tmp/ 
+              -Dconfig.file=/configuration/cromwell/cromwell-application.conf 
+              -Dlogback.configurationFile=/configuration/cromwell/logback.xml 
+              -jar /app/cromwell.jar 
+              server
           command:
             - /bin/sh
             - -c
@@ -64,6 +73,34 @@ status:
 {{ end }}
 {{ define "coa-helm.cromwell-config" }}
 data:
+  logback.xml: |-
+    <configuration>
+      <!-- Enhanced thread and date reporting. -->
+      <conversionRule
+              conversionWord="et"
+              converterClass="cromwell.core.logging.EnhancedThreadConverter"
+      />
+      <conversionRule
+              conversionWord="ed"
+              converterClass="cromwell.core.logging.EnhancedDateConverter"
+      />
+
+      <appender name="AppInsightsAppender" class="com.microsoft.applicationinsights.logback.ApplicationInsightsAppender" />
+
+      <root level="INFO">
+          <appender-ref ref="AppInsightsAppender" />
+      </root>
+
+      <logger name="liquibase" level="WARN"/>
+      <logger name="com.zaxxer.hikari" level="ERROR"/>
+      <logger name="HikariPool" level="ERROR"/>
+      <logger name="com.google.cloud.hadoop.gcsio.GoogleCloudStorageReadChannel" level="ERROR"/>
+      <logger name="org.semanticweb.owlapi.utilities.Injector" level="ERROR"/>
+
+      <!-- Guilty of logging ERROR under non-erroneous conditions -->
+      <logger name="com.azure.storage.blob.nio" level="OFF"/>
+    </configuration>
+
   cromwell-application.conf: |-
     include required(classpath("application"))
 
