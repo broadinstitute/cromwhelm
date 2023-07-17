@@ -58,7 +58,11 @@ metadata:
 {{- define "terra-batch-libchart.cromwell-config.database.conf" -}}
 
 database {
+  {{- if .Values.postgres.podLocalDatabaseEnabled }}
   db.url = "jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+  {{- else }}
+  db.url = "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?sslMode=Require&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+  {{- end }}
   db.user = {{ .Values.postgres.user | quote }}
   db.password = {{ include "dbPassword" . | b64enc | quote }}
   db.driver = "org.postgresql.Driver"

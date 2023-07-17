@@ -8,6 +8,9 @@ spec:
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
+      {{- if .Values.workloadIdentity.enabled }}
+      serviceAccountName: {{ .Values.workloadIdentity.serviceAccountName }}
+      {{ end }}
       containers:
         - env:
             # Parse application insights instrumentation key (uuid) out of connection string

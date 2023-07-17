@@ -56,16 +56,22 @@ exports:
       url: "UNDEFINED"
 
     postgres:
-      image: postgres:15.2
+      podLocalDatabaseEnabled: true
+
+      host: RUNTIME_PARAMETER # ignored if podLocalDatabaseEnabled is true
       port: 5432
       user: postgres_user
-      password: "RUNTIME_PARAMETER"
       cromwell:
         dbname: cromwell
       cbas:
         dbname: cbas
       tes:
         dbname: tes
+
+      # If podLocalDatabaseEnabled is false, then the app will connect to external Postgres databases and
+      # the following fields will be ignored
+      image: postgres:15.2
+      password: "RUNTIME_PARAMETER"
       startup_dir: /docker-entrypoint-initdb.d
       startup_scripts: # Numbered because the scripts in initdb.d are run in alphabetical order
         create_dbs: 01_create_dbs.sh
