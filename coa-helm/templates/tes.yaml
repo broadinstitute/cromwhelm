@@ -119,8 +119,17 @@ spec:
               value: {{ .Values.postgres.tes.dbname }}
             - name: TesPostgreSql__DatabaseUserLogin
               value: {{ .Values.postgres.user | quote }}
+            {{ if .Values.postgres.podLocalDatabaseEnabled -}}
             - name: TesPostgreSql__DatabaseUserPassword
               value: {{ include "dbPassword" . | b64enc | quote }}
+            - name: TesPostgreSql__UseManagedIdentity
+              value: "false"
+            {{- else -}}
+            - name: TesPostgreSql__DatabaseUserPassword
+              value: ""
+            - name: TesPostgreSql__UseManagedIdentity
+              value: true
+            {{- end }}
           image: {{ .Values.tes.image }}
           name: tes
           ports:
