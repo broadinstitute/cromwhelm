@@ -12,7 +12,7 @@ spec:
   {{- include "app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotation:
+      annotations:
         checksum/config: {{ include ("terra-batch-libchart.reverse-proxy-config.tpl") . | sha256sum }}
       labels:
     {{- include "app.selectorLabels" . | nindent 8 }}
