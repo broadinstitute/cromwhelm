@@ -107,28 +107,32 @@ spec:
               value: {{ .Values.persistence.storageAccount }}
             - name: Terra__WorkspaceId
               value: {{ .Values.persistence.workspaceManager.workspaceId }}
-            - name: TesPostgreSql__ServerName
-              value: {{ include "app.fullname" . }}
-            - name: TesPostgreSql__ServerNameSuffix
-              value: "-postgres"
             - name: TesPostgreSql__ServerSslMode
               value: Disable
             - name: TesPostgreSql__ServerPort
               value: {{ .Values.postgres.port | quote }}
             - name: TesPostgreSql__DatabaseName
-              value: {{ .Values.postgres.tes.dbname }}
+              value: {{ .Values.postgres.dbnames.tes }}
             - name: TesPostgreSql__DatabaseUserLogin
               value: {{ .Values.postgres.user | quote }}
             {{ if .Values.postgres.podLocalDatabaseEnabled -}}
+            - name: TesPostgreSql__ServerName
+              value: {{ include "app.fullname" . }}
+            - name: TesPostgreSql__ServerNameSuffix
+              value: "-postgres"
             - name: TesPostgreSql__DatabaseUserPassword
               value: {{ include "dbPassword" . | b64enc | quote }}
             - name: TesPostgreSql__UseManagedIdentity
               value: "false"
             {{- else -}}
+            - name: TesPostgreSql__ServerName
+              value: {{ .Values.postgres.host | quote }}
+            - name: TesPostgreSql__ServerNameSuffix
+              value: ""
             - name: TesPostgreSql__DatabaseUserPassword
               value: ""
             - name: TesPostgreSql__UseManagedIdentity
-              value: true
+              value: "true"
             {{- end }}
           image: {{ .Values.tes.image }}
           name: tes
