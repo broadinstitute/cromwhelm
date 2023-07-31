@@ -2,6 +2,12 @@
 {{ include "terra-batch-libchart.cbas-api-deploy" (list . "cromwell-helm.cbas-api-deploy") }}
 {{ end }}
 {{ define "cromwell-helm.cbas-api-deploy" }}
+# Overrides go here
+spec:
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include ("cromwell-helm.cbas-api-config") . | sha256sum }}
 {{ end }}
 
 ---
