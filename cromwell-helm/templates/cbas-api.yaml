@@ -28,20 +28,20 @@ data:
   {{ .Values.cbas.conf_file }}: |-
     spring:
       datasource:
-        jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
+        jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
         username: {{ .Values.postgres.user }}
         password: {{ include "dbPassword" . | b64enc | quote }}
       sql:
         init:
           mode: always
       liquibase:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
+        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
         user: {{ .Values.postgres.user }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         change-log: changelog/changelog.yaml
     cbas:
       cbas-database:
-        uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
+        uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
         username: {{ .Values.postgres.user }}
         password: {{ include "dbPassword" . | b64enc | quote }}
     workflow-engines:

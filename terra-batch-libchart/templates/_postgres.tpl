@@ -41,7 +41,7 @@ spec:
             - name: POSTGRES_USER
               value: {{ .Values.postgres.user }}
             - name: POSTGRES_MULTIPLE_DATABASES
-              value: "{{ .Values.postgres.cromwell.dbname }},{{ .Values.postgres.cbas.dbname }},{{ .Values.postgres.tes.dbname }}"
+              value: "{{ .Values.postgres.dbnames.cromwell }},{{ .Values.postgres.dbnames.cbas }},{{ .Values.postgres.dbnames.tes }}"
 {{- end -}}
 {{- define "terra-batch-libchart.postgres-deploy" -}}
 {{- include "terra-batch-libchart.util.merge" (append . "terra-batch-libchart.postgres-deploy.tpl") -}}

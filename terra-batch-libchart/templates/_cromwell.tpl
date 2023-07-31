@@ -59,9 +59,9 @@ metadata:
 
 database {
   {{- if .Values.postgres.podLocalDatabaseEnabled }}
-  db.url = "jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
+  db.url = "jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cromwell }}?useSSL=false&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true"
   {{- else }}
-  db.url = "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.cromwell.dbname }}?sslMode=Require&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+  db.url = "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cromwell }}?sslMode=Require&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
   {{- end }}
   db.user = {{ .Values.postgres.user | quote }}
   db.password = {{ include "dbPassword" . | b64enc | quote }}

@@ -61,12 +61,10 @@ exports:
       host: RUNTIME_PARAMETER # ignored if podLocalDatabaseEnabled is true
       port: 5432
       user: postgres_user
-      cromwell:
-        dbname: cromwell
-      cbas:
-        dbname: cbas
-      tes:
-        dbname: tes
+      dbnames:
+        cromwell: cromwell
+        cbas: cbas
+        tes: tes
 
       # If podLocalDatabaseEnabled is false, then the app will connect to external Postgres databases and
       # the following fields will be ignored
