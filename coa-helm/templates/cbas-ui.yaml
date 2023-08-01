@@ -5,6 +5,8 @@
 spec:
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include ("coa-helm.cbas-ui-config") . | sha256sum }}
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
