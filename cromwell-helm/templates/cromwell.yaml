@@ -2,8 +2,13 @@
 {{ include "terra-batch-libchart.cromwell-deploy" (list . "cromwell-helm.cromwell-deploy") }}
 {{ end }}
 {{ define "cromwell-helm.cromwell-deploy" }}
+# Overrides go here
 spec:
   template:
+    metadata:
+      annotations:
+        checksum/config: {{ include ("cromwell-helm.cromwell-config") . | sha256sum }}
+        checksum/dbconfig: {{ include ("terra-batch-libchart.cromwell-config.database.conf") . | sha256sum }}
     spec:
       serviceAccountName: {{ .Values.config.serviceAccount.name }}
       volumes:

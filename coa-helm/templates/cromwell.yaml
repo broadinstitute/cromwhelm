@@ -5,9 +5,15 @@
 spec:
   template:
     metadata:
+      annotations: 
+        checksum/config: {{ include ("coa-helm.cromwell-config") . | sha256sum }}
+        checksum/dbconfig: {{ include ("terra-batch-libchart.cromwell-config.database.conf") . | sha256sum }}
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
     spec:
+      {{- if .Values.workloadIdentity.enabled }}
+      serviceAccountName: {{ .Values.workloadIdentity.serviceAccountName }}
+      {{ end }}
       containers:
         - env:
             # Parse application insights instrumentation key (uuid) out of connection string
@@ -162,7 +168,7 @@ data:
     engine {
       filesystems {
         local {
-          enabled: false
+          enabled: true
         }
         http {
           enabled: true
