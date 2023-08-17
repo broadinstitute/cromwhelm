@@ -5,6 +5,21 @@
 # Overrides go here
 spec:
   template:
+    spec:
+      tolerations:
+        - key: "kubernetes.azure.com/scalesetpriority"
+          operator: "Equal"
+          value: "spot"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "kubernetes.azure.com/scalesetpriority"
+                operator: In
+                values:
+                - "spot"
     metadata:
       annotations:
         checksum/config: {{ include ("coa-helm.cbas-api-config") . | sha256sum }}
