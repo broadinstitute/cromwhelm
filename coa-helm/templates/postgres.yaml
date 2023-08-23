@@ -1,17 +1,21 @@
+{{- if .Values.postgres.podLocalDatabaseEnabled }}
 {{ include "terra-batch-libchart.postgres-deploy" (list . "coa-helm.postgres-deploy") }}
+{{ end }}
 {{ define "coa-helm.postgres-deploy" }}
 {{ end }}
 
 ---
-
+{{- if .Values.postgres.podLocalDatabaseEnabled }}
 {{ include "terra-batch-libchart.postgres-service" (list . "coa-helm.postgres-service") }}
+{{ end }}
 {{ define "coa-helm.postgres-service" }}
 # Overrides go here
 {{ end }}
 
 ---
-
+{{- if .Values.postgres.podLocalDatabaseEnabled }}
 {{ include "terra-batch-libchart.postgres-config" (list . "coa-helm.postgres-config") }}
+{{ end }}
 {{ define "coa-helm.postgres-config" }}
 # Overrides go here
 {{ end }}

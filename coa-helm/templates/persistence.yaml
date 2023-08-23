@@ -17,6 +17,7 @@ status: {}
 
 ---
 
+{{- if .Values.postgres.podLocalDatabaseEnabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -31,3 +32,4 @@ spec:
     requests:
       storage: {{ .Values.persistence.postgresPvcSize }}
 status: {}
+{{ end }}

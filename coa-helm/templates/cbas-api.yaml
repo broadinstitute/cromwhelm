@@ -21,8 +21,14 @@ spec:
                 values:
                 - "spot"
     metadata:
+      annotations:
+        checksum/config: {{ include ("coa-helm.cbas-api-config") . | sha256sum }}
       labels:
   {{ include "coa-helm.labels" $ | nindent 8 }}
+    spec:
+      {{- if .Values.workloadIdentity.enabled }}
+      serviceAccountName: {{ .Values.workloadIdentity.serviceAccountName }}
+      {{ end }}
 {{ end }}
 
 ---
@@ -43,22 +49,34 @@ data:
   {{ .Values.cbas.conf_file }}: |-
     spring:
       datasource:
-        jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
-        username: {{ .Values.postgres.user }}
+        {{- if .Values.postgres.podLocalDatabaseEnabled }}
+        jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
+        {{- else }}
+        jdbc-url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        {{- end }}
+        username: {{ .Values.postgres.user }}
       sql:
         init:
           mode: always
       liquibase:
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
-        user: {{ .Values.postgres.user }}
+        {{- if .Values.postgres.podLocalDatabaseEnabled }}
+        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
+        {{- else }}
+        url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        {{- end }}
+        user: {{ .Values.postgres.user }}
         change-log: changelog/changelog.yaml
     cbas:
       cbas-database:
-        uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.cbas.dbname }}
-        username: {{ .Values.postgres.user }}
+        {{- if .Values.postgres.podLocalDatabaseEnabled }}
+        uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
+        {{- else }}
+        uri: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        {{- end }}
+        username: {{ .Values.postgres.user }}
     workflow-engines:
       cromwell:
         baseUri: 'http://{{ include "app.fullname" . }}-cromwell-svc:8000'
@@ -79,4 +97,7 @@ data:
         stackdriverExportEnabled: false
     dockstore:
       baseUri: "{{ .Values.dockstore.baseUrl}}"
+    sam:
+      baseUri: "{{ .Values.sam.url}}"
+      workspaceId: "{{ .Values.persistence.workspaceManager.workspaceId }}"
 {{ end }}

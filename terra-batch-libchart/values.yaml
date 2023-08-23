@@ -2,7 +2,7 @@ exports:
   common:
     cromwell:
       name: coa-cromwell-svc
-      image: broadinstitute/cromwell:86-8a1297f
+      image: broadinstitute/cromwell:86-f64b3b9
       port: 8000
       enabled: true
 
@@ -19,7 +19,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbasUI:
       name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.147
+      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.157
       conf_file: config.json
       conf_dir: /usr/share/nginx/html
       enabled: true
@@ -28,7 +28,7 @@ exports:
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
-      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.132
+      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.152
       conf_dir: /etc/conf
       conf_file: cbas.yaml
       enabled: true
@@ -56,16 +56,22 @@ exports:
       url: "UNDEFINED"
 
     postgres:
-      image: postgres:15.2
+      # Note that podLocalDatabaseEnabled=false is only currently supported by 
+      # coa-helm (Azure), NOT cromwell-helm (GCP)
+      podLocalDatabaseEnabled: true
+
+      host: RUNTIME_PARAMETER # ignored if podLocalDatabaseEnabled is true
       port: 5432
       user: postgres_user
+      dbnames:
+        cromwell: cromwell
+        cbas: cbas
+        tes: tes
+
+      # If podLocalDatabaseEnabled is false, then the app will connect to external Postgres databases and
+      # the following fields will be ignored
+      image: postgres:15.2
       password: "RUNTIME_PARAMETER"
-      cromwell:
-        dbname: cromwell
-      cbas:
-        dbname: cbas
-      tes:
-        dbname: tes
       startup_dir: /docker-entrypoint-initdb.d
       startup_scripts: # Numbered because the scripts in initdb.d are run in alphabetical order
         create_dbs: 01_create_dbs.sh

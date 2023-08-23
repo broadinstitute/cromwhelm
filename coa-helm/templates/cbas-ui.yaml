@@ -20,8 +20,14 @@ spec:
                 values:
                 - "spot"
     metadata:
+      annotations:
+        checksum/config: {{ include ("coa-helm.cbas-ui-config") . | sha256sum }}
       labels:
     {{ include "coa-helm.labels" $ | nindent 8 }}
+    spec:
+      {{- if .Values.workloadIdentity.enabled }}
+      serviceAccountName: {{ .Values.workloadIdentity.serviceAccountName }}
+      {{ end }}
 {{ end }}
 
 ---
