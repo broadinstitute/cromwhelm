@@ -61,20 +61,6 @@ spec:
         - name: cromwell-config-volume
           configMap:
             name: {{ include "app.fullname" . }}-cromwell-config
-      tolerations:
-        - key: "kubernetes.azure.com/scalesetpriority"
-          operator: "Equal"
-          value: "spot"
-          effect: "NoSchedule"
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: "kubernetes.azure.com/scalesetpriority"
-                operator: In
-                values:
-                - "spot"
 status: {}
 {{ end }}
 

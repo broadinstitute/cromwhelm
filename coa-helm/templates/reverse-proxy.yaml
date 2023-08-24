@@ -1,22 +1,6 @@
 {{ include "terra-batch-libchart.reverse-proxy-deploy" (list . "coa-helm.reverse-proxy-deploy") }}
 {{ define "coa-helm.reverse-proxy-deploy" }}
-spec:
-  template:
-    spec:
-      tolerations:
-        - key: "kubernetes.azure.com/scalesetpriority"
-          operator: "Equal"
-          value: "spot"
-          effect: "NoSchedule"
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: "kubernetes.azure.com/scalesetpriority"
-                operator: In
-                values:
-                - "spot"
+
 {{ end }}
 
 ---
