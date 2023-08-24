@@ -59,7 +59,16 @@ exports:
       # Note that podLocalDatabaseEnabled=false is only currently supported by 
       # coa-helm (Azure), NOT cromwell-helm (GCP)
       podLocalDatabaseEnabled: true
-      podLocalDatabaseEnabledForTES: true
+
+       # Temporary shim to allow all parts of the Azure app except TES to move to
+       # LZ postgres. Should always be false in library chart, can be set to true in coa-helm.
+      podLocalDatabaseEnabledForTES: false
+
+      # PgBouncer currently only functions in Azure app. Should always be false in 
+      # library chart, can be set to true in coa-helm.
+      pgbouncer:
+        enabled: false
+        port: 6432
 
       host: RUNTIME_PARAMETER # ignored if podLocalDatabaseEnabled is true
       port: 5432
