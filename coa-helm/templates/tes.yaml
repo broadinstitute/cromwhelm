@@ -107,8 +107,6 @@ spec:
               value: {{ .Values.persistence.storageAccount }}
             - name: Terra__WorkspaceId
               value: {{ .Values.persistence.workspaceManager.workspaceId }}
-            - name: TesPostgreSql__ServerSslMode
-              value: Disable
             - name: TesPostgreSql__ServerPort
               value: {{ .Values.postgres.port | quote }}
             - name: TesPostgreSql__DatabaseName
@@ -116,6 +114,8 @@ spec:
             - name: TesPostgreSql__DatabaseUserLogin
               value: {{ .Values.postgres.user | quote }}
             {{ if .Values.postgres.podLocalDatabaseEnabled -}}
+            - name: TesPostgreSql__ServerSslMode
+              value: Disable
             - name: TesPostgreSql__ServerName
               value: {{ include "app.fullname" . }}
             - name: TesPostgreSql__ServerNameSuffix
@@ -125,10 +125,13 @@ spec:
             - name: TesPostgreSql__UseManagedIdentity
               value: "false"
             {{- else -}}
+            - name: TesPostgreSql__ServerSslMode
+              value: Require
+            # database host is like: lz160f3e0169a1cc0808d9e060cc.postgres.database.azure.com
             - name: TesPostgreSql__ServerName
-              value: {{ .Values.postgres.host | quote }}
+              value: {{ splitList "." .Values.postgres.host | first | quote }}
             - name: TesPostgreSql__ServerNameSuffix
-              value: ""
+              value: ".{{ splitList "." .Values.postgres.host | rest | join "." }}"
             - name: TesPostgreSql__DatabaseUserPassword
               value: ""
             - name: TesPostgreSql__UseManagedIdentity
