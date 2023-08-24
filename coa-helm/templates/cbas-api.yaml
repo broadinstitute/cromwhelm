@@ -4,6 +4,7 @@
 {{ define "coa-helm.cbas-api-deploy" }}
 # Overrides go here
 spec:
+  template:
     metadata:
       annotations:
         checksum/config: {{ include ("coa-helm.cbas-api-config") . | sha256sum }}
