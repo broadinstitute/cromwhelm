@@ -113,7 +113,7 @@ spec:
               value: {{ .Values.postgres.dbnames.tes }}
             - name: TesPostgreSql__DatabaseUserLogin
               value: {{ .Values.postgres.user | quote }}
-            {{ if .Values.postgres.podLocalDatabaseEnabled -}}
+            {{ if .Values.postgres.podLocalDatabaseEnabledForTES -}}
             - name: TesPostgreSql__ServerSslMode
               value: Disable
             - name: TesPostgreSql__ServerName
