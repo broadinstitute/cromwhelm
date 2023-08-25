@@ -91,3 +91,15 @@ Lookup the existing secret values if they exist, or generate a random value
     {{- .Values.postgres.password -}}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the port to use to connect to postgresql. Allows pgbouncer port to override 
+standard port when appropriate. Non-Azure apps should always use the standard port.
+*/}}
+{{- define "postgresPort" -}}
+{{- if and (.Values.postgres.pgbouncer.enabled) (not (.Values.postgres.podLocalDatabaseEnabled)) }}
+{{- .Values.postgres.pgbouncer.port }}
+{{- else }}
+{{- .Values.postgres.port }}
+{{- end }}
+{{- end -}}

@@ -23,7 +23,7 @@ spec:
   {{- end }}
 
 ---
-{{ if .Values.postgres.podLocalDatabaseEnabled }}
+{{- if or (.Values.postgres.podLocalDatabaseEnabled) (.Values.postgres.podLocalDatabaseEnabledForTES) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
