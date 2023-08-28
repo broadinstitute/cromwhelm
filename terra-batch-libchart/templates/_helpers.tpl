@@ -92,14 +92,44 @@ Lookup the existing secret values if they exist, or generate a random value
 {{- end }}
 {{- end }}
 
+{{- define "useLZPostgresWithPgBouncer" -}}
+{{- if and (.Values.postgres.pgbouncer.enabled) (not (.Values.postgres.podLocalDatabaseEnabled)) -}}
+true
+{{- else -}}
+false
+{{- end }}
+{{- end -}}
+
 {{/*
 Return the port to use to connect to postgresql. Allows pgbouncer port to override 
 standard port when appropriate. Non-Azure apps should always use the standard port.
 */}}
 {{- define "postgresPort" -}}
-{{- if and (.Values.postgres.pgbouncer.enabled) (not (.Values.postgres.podLocalDatabaseEnabled)) }}
+{{- if (eq ("true") (include "useLZPostgresWithPgBouncer" .)) }}
 {{- .Values.postgres.pgbouncer.port }}
 {{- else }}
 {{- .Values.postgres.port }}
+{{- end }}
+{{- end -}}
+
+{{/*
+We want Cromwell and CBAS to use pod-local postgres unless PgBouncer is enabled. 
+*/}}
+{{- define "podLocalDatabaseEnabledForCromwellCBAS" -}}
+{{- if eq ("true") (include "useLZPostgresWithPgBouncer" .) -}}
+false
+{{- else -}}
+true
+{{- end }}
+{{- end -}}
+
+{{/*
+Build a postgres pod into the app if any service needs it.
+*/}}
+{{- define "buildPodLocalDatabase" -}}
+{{- if or (eq ("true") (include "podLocalDatabaseEnabledForCromwellCBAS" .)) (.Values.postgres.podLocalDatabaseEnabledForTES) -}}
+true
+{{- else -}}
+false
 {{- end }}
 {{- end -}}
