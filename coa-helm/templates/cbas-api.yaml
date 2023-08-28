@@ -50,10 +50,10 @@ data:
     spring:
       datasource:
         {{- if .Values.postgres.podLocalDatabaseEnabled }}
-        jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
+        jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
-        jdbc-url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        jdbc-url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
         {{- end }}
         username: {{ .Values.postgres.user }}
       sql:
@@ -61,20 +61,20 @@ data:
           mode: always
       liquibase:
         {{- if .Values.postgres.podLocalDatabaseEnabled }}
-        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
+        url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
-        url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
         {{- end }}
         user: {{ .Values.postgres.user }}
         change-log: changelog/changelog.yaml
     cbas:
       cbas-database:
         {{- if .Values.postgres.podLocalDatabaseEnabled }}
-        uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}
+        uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
-        uri: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        uri: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
         {{- end }}
         username: {{ .Values.postgres.user }}
     workflow-engines:

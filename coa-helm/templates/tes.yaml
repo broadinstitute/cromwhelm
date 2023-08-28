@@ -107,15 +107,16 @@ spec:
               value: {{ .Values.persistence.storageAccount }}
             - name: Terra__WorkspaceId
               value: {{ .Values.persistence.workspaceManager.workspaceId }}
-            - name: TesPostgreSql__ServerSslMode
-              value: Disable
-            - name: TesPostgreSql__ServerPort
-              value: {{ .Values.postgres.port | quote }}
             - name: TesPostgreSql__DatabaseName
               value: {{ .Values.postgres.dbnames.tes }}
             - name: TesPostgreSql__DatabaseUserLogin
               value: {{ .Values.postgres.user | quote }}
-            {{ if .Values.postgres.podLocalDatabaseEnabled -}}
+            {{ if .Values.postgres.podLocalDatabaseEnabledForTES -}}
+             # don't use postgresPort helper, pgbouncer may be in use for other app components
+            - name: TesPostgreSql__ServerPort
+              value: {{ .Values.postgres.port | quote }}
+            - name: TesPostgreSql__ServerSslMode
+              value: Disable
             - name: TesPostgreSql__ServerName
               value: {{ include "app.fullname" . }}
             - name: TesPostgreSql__ServerNameSuffix
@@ -124,11 +125,16 @@ spec:
               value: {{ include "dbPassword" . | b64enc | quote }}
             - name: TesPostgreSql__UseManagedIdentity
               value: "false"
-            {{- else -}}
+            {{- else -}} # else we are using LZ postgres
+            - name: TesPostgreSql__ServerPort
+              value: {{ include "postgresPort" . | quote }}
+            - name: TesPostgreSql__ServerSslMode
+              value: Require
+            # database host is like: lz160f3e0169a1cc0808d9e060cc.postgres.database.azure.com
             - name: TesPostgreSql__ServerName
-              value: {{ .Values.postgres.host | quote }}
+              value: {{ splitList "." .Values.postgres.host | first | quote }}
             - name: TesPostgreSql__ServerNameSuffix
-              value: ""
+              value: ".{{ splitList "." .Values.postgres.host | rest | join "." }}"
             - name: TesPostgreSql__DatabaseUserPassword
               value: ""
             - name: TesPostgreSql__UseManagedIdentity
