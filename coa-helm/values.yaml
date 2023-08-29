@@ -75,6 +75,13 @@ workloadIdentity:
   enabled: false
   serviceAccountName: RUNTIME_PARAMETER
 
+# The Azure app will use the managed postgres instance in the 
+# landing zone if:
+#  * podLocalDatabaseEnabled is false
+#  * pgbouncer.enabled is true
+# Otherwise, we will use pod-local postgres. We require PgBouncer
+# because landing zones without it have a too-small db connection 
+# limit and we can quickly use them up and create system instability.
 postgres:
   podLocalDatabaseEnabled: true
   podLocalDatabaseEnabledForTES: true
