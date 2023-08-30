@@ -49,7 +49,7 @@ data:
   {{ .Values.cbas.conf_file }}: |-
     spring:
       datasource:
-        {{- if .Values.postgres.podLocalDatabaseEnabled }}
+        {{- if eq ("true") (include "podLocalDatabaseEnabledForCromwellCBAS" .) }}
         jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
@@ -60,7 +60,7 @@ data:
         init:
           mode: always
       liquibase:
-        {{- if .Values.postgres.podLocalDatabaseEnabled }}
+        {{- if eq ("true") (include "podLocalDatabaseEnabledForCromwellCBAS" .) }}
         url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
@@ -70,7 +70,7 @@ data:
         change-log: changelog/changelog.yaml
     cbas:
       cbas-database:
-        {{- if .Values.postgres.podLocalDatabaseEnabled }}
+        {{- if eq ("true") (include "podLocalDatabaseEnabledForCromwellCBAS" .) }}
         uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
@@ -87,6 +87,7 @@ data:
     leonardo:
       baseUri: "{{ .Values.leonardo.url }}"
       wdsAppTypeNames: ['WDS', 'CROMWELL']
+      cromwellRunnerAppTypeNames: ['CROMWELL_RUNNER_APP', 'CROMWELL']
       dependencyUrlCacheTtlSeconds: 300
     credentials:
       azure:

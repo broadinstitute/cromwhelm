@@ -17,7 +17,7 @@ status: {}
 
 ---
 
-{{- if or (.Values.postgres.podLocalDatabaseEnabled) (.Values.postgres.podLocalDatabaseEnabledForTES) }}
+{{- if eq ("true") (include "buildPodLocalDatabase" .) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

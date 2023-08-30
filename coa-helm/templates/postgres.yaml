@@ -1,11 +1,11 @@
-{{- if or (.Values.postgres.podLocalDatabaseEnabled) (.Values.postgres.podLocalDatabaseEnabledForTES) }}
+{{- if eq ("true") (include "buildPodLocalDatabase" .) }}
 {{ include "terra-batch-libchart.postgres-deploy" (list . "coa-helm.postgres-deploy") }}
 {{ end }}
 {{ define "coa-helm.postgres-deploy" }}
 {{ end }}
 
 ---
-{{- if or (.Values.postgres.podLocalDatabaseEnabled) (.Values.postgres.podLocalDatabaseEnabledForTES) }}
+{{- if eq ("true") (include "buildPodLocalDatabase" .) }}
 {{ include "terra-batch-libchart.postgres-service" (list . "coa-helm.postgres-service") }}
 {{ end }}
 {{ define "coa-helm.postgres-service" }}
@@ -13,7 +13,7 @@
 {{ end }}
 
 ---
-{{- if or (.Values.postgres.podLocalDatabaseEnabled) (.Values.postgres.podLocalDatabaseEnabledForTES) }}
+{{- if eq ("true") (include "buildPodLocalDatabase" .) }}
 {{ include "terra-batch-libchart.postgres-config" (list . "coa-helm.postgres-config") }}
 {{ end }}
 {{ define "coa-helm.postgres-config" }}

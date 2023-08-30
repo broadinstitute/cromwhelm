@@ -57,7 +57,8 @@ exports:
 
     postgres:
       # Note that podLocalDatabaseEnabled=false is only currently supported by 
-      # coa-helm (Azure), NOT cromwell-helm (GCP)
+      # coa-helm (Azure), NOT cromwell-helm (GCP). 
+      # Even if this is false, in Azure we'll use pod-local Postgres unless pgbouncer is enabled.
       podLocalDatabaseEnabled: true
 
        # Temporary shim to allow all parts of the Azure app except TES to move to
