@@ -38,7 +38,7 @@ data:
         jdbc-url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
-        jdbc-url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        jdbc-url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?prepareThreshold=0&sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
         {{- end }}
         username: {{ .Values.postgres.user }}
       sql:
@@ -49,7 +49,7 @@ data:
         url: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
-        url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        url: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?prepareThreshold=0&sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
         {{- end }}
         user: {{ .Values.postgres.user }}
         change-log: changelog/changelog.yaml
@@ -59,7 +59,7 @@ data:
         uri: jdbc:postgresql://{{ include "app.fullname" . }}-postgres:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}
         password: {{ include "dbPassword" . | b64enc | quote }}
         {{- else }}
-        uri: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
+        uri: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ include "postgresPort" . }}/{{ .Values.postgres.dbnames.cbas }}?prepareThreshold=0&sslMode=Require&authenticationPluginClassName=com.azure.identity.extensions.jdbc.postgresql.AzurePostgresqlAuthenticationPlugin"
         {{- end }}
         username: {{ .Values.postgres.user }}
     workflow-engines:
