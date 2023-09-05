@@ -68,9 +68,10 @@ spec:
           effect: "NoSchedule"
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
               - key: "kubernetes.azure.com/scalesetpriority"
                 operator: In
                 values:
