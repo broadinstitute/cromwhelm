@@ -90,6 +90,10 @@ data:
           alias /www/data/index.html;
         }
 
+        location / {
+          alias /www/data/index.html;
+        }
+
         # Proxying to other hosts by subpath:
         {{- if .Values.cromwell.enabled }}
         # For now, keep serving 'cromwell' APIs at proxy root, but we should consider this deprecated and
@@ -110,12 +114,6 @@ data:
           proxy_pass http://{{ include "app.fullname" . }}-cbas-svc:8080/;
         }
         {{ end }}
-
-        {{- if .Values.cbasUI.enabled }}
-        location / {
-          proxy_pass http://{{ include "app.fullname" . }}-cbas-ui-svc:8080/;
-        }
-        {{ end }}
       }
     }
   {{ .Values.proxy.www_file }}: |-
@@ -131,7 +129,6 @@ data:
         </h1>
         <p> This is the Cromwell as an App proxy. Valid internal paths:</p>
         <ul>
-          <li> Batch Analysis UI: <a href="./"> cbas-ui/ </a> </li>
           <li> CBAS: /cbas/
           <ul>
             <li> eg: <a href="./cbas/swagger-ui.html"> cbas/swagger-ui.html </a> </li>
