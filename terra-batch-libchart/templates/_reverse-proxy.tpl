@@ -86,12 +86,8 @@ data:
         listen 8000;
 
         # Reference to nginx's local content
-        location /index.html {
-          alias /www/data/index.html;
-        }
-
         location / {
-          alias /www/data/index.html;
+          alias /www/data/;
         }
 
         # Proxying to other hosts by subpath:

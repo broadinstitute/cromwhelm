@@ -1,4 +1,4 @@
-`terra-batch-libchart` is a Library Chart that configures the C-BAS service, and reverse proxy.
+`terra-batch-libchart` is a Library Chart that configures the C-BAS service and reverse proxy.
 
 To update, run:
 
