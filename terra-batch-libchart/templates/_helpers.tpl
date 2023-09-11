@@ -65,13 +65,6 @@ app.kubernetes.io/component: {{ .Values.cromwell.name }}
 {{- end}}
 
 {{/*
-CBAS UI labels
-*/}}
-{{- define "app.cbasUI.selectorLabels" -}}
-app.kubernetes.io/component: {{ .Values.cbasUI.name }}
-{{- end}}
-
-{{/*
 CBAS Service labels
 */}}
 {{- define "app.cbas.selectorLabels" -}}
