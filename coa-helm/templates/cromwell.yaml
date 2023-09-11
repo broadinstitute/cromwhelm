@@ -146,6 +146,11 @@ data:
       io.command-backpressure-staleness = 20 seconds
     }
 
+    akka {
+      http.host-connection-pool.max-open-requests = 1024
+      http.host-connection-pool.max-connections = 200
+    }
+
     filesystems {
       drs.global.config.martha.url = "{{ .Values.config.drsUrl }}"
       blob {
