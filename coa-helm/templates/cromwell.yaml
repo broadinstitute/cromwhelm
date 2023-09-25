@@ -111,7 +111,7 @@ data:
     include required(classpath("application"))
 
     call-caching {
-      enabled = false
+      enabled = true
     }
 
     system {
@@ -146,8 +146,13 @@ data:
       io.command-backpressure-staleness = 20 seconds
     }
 
+    akka {
+      http.host-connection-pool.max-open-requests = 1024
+      http.host-connection-pool.max-connections = 200
+    }
+
     filesystems {
-      drs.global.config.martha.url = "{{ .Values.config.drsUrl }}"
+      drs.global.config.resolver.url = "{{ .Values.config.drsUrl }}"
       blob {
         class = "cromwell.filesystems.blob.BlobPathBuilderFactory"
         global {
@@ -198,6 +203,10 @@ data:
               }
               blob {
                 enabled: true
+              }
+              drs {
+                enabled: true
+                auth: "azure"
               }
             }
             root = "https://{{ .Values.persistence.storageAccount }}.blob.core.windows.net/{{ .Values.persistence.blobContainer }}/workspace-services/cbas/{{ .Values.persistence.leoAppInstanceName }}/"

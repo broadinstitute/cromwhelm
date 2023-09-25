@@ -2,7 +2,7 @@ exports:
   common:
     cromwell:
       name: coa-cromwell-svc
-      image: broadinstitute/cromwell:86-bdc1ab3
+      image: broadinstitute/cromwell:86-660f6e3
       port: 8000
       enabled: true
 
@@ -15,20 +15,11 @@ exports:
       www_dir: /www/data
       www_file: index.html
 
-    # Note: If you change the location of cbas-ui image config, please also update publish.yml in cbas-ui
-    #       repo as the GitHub workflow looks in this file to automatically update the image version
-    cbasUI:
-      name: cbas-ui
-      image: us.gcr.io/broad-dsp-gcr-public/cbas-ui:0.0.157
-      conf_file: config.json
-      conf_dir: /usr/share/nginx/html
-      enabled: true
-
     # Note: If you change the location of cbas image config, please also update publish.yml in cbas
     #       repo as the GitHub workflow looks in this file to automatically update the image version
     cbas:
       name: cbas
-      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.152
+      image: us.gcr.io/broad-dsp-gcr-public/cbas:0.0.160
       conf_dir: /etc/conf
       conf_file: cbas.yaml
       enabled: true
@@ -57,8 +48,19 @@ exports:
 
     postgres:
       # Note that podLocalDatabaseEnabled=false is only currently supported by 
-      # coa-helm (Azure), NOT cromwell-helm (GCP)
+      # coa-helm (Azure), NOT cromwell-helm (GCP). 
+      # Even if this is false, in Azure we'll use pod-local Postgres unless pgbouncer is enabled.
       podLocalDatabaseEnabled: true
+
+       # Temporary shim to allow all parts of the Azure app except TES to move to
+       # LZ postgres. Should always be false in library chart, can be set to true in coa-helm.
+      podLocalDatabaseEnabledForTES: false
+
+      # PgBouncer currently only functions in Azure app. Should always be false in 
+      # library chart, can be set to true in coa-helm.
+      pgbouncer:
+        enabled: false
+        port: 6432
 
       host: RUNTIME_PARAMETER # ignored if podLocalDatabaseEnabled is true
       port: 5432
