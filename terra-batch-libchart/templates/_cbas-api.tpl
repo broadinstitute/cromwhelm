@@ -36,6 +36,8 @@ spec:
           env:
             - name: SPRING_CONFIG_ADDITIONAL-LOCATION
               value: {{ .Values.cbas.conf_dir }}/{{ .Values.cbas.conf_file }}
+            - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+              value: {{ .Values.config.applicationInsightsConnectionString }}
           livenessProbe:
             httpGet:
               path: /status
