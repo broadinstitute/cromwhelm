@@ -146,6 +146,14 @@ data:
       io.command-backpressure-staleness = 20 seconds
     }
 
+    services {
+      HealthMonitor {
+        config {
+          check-engine-database: true
+        }
+      }
+    }
+
     akka {
       http.host-connection-pool.max-open-requests = 1024
       http.host-connection-pool.max-connections = 200
