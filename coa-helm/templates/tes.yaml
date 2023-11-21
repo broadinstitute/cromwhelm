@@ -64,9 +64,9 @@ spec:
               value: {{ .Values.tes.batchImageGen2.version }}
             - name: BatchNodes__DisablePublicIpAddress
               value: {{ .Values.tes.batchNodes.disablePublicIpAddress | quote }}
-            # Not currently working
-            # - name: BatchNodes__SubnetId
-            #   value: {{ .Values.config.batchNodesSubnetId }}
+            # Enabled in https://broadworkbench.atlassian.net/browse/WX-1312
+            - name: BatchNodes__SubnetId
+              value: {{ .Values.config.batchNodesSubnetId }}
             - name: BatchScheduling__Disable
               value: {{ .Values.tes.batchScheduling.disable | quote }}
             - name: BatchScheduling__PoolRotationForcedDays
