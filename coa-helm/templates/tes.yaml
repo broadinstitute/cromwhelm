@@ -146,11 +146,11 @@ spec:
             - containerPort: {{ .Values.tes.port }}
           resources:
             requests:
-              cpu: "1.5"
-              memory: "3072Mi"
+              cpu: "0.5"
+              memory: "1024Mi"
             limits:
-              cpu: "8.0"
-              memory: "8192Mi"
+              cpu: "1.0"
+              memory: "2048Mi"
           livenessProbe:
             httpGet:
               path: {{ .Values.tes.apiVersion }}/service-info
