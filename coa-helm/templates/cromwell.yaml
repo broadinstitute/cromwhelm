@@ -103,6 +103,10 @@ data:
       <logger name="com.google.cloud.hadoop.gcsio.GoogleCloudStorageReadChannel" level="ERROR"/>
       <logger name="org.semanticweb.owlapi.utilities.Injector" level="ERROR"/>
 
+      <!-- These continually output INFO messages due to postgres auth JDBC plugin -->
+      <logger name="com.azure.identity.ChainedTokenCredential" level="WARN"/>
+      <logger name="com.azure.identity.extensions.implementation.token.AccessTokenResolverOptions" level="WARN"/>
+
       <!-- Guilty of logging ERROR under non-erroneous conditions -->
       <logger name="com.azure.storage.blob.nio" level="OFF"/>
     </configuration>
