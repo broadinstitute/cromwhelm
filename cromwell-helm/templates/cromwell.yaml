@@ -123,12 +123,6 @@ data:
             // This is the maximum polling interval (in seconds):
             maximum-polling-interval = 600
 
-            // Optional Dockerhub Credentials. Can be used to access private docker images.
-            dockerhub {
-              // account = ""
-              // token = ""
-            }
-
             genomics {
               // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
               // Pipelines and manipulate auth JSONs.
@@ -179,12 +173,6 @@ data:
             // This is the maximum polling interval (in seconds):
             maximum-polling-interval = 600
 
-            // Optional Dockerhub Credentials. Can be used to access private docker images.
-            dockerhub {
-              // account = ""
-              // token = ""
-            }
-
             batch {
               // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
               // Batch Jobs and manipulate auth JSONs.
@@ -207,11 +195,11 @@ data:
                 project = "{{ .Values.config.gcsProject }}"
               }
             }
+            // Cromwell will replace * with the correct region for each job submission.
             virtual-private-cloud {
-              network-label-key = "vpc-network-name"
-              subnetwork-label-key = "vpc-subnetwork-name"
-              auth = "application-default"
-            }    
+              network-name = "projects/{{ .Values.config.gcsProject }}/global/networks/network"
+              subnetwork-name = "projects/{{ .Values.config.gcsProject }}/regions/*/subnetworks/subnetwork"
+            } 
           }
         }
       }
