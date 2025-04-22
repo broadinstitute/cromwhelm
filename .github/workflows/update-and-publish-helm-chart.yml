@@ -17,7 +17,7 @@ jobs:
           echo ::set-output name=JIRA_ID::${JIRA_ID}
 
       - name: Check out the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
 
@@ -87,7 +87,7 @@ jobs:
           fi
 
       - name: Clone leonardo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: broadinstitute/leonardo
           token: ${{ secrets.BROADBOT_TOKEN }} # Has to be set at checkout AND later when pushing to work
