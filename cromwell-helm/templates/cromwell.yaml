@@ -108,7 +108,7 @@ data:
     }
 
     backend {
-      default = "PAPIv2"
+      default = "{{ .Values.config.backend }}"
       providers {
         PAPIv2 {
           actor-factory = "cromwell.backend.google.pipelines.v2beta.PipelinesApiLifecycleActorFactory"
@@ -123,18 +123,12 @@ data:
             // This is the maximum polling interval (in seconds):
             maximum-polling-interval = 600
 
-            // Optional Dockerhub Credentials. Can be used to access private docker images.
-            dockerhub {
-              // account = ""
-              // token = ""
-            }
-
             genomics {
               // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
               // Pipelines and manipulate auth JSONs.
               auth = "application-default"
               // Endpoint for API (dependent on 'location')
-              endpoint-url = "{{ .Values.config.papiv2EndpointUrl }}"
+              endpoint-url = "https://lifesciences.googleapis.com/"
               // Will get overridden by email address provided in workflow options, "google_compute_service_account"
               compute-service-account = "{{ .Values.config.serviceAccount.annotations.gcpServiceAccount }}"
 
@@ -164,6 +158,48 @@ data:
               subnetwork-label-key = "vpc-subnetwork-name"
               auth = "application-default"
             }
+          }
+        }
+        GCPBATCH {
+          actor-factory = "cromwell.backend.google.batch.GcpBatchBackendLifecycleActorFactory"
+          config {
+            // Google project
+            project = "{{ .Values.config.gcsProject }}"
+
+            // Base bucket for workflow executions
+            root = "{{ .Values.config.gcsBucket }}"
+
+            // Polling for completion backs-off gradually for slower-running jobs.
+            // This is the maximum polling interval (in seconds):
+            maximum-polling-interval = 600
+
+            batch {
+              // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
+              // Batch Jobs and manipulate auth JSONs.
+              auth = "application-default"
+
+              // alternative service account to use on the launched compute instance
+              // NOTE: If combined with service account authorization, both that service account and this service account
+              // must be able to read and write to the 'root' GCS path
+              compute-service-account = "{{ .Values.config.serviceAccount.annotations.gcpServiceAccount }}"
+
+              // Location to submit jobs to Batch and store job metadata.
+              location = "{{ .Values.config.gcsRegion }}"
+            }
+
+            filesystems {
+              gcs {
+                // A reference to a potentially different auth for manipulating files via engine functions.
+                auth = "application-default"
+                // Google project which will be billed for the requests
+                project = "{{ .Values.config.gcsProject }}"
+              }
+            }
+            // Cromwell will replace * with the correct region for each job submission.
+            virtual-private-cloud {
+              network-name = "projects/{{ .Values.config.gcsProject }}/global/networks/network"
+              subnetwork-name = "projects/{{ .Values.config.gcsProject }}/regions/*/subnetworks/subnetwork"
+            } 
           }
         }
       }

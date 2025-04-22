@@ -17,6 +17,20 @@ Here is a suggested workflow for testing updates to this chart from local Termin
       - Note: you can also see the namespace in Google Cloud console to the right of the Cromwell service.
    - If you see `Error: UPGRADE FAILED: ...` refer to the Troubleshooting section below.
 
+
+If you do want to test your chart by deploying via leonardo, you can do the following:
+1. Bump the version in `Chart.yaml`
+2. Build the new chart, move it to the `/charts` directory, and update the index:
+   `helm dependency update cromwell-helm/`
+   `helm package cromwell-helm/`
+   `mv cromwell-<NEW-VERSION>.tgz charts/cromwell-<NEW-VERSION>.tgz`
+   `helm repo index --url https://broadinstitute.github.io/cromwhelm/charts/ charts`
+3. Commit and push the new chart to your branch
+4. The charts are hosted at https://broadinstitute.github.io/cromwhelm/charts/, which is the web page hosted by the github repo. 
+You need to redeploy the web page from your branch instead of main. You can do that by going into Settings > Pages > Build and deployment > Source > Deploy from a branch
+5. You can now use this new version of the chart in Leonardo [here](https://github.com/DataBiosphere/leonardo/blob/68e204738a01ba34b78f673098635e4c4ef111d9/Dockerfile#L33)
+
+
 **Troubleshooting**: 
 
 You may encounter the following error when trying to run `helm upgrade`:
