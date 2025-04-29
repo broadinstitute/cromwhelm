@@ -162,6 +162,11 @@ data:
         }
         GCPBATCH {
           actor-factory = "cromwell.backend.google.batch.GcpBatchBackendLifecycleActorFactory"
+
+          default-runtime-attributes {
+            noAddress: true
+          }
+          
           config {
             // Google project
             project = "{{ .Values.config.gcsProject }}"
