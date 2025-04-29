@@ -162,6 +162,7 @@ data:
         }
         GCPBATCH {
           actor-factory = "cromwell.backend.google.batch.GcpBatchBackendLifecycleActorFactory"
+
           config {
             // Google project
             project = "{{ .Values.config.gcsProject }}"
@@ -172,6 +173,10 @@ data:
             // Polling for completion backs-off gradually for slower-running jobs.
             // This is the maximum polling interval (in seconds):
             maximum-polling-interval = 600
+
+            default-runtime-attributes {
+              noAddress: true
+            }
 
             batch {
               // A reference to an auth defined in the `google` stanza at the top.  This auth is used to create
